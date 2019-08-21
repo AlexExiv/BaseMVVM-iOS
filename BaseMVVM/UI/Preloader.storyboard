@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Preloader Controller-->
+        <scene sceneID="lFX-kJ-lhd">
+            <objects>
+                <viewController storyboardIdentifier="SBPreloaderController" id="Z5b-Wl-PHI" customClass="SBPreloaderController" customModule="BaseMVVM" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="egm-qz-6Bw"/>
+                        <viewControllerLayoutGuide type="bottom" id="StQ-pD-drj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7V2-wJ-xXb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="K0Q-TC-tZ8">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odx-eb-12W">
+                                <rect key="frame" x="15" y="555.5" width="384" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="odx-eb-12W" firstAttribute="leading" secondItem="7V2-wJ-xXb" secondAttribute="leading" constant="15" id="7UP-g4-GAV"/>
+                            <constraint firstItem="K0Q-TC-tZ8" firstAttribute="centerX" secondItem="7V2-wJ-xXb" secondAttribute="centerX" id="D9N-wL-mwc"/>
+                            <constraint firstItem="odx-eb-12W" firstAttribute="top" secondItem="K0Q-TC-tZ8" secondAttribute="bottom" constant="89" id="U9M-s0-g33"/>
+                            <constraint firstAttribute="trailing" secondItem="odx-eb-12W" secondAttribute="trailing" constant="15" id="Ujb-BO-dQR"/>
+                            <constraint firstItem="K0Q-TC-tZ8" firstAttribute="centerY" secondItem="7V2-wJ-xXb" secondAttribute="centerY" id="tpc-mA-KI8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1QQ-vU-mXc"/>
+                    </view>
+                    <connections>
+                        <outlet property="activity" destination="K0Q-TC-tZ8" id="JEs-TB-jSx"/>
+                        <outlet property="titleLab" destination="odx-eb-12W" id="pj0-Wj-mMk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p4M-Tt-TVB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6004" y="734"/>
+        </scene>
+    </scenes>
+</document>
