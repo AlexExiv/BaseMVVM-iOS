@@ -24,7 +24,7 @@ s.summary      = "Swift MVVM based on RxSwift with SOA support"
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
-s.description  = "Swift MVVM based on RxSwift with SOA support"
+s.description  = "Swift MVVM based on RxSwift with SOA support Disable warning"
 
 s.homepage     = "http://speakerboxlite.com"
 # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -64,6 +64,7 @@ s.author             = { "ALEXEY ABDULIN" => "alexexiv@gmail.com" }
 
 # s.platform     = :ios
 s.platform     = :ios, "10.0"
+s.swift_version = "5.0"
 
 #  When using multiple platforms
 # s.ios.deployment_target = "9.0"
@@ -131,6 +132,8 @@ s.source_files  = 'BaseMVVM', 'BaseMVVM/**/*.{h,m,swift}'
 s.requires_arc = true
 
 # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-# s.dependency "JSONKit", "~> 1.4"
+s.dependency "RxSwift", "~> 5.0"
+s.dependency "RxCocoa", "~> 5.0"
+s.dependency "RxRelay", "~> 5.0"
 
 end
