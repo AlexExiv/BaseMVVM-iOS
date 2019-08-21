@@ -21,6 +21,7 @@ public class SBViewModel: SBBindProtocol
     
     public let rxMessages = PublishRelay<Message>()
     
+    public let rxIsLogin = BehaviorRelay( value: false )
     public let rxLoading = BehaviorRelay( value: false )
     public let rxScreenLoading = BehaviorRelay( value: false )
     

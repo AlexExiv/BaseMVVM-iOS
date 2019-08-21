@@ -16,8 +16,6 @@ public class SBServiceViewModel<SF: SBServiceFactoryProtocol>: SBViewModel
     public let authUserService: SBAuthUserServiceProtocol!
     public let imageDownloadService: SBImageDowloadServiceProtocol!
     
-    public let rxIsLogin = BehaviorRelay( value: false )
-    
     init( serviceFactory: SF, parent: SBViewModel? = nil )
     {
         self.serviceFactory = serviceFactory
