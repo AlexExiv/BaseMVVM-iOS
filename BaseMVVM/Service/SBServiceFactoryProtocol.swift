@@ -10,6 +10,6 @@ import Foundation
 
 public protocol SBServiceFactoryProtocol
 {
-    var authUserService: SBAuthUserServiceProtocol! { get }
-    var imageDownloadService: SBImageDowloadServiceProtocol! { get }
+    func ProvideAuthUserService() -> SBAuthUserServiceProtocol!
+    func ProvideImageDownloadService() -> SBImageDowloadServiceProtocol!
 }

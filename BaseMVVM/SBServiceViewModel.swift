@@ -19,8 +19,8 @@ public class SBServiceViewModel<SF: SBServiceFactoryProtocol>: SBViewModel
     init( serviceFactory: SF, parent: SBViewModel? = nil )
     {
         self.serviceFactory = serviceFactory
-        authUserService = serviceFactory.authUserService
-        imageDownloadService = serviceFactory.imageDownloadService
+        authUserService = serviceFactory.ProvideAuthUserService()
+        imageDownloadService = serviceFactory.ProvideImageDownloadService()
         
         super.init( parent: parent )
         
