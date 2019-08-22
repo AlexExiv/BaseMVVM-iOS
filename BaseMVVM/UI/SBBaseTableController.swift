@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxRelay
 
-public class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
+open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
 {
     public var preloaderView: SBPreloaderView!
     public var screenPreloaderCntrl: SBPreloaderController!
@@ -27,7 +27,7 @@ public class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMV
     private var footer: UIView? = nil
     private var footerHeight: CGFloat = 0.0
     
-    override public var tableView: UITableView!
+    override open var tableView: UITableView!
     {
         get
         {
@@ -39,26 +39,26 @@ public class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMV
         }
     }
     
-    override public func viewDidLoad()
+    override open func viewDidLoad()
     {
         super.viewDidLoad()
         isInitRx = isInitRx || InvokeInitRx( b: viewModel != nil )
     }
     
-    override public func viewWillAppear( _ animated: Bool )
+    override open func viewWillAppear( _ animated: Bool )
     {
         super.viewWillAppear( animated )
         messagesDisp = InvokeInitMessages()
     }
     
-    override public func viewWillDisappear( _ animated: Bool )
+    override open func viewWillDisappear( _ animated: Bool )
     {
         super.viewWillDisappear(animated)
         messagesDisp?.dispose()
     }
     
     //MARK: - MVVM
-    public func InitRx()
+    open func InitRx()
     {
         BindLoading( table: tableView )
         BindScreenLoading()
@@ -70,33 +70,33 @@ public class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMV
         isInitRx = isInitRx || InvokeInitRx( b: isViewLoaded )
     }
     
-    public func BindReload<T>( rxEvent: Observable<T> )
+    open func BindReload<T>( rxEvent: Observable<T> )
     {
         BindReload( rxEvent: rxEvent, table: tableView )
     }
     
-    public func BindReload<T>( rxEvent: BehaviorRelay<T> )
+    open func BindReload<T>( rxEvent: BehaviorRelay<T> )
     {
         BindReload( rxEvent: rxEvent.asObservable(), table: tableView )
     }
     
-    public func BindRefresh()
+    open func BindRefresh()
     {
         tableView.refreshControl = UIRefreshControl()
         BindRefresh( refresh: tableView.refreshControl!, scrollView: tableView )
     }
     
-    public func DispatchMessage( message: SBViewModel.Message )
+    open func DispatchMessage( message: SBViewModel.Message )
     {
         _DispatchMessage( message: message )
     }
     
-    public func CreatePreloaderView()
+    open func CreatePreloaderView()
     {
         preloaderView = SBPreloaderView( withStyle: .gray )
     }
     
-    public func CreateScreenPreloaderCntrl()
+    open func CreateScreenPreloaderCntrl()
     {
         screenPreloaderCntrl = SBPreloaderController.Create()
     }
@@ -156,18 +156,18 @@ public class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMV
     }
     
     //MARK - UITableViewDelegate
-    override public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat
+    override open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat
     {
         return cellHeights[indexPath.section*10000 + indexPath.row] ?? UITableView.automaticDimension;
     }
 
-    override public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    override open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
         cellHeights[indexPath.section*10000 + indexPath.row] = cell.bounds.size.height;
     }
     
     //MARK: - SEGUE
-    override public func prepare( for segue: UIStoryboardSegue, sender: Any? )
+    override open func prepare( for segue: UIStoryboardSegue, sender: Any? )
     {
         prepareVM( for: segue, sender: sender )
     }
