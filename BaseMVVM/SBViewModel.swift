@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxRelay
 
-public class SBViewModel: SBBindProtocol
+open class SBViewModel: SBBindProtocol
 {
     public enum Message
     {
@@ -33,40 +33,41 @@ public class SBViewModel: SBBindProtocol
         self.parent = parent
     }
     
-    public func GetChildVM( id: String, sender: Any? = nil ) -> SBViewModel
+    open func GetChildVM( id: String, sender: Any? = nil ) -> SBViewModel
     {
         assertionFailure( "There is no such view model \(id)" )
         return SBViewModel( parent: self )
     }
     
-    public func RefreshData()
+    open func RefreshData()
     {
         
     }
     
     //MARK: - SEND MESSAGES
-    public func SendClose()
+    open func SendClose()
     {
         rxScreenLoading.accept( false )
         rxMessages.accept( .Close )
     }
     
-    public func SendError( error: Error, hidePreloaders: Bool = true )
+    open func SendError( error: Error, hidePreloaders: Bool = true )
     {
         SendError( error: (error as NSError).domain, hidePreloaders: hidePreloaders )
     }
     
-    public func SendError( error: String, hidePreloaders: Bool = true )
+    open func SendError( error: String, hidePreloaders: Bool = true )
     {
         if hidePreloaders
         {
             rxLoading.accept( false )
             rxScreenLoading.accept( false )
         }
+        
         rxMessages.accept( .Error( error: error ) )
     }
     
-    public func SendMessage( tag: Int, userInfo: Any? = nil )
+    open func SendMessage( tag: Int, userInfo: Any? = nil )
     {
         rxMessages.accept( .Custom( tag: tag, userInfo: userInfo ) )
     }

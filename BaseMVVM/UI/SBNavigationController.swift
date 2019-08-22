@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class SBNavigationController: UINavigationController, UINavigationControllerDelegate, SBMVVMHolderProtocol
+open class SBNavigationController: UINavigationController, UINavigationControllerDelegate, SBMVVMHolderProtocol
 {
     public var showRootBack = true;
     
-    override public func viewDidLoad()
+    override open func viewDidLoad()
     {
         super.viewDidLoad();
         delegate = self
@@ -38,7 +38,7 @@ public class SBNavigationController: UINavigationController, UINavigationControl
     }
     
     //MARK: - UINavigationControllerDelegate
-    public func navigationController( _ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool )
+    open func navigationController( _ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool )
     {
         if (viewControllers.count == 1) && !showRootBack
         {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SBPreloaderController: UIViewController
+open class SBPreloaderController: UIViewController
 {
     static func Create() -> SBPreloaderController
     {
@@ -20,7 +20,7 @@ public class SBPreloaderController: UIViewController
     
     
     //MARK: - Actions
-    public func Show( title: String = "" )
+    open func Show( title: String = "" )
     {
         if let rWnd = UIApplication.shared.keyWindow
         {
@@ -32,7 +32,7 @@ public class SBPreloaderController: UIViewController
         }
     }
     
-    public func Hide()
+    open func Hide()
     {
         view.removeFromSuperview();
     }

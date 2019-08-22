@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-public class SBServiceBaseVM<SF: SBServiceFactoryProtocol>: SBBaseVM
+open class SBServiceBaseVM<SF: SBServiceFactoryProtocol>: SBBaseVM
 {
     public var serviceParent: SBServiceViewModel<SF>?
     {

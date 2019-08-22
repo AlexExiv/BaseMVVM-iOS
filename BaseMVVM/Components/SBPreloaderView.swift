@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SBPreloaderView: UIView
+open class SBPreloaderView: UIView
 {
     private var indicator: UIActivityIndicatorView? = nil;
     
@@ -44,7 +44,7 @@ public class SBPreloaderView: UIView
         super.init( frame: frame )
     }
     
-    override public func layoutSubviews()
+    override open func layoutSubviews()
     {
         super.layoutSubviews();
         indicator?.center = CGPoint( x: self.bounds.size.width/2.0, y: self.bounds.size.height/2.0 );

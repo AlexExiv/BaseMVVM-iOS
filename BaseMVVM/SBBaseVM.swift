@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-public class SBBaseVM
+open class SBBaseVM
 {
     public let parent: SBViewModel?
     

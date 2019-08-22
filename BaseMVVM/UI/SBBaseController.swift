@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-public class SBBaseController<VM: SBViewModel>: UIViewController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
+open class SBBaseController<VM: SBViewModel>: UIViewController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
 {
     public var preloaderView: SBPreloaderView!
     public var screenPreloaderCntrl: SBPreloaderController!
@@ -21,26 +21,26 @@ public class SBBaseController<VM: SBViewModel>: UIViewController, SBMVVMHolderPr
     private(set) public var isInitRx = false
     private var messagesDisp: Disposable? = nil
     
-    override public func viewDidLoad()
+    override open func viewDidLoad()
     {
         super.viewDidLoad()
         isInitRx = isInitRx || InvokeInitRx( b: viewModel != nil )
     }
     
-    override public func viewWillAppear( _ animated: Bool )
+    override open func viewWillAppear( _ animated: Bool )
     {
         super.viewWillAppear( animated )
         messagesDisp = InvokeInitMessages()
     }
     
-    override public func viewWillDisappear( _ animated: Bool )
+    override open func viewWillDisappear( _ animated: Bool )
     {
         super.viewWillDisappear(animated)
         messagesDisp?.dispose()
     }
     
     //MARK: - MVVM
-    public func InitRx()
+    open func InitRx()
     {
         BindScreenLoading()
     }
@@ -51,23 +51,23 @@ public class SBBaseController<VM: SBViewModel>: UIViewController, SBMVVMHolderPr
         isInitRx = isInitRx || InvokeInitRx( b: isViewLoaded )
     }
     
-    public func DispatchMessage( message: SBViewModel.Message )
+    open func DispatchMessage( message: SBViewModel.Message )
     {
         _DispatchMessage( message: message )
     }
     
-    public func CreatePreloaderView()
+    open func CreatePreloaderView()
     {
         preloaderView = SBPreloaderView( withStyle: .gray )
     }
     
-    public func CreateScreenPreloaderCntrl()
+    open func CreateScreenPreloaderCntrl()
     {
         screenPreloaderCntrl = SBPreloaderController.Create()
     }
     
     //MARK: - SEGUE
-    override public func prepare( for segue: UIStoryboardSegue, sender: Any? )
+    override open func prepare( for segue: UIStoryboardSegue, sender: Any? )
     {
         prepareVM( for: segue, sender: sender )
     }
