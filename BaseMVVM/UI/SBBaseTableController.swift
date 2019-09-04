@@ -16,7 +16,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
     public var screenPreloaderCntrl: SBPreloaderController!
     
     public let dispBag = DisposeBag()
-    public let bindScheduler: ImmediateSchedulerType = MainScheduler.asyncInstance
+    public let bindScheduler: SchedulerType = MainScheduler.asyncInstance
     
     private(set) public var viewModel: VM! = nil
     private(set) public var isInitRx = false

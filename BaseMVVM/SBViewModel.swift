@@ -25,7 +25,7 @@ open class SBViewModel: SBBindProtocol
     public let rxLoading = BehaviorRelay( value: false )
     public let rxScreenLoading = BehaviorRelay( value: false )
     
-    public let bindScheduler: ImmediateSchedulerType = MainScheduler.asyncInstance
+    public let bindScheduler: SchedulerType = MainScheduler.asyncInstance
     public let dispBag = DisposeBag()
     
     public init( parent: SBViewModel? = nil )

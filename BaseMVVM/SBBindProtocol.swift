@@ -13,7 +13,7 @@ import RxRelay
 public protocol SBBindProtocol
 {
     var dispBag: DisposeBag { get }
-    var bindScheduler: ImmediateSchedulerType { get }
+    var bindScheduler: SchedulerType { get }
 }
 
 public extension SBBindProtocol

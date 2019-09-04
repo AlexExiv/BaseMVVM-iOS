@@ -20,7 +20,7 @@ public protocol SBMVVMHolderBase
     
     var viewModel: ViewModel! { get }
     var isInitRx: Bool { get }
-    var bindScheduler: ImmediateSchedulerType { get }
+    var bindScheduler: SchedulerType { get }
     
     func InitRx()
     func DispatchMessage( message: ViewModel.Message )
