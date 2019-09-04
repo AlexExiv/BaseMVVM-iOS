@@ -9,8 +9,8 @@
 import Foundation
 import RxSwift
 
-public protocol SBImageDowloadServiceProtocol
+public protocol SBDowloadServiceProtocol
 {
     func RxDownload( url: String ) -> Single<String>
-    func RxDownload( url: String, width: Int, height: Int ) -> Single<String>
+    func RxDownloadImage( url: String, width: Int, height: Int ) -> Single<String>
 }

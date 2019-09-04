@@ -30,7 +30,7 @@
 		FB061B26230D519800202907 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB061B25230D519800202907 /* UIViewController+Ext.swift */; };
 		FB061B29230D53B500202907 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB061B2B230D53B500202907 /* Localizable.strings */; };
 		FB061B2E230D54AB00202907 /* Preloader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB061B2D230D54AB00202907 /* Preloader.storyboard */; };
-		FB061B30230D55C700202907 /* SBImageDowloadServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB061B2F230D55C700202907 /* SBImageDowloadServiceProtocol.swift */; };
+		FB061B30230D55C700202907 /* SBDowloadServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB061B2F230D55C700202907 /* SBDowloadServiceProtocol.swift */; };
 		FB061B32230D57F800202907 /* SBServiceBaseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB061B31230D57F800202907 /* SBServiceBaseVM.swift */; };
 		FB061B36230D8A9200202907 /* SwiftMVVM-Rx-SOA.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */; };
 /* End PBXBuildFile section */
@@ -75,7 +75,7 @@
 		FB061B2A230D53B500202907 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB061B2C230D53C200202907 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FB061B2D230D54AB00202907 /* Preloader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preloader.storyboard; sourceTree = "<group>"; };
-		FB061B2F230D55C700202907 /* SBImageDowloadServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBImageDowloadServiceProtocol.swift; sourceTree = "<group>"; };
+		FB061B2F230D55C700202907 /* SBDowloadServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDowloadServiceProtocol.swift; sourceTree = "<group>"; };
 		FB061B31230D57F800202907 /* SBServiceBaseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBServiceBaseVM.swift; sourceTree = "<group>"; };
 		FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SwiftMVVM-Rx-SOA.podspec"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -192,7 +192,7 @@
 			children = (
 				FB061B1D230D46E200202907 /* SBServiceFactoryProtocol.swift */,
 				FB061B21230D4E1600202907 /* SBAuthUserServiceProtocol.swift */,
-				FB061B2F230D55C700202907 /* SBImageDowloadServiceProtocol.swift */,
+				FB061B2F230D55C700202907 /* SBDowloadServiceProtocol.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -366,7 +366,7 @@
 				FB061B16230D452400202907 /* SBMVVMHolderUIBase.swift in Sources */,
 				FB061B26230D519800202907 /* UIViewController+Ext.swift in Sources */,
 				FB061B20230D4CCE00202907 /* SBServiceViewModel.swift in Sources */,
-				FB061B30230D55C700202907 /* SBImageDowloadServiceProtocol.swift in Sources */,
+				FB061B30230D55C700202907 /* SBDowloadServiceProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

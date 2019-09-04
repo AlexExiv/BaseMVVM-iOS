@@ -14,7 +14,7 @@ open class SBViewModel: SBBindProtocol
 {
     public enum Message
     {
-        case Close, Error( error: String ), Custom( tag: Int, userInfo: Any? )
+        case Close, Error( error: String ), Custom( tag: Int, userInfo: Any? ), Show( tag: Int )
     }
     
     private(set) weak var parent: SBViewModel?
@@ -65,6 +65,11 @@ open class SBViewModel: SBBindProtocol
         }
         
         rxMessages.accept( .Error( error: error ) )
+    }
+    
+    open func SendShowView( tag: Int )
+    {
+        rxMessages.accept( .Show( tag: tag ) )
     }
     
     open func SendMessage( tag: Int, userInfo: Any? = nil )

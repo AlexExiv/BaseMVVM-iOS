@@ -14,13 +14,13 @@ open class SBServiceViewModel<SF: SBServiceFactoryProtocol>: SBViewModel
 {
     public let serviceFactory: SF
     public let authUserService: SBAuthUserServiceProtocol!
-    public let imageDownloadService: SBImageDowloadServiceProtocol!
+    public let downloadService: SBDowloadServiceProtocol!
     
     public init( serviceFactory: SF, parent: SBViewModel? = nil )
     {
         self.serviceFactory = serviceFactory
         authUserService = serviceFactory.ProvideAuthUserService()
-        imageDownloadService = serviceFactory.ProvideImageDownloadService()
+        downloadService = serviceFactory.ProvideDownloadService()
         
         super.init( parent: parent )
         
@@ -33,12 +33,25 @@ open class SBServiceViewModel<SF: SBServiceFactoryProtocol>: SBViewModel
         return SBServiceViewModel<SF>( serviceFactory: serviceFactory, parent: self )
     }
     
+    open func RxDownload( url: String ) -> Single<String>
+    {
+        if let downloadService = downloadService
+        {
+            return downloadService
+                .RxDownload( url: url )
+                .catchErrorJustReturn( "" )
+                .observeOn( bindScheduler )
+        }
+        
+        return Single.just( "" )
+    }
+    
     open func RxDownloadImage( url: String, width: Int = 0, height: Int = 0 ) -> Single<String>
     {
-        if let imageDownloadService = imageDownloadService
+        if let downloadService = downloadService
         {
-            return imageDownloadService
-                .RxDownload( url: url, width: width, height: height )
+            return downloadService
+                .RxDownloadImage( url: url, width: width, height: height )
                 .catchErrorJustReturn( "" )
                 .observeOn( bindScheduler )
         }

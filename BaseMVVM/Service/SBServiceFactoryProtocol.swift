@@ -11,5 +11,5 @@ import Foundation
 public protocol SBServiceFactoryProtocol
 {
     func ProvideAuthUserService() -> SBAuthUserServiceProtocol!
-    func ProvideImageDownloadService() -> SBImageDowloadServiceProtocol!
+    func ProvideDownloadService() -> SBDowloadServiceProtocol!
 }
