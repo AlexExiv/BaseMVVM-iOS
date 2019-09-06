@@ -11,7 +11,7 @@ import RxSwift
 
 open class SBBaseVM
 {
-    public let parent: SBViewModel?
+    public private(set) weak var parent: SBViewModel?
     
     public init( parent: SBViewModel? = nil )
     {
