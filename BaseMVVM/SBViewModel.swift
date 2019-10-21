@@ -67,9 +67,9 @@ open class SBViewModel: SBBindProtocol
         rxMessages.accept( .Error( error: error ) )
     }
     
-    open func SendShowView( tag: Int )
+    open func SendShowView( tag: Int, sender: Any? = nil )
     {
-        rxMessages.accept( .Show( tag: tag ) )
+        rxMessages.accept( .Show( tag: tag, sender: sender ) )
     }
     
     open func SendMessage( tag: Int, userInfo: Any? = nil )
