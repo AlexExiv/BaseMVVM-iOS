@@ -79,7 +79,7 @@ s.swift_version = "5.0"
 #  Supports git, hg, bzr, svn and HTTP.
 #
 
-s.source       = { :git => "https://github.com/AlexExiv/SwiftMVVM-Rx-SOA.git", :tag => "0.2.2" }
+s.source       = { :git => "https://github.com/AlexExiv/SwiftMVVM-Rx-SOA.git", :tag => "0.2.3" }
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

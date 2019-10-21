@@ -14,7 +14,7 @@ open class SBViewModel: SBBindProtocol
 {
     public enum Message
     {
-        case Close, Error( error: String ), Custom( tag: Int, userInfo: Any? ), Show( tag: Int )
+        case Close, Error( error: String ), Custom( tag: Int, userInfo: Any? ), Show( tag: Int, sender: Any? = nil )
     }
     
     private(set) weak var parent: SBViewModel?
