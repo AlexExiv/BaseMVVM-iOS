@@ -14,7 +14,7 @@ public struct AlertAction
     let title: String
     let color: UIColor?
     
-    init( tag: Int = 0, title: String, color: UIColor? = nil )
+    public init( tag: Int = 0, title: String, color: UIColor? = nil )
     {
         self.tag = tag;
         self.title = title;
