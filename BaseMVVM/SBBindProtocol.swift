@@ -72,6 +72,7 @@ public extension SBBindProtocol
             .distinctUntilChanged()
             .skip( 1 )
             .map( { mapTo( $0 ) } )
+            .filter( { from.value != $0 } )
             .bind( to: from )
             .disposed( by: dispBag ?? self.dispBag )
     }

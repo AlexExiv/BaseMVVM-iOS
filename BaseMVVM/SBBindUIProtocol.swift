@@ -233,6 +233,40 @@ public extension SBBindUIProtocol where Self: UIViewController
     }
     
     //MARK: - 2WAY
+    func Bind2Way( from: BehaviorRelay<String>, to: UITextField )
+    {
+        from
+            .asDriver()
+            .distinctUntilChanged()
+            .drive( to.rx.text )
+            .disposed( by: dispBag );
+        
+        to.rx.text
+            .asDriver()
+            .map( { $0! } )
+            .filter( { from.value != $0 } )
+            //.distinctUntilChanged()
+            .drive( from )
+            .disposed( by: dispBag );
+    }
+    
+    func Bind2Way( from: BehaviorRelay<String>, to: UITextView )
+    {
+        from
+            .asDriver()
+            .distinctUntilChanged()
+            .drive( to.rx.text )
+            .disposed( by: dispBag );
+        
+        to.rx.text
+            .asDriver()
+            .map( { $0! } )
+            .filter( { from.value != $0 } )
+            //.distinctUntilChanged()
+            .drive( from )
+            .disposed( by: dispBag );
+    }
+    
     func Bind2Way( from: BehaviorRelay<Bool>, to: UISwitch )
     {
         from
@@ -246,6 +280,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .debounce( .milliseconds( 200 ) )
             //.distinctUntilChanged()
             .skip( 1 )
+            .filter( { from.value != $0 } )
             .drive( from )
             .disposed( by: dispBag );
     }
@@ -263,6 +298,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .debounce( .milliseconds( 200 ) )
             //.distinctUntilChanged()
             .skip( 1 )
+            .filter( { from.value != $0 } )
             .drive( from )
             .disposed( by: dispBag );
     }
@@ -281,6 +317,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .debounce( .milliseconds( 200 ) )
             .skip( 1 )
             .map( { T( rawValue: $0 )! } )
+            .filter( { from.value != $0 } )
             .drive( from )
             .disposed( by: dispBag );
     }
@@ -299,6 +336,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             //.delay( 0.2 )
             .skip( 1 )
             .map( { T( $0 ) } )
+            .filter( { from.value != $0 } )
             .drive( from )
             .disposed( by: dispBag );
     }
