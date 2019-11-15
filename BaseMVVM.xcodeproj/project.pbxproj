@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		50B7EA79C2D2A151AA95D941 /* Pods_BaseMVVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC73F19C218490FB9ADB4812 /* Pods_BaseMVVM.framework */; };
+		FB02A00E237EF7940042AE84 /* SBBaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB02A00D237EF7940042AE84 /* SBBaseTabBarController.swift */; };
 		FB061AF0230D39B300202907 /* BaseMVVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB061AE6230D39B300202907 /* BaseMVVM.framework */; };
 		FB061AF5230D39B300202907 /* BaseMVVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB061AF4230D39B300202907 /* BaseMVVMTests.swift */; };
 		FB061AF7230D39B300202907 /* BaseMVVM.h in Headers */ = {isa = PBXBuildFile; fileRef = FB061AE9230D39B300202907 /* BaseMVVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,6 +50,7 @@
 		98542F77A270387507298FFB /* Pods-BaseMVVM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseMVVM.debug.xcconfig"; path = "Target Support Files/Pods-BaseMVVM/Pods-BaseMVVM.debug.xcconfig"; sourceTree = "<group>"; };
 		CC73F19C218490FB9ADB4812 /* Pods_BaseMVVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaseMVVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EFABDFD4FCFA11D36601CC /* Pods-BaseMVVM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseMVVM.release.xcconfig"; path = "Target Support Files/Pods-BaseMVVM/Pods-BaseMVVM.release.xcconfig"; sourceTree = "<group>"; };
+		FB02A00D237EF7940042AE84 /* SBBaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBBaseTabBarController.swift; sourceTree = "<group>"; };
 		FB061AE6230D39B300202907 /* BaseMVVM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseMVVM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB061AE9230D39B300202907 /* BaseMVVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseMVVM.h; sourceTree = "<group>"; };
 		FB061AEA230D39B300202907 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				FB061B09230D452400202907 /* SBNavigationController.swift */,
 				FB061B03230D452300202907 /* SBBaseController.swift */,
 				FB061B0A230D452400202907 /* SBBaseTableController.swift */,
+				FB02A00D237EF7940042AE84 /* SBBaseTabBarController.swift */,
 				FB061B08230D452400202907 /* SBPreloaderController.swift */,
 			);
 			path = UI;
@@ -351,6 +354,7 @@
 			files = (
 				FB061B14230D452400202907 /* SBBaseTableController.swift in Sources */,
 				FB061B1E230D46E200202907 /* SBServiceFactoryProtocol.swift in Sources */,
+				FB02A00E237EF7940042AE84 /* SBBaseTabBarController.swift in Sources */,
 				FB061B32230D57F800202907 /* SBServiceBaseVM.swift in Sources */,
 				FB061B11230D452400202907 /* SBBindUIProtocol.swift in Sources */,
 				FB061B0E230D452400202907 /* SBMVVMHolderProtocol.swift in Sources */,
