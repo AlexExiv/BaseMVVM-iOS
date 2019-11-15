@@ -14,7 +14,7 @@ open class SBViewModel: SBBindProtocol
 {
     public enum Message
     {
-        case Close, Error( error: String ), Custom( tag: Int, userInfo: Any? ), Show( tag: Int, sender: Any? = nil )
+        case Close, Message( title: String, message: String ), Error( error: String ), Custom( tag: Int, userInfo: Any? ), Show( tag: Int, sender: Any? = nil )
     }
     
     private(set) weak var parent: SBViewModel?
@@ -49,6 +49,11 @@ open class SBViewModel: SBBindProtocol
     {
         rxScreenLoading.accept( false )
         rxMessages.accept( .Close )
+    }
+    
+    open func SendMessage( title: String = "", message: String = "" )
+    {
+        rxMessages.accept( .Message( title: title, message: message ) )
     }
     
     open func SendError( error: Error, hidePreloaders: Bool = true )

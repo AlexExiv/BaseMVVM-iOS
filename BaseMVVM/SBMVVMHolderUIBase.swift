@@ -47,6 +47,10 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
             let alert = UIAlertController.DialogText( title: NSLocalizedString( "Ошибка", comment: "" ), message: error )
             alert.Show( cntrl: self )
             
+        case .Message( let title, let message ):
+            let alert = UIAlertController.DialogText( title: title, message: message )
+            alert.Show( cntrl: self )
+            
         default:
             break
         }
