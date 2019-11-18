@@ -10,7 +10,8 @@ import UIKit
 
 open class SBNavigationController: UINavigationController, UINavigationControllerDelegate, SBMVVMHolderProtocol
 {
-    public var showRootBack = true;
+    @objc
+    open var showRootBack = true;
     
     override open func viewDidLoad()
     {
