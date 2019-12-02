@@ -10,7 +10,7 @@ import UIKit
 
 open class SBPreloaderView: UIView
 {
-    private var indicator: UIActivityIndicatorView? = nil;
+    public private(set) var indicator: UIActivityIndicatorView? = nil;
     
     public var animating: Bool
     {

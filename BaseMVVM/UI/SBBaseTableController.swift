@@ -110,6 +110,13 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
         view = UIView();
         view.backgroundColor = UIColor.white;
         view.addSubview( _tableView! );
+        
+        DidExchangedTableView()
+    }
+    
+    open func DidExchangedTableView()
+    {
+        
     }
     
     func UpdateConstaints( table2bottom bTable2Bottom: Bool = false )
