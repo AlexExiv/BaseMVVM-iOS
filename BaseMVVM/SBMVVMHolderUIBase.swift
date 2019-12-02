@@ -30,18 +30,28 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
         switch message
         {
         case .Close:
-            if let rPres = presentingViewController
+            if let nav = navigationController
             {
-                rPres.dismiss( animated: true, completion: nil );
-            }
-            else if let rNav = navigationController
-            {
-                rNav.popViewController( animated: true );
+                if nav.viewControllers.count == 1
+                {
+                    presentingViewController?.dismiss( animated: true, completion: nil )
+                }
+                else
+                {
+                    nav.popViewController( animated: true );
+                }
             }
             else
             {
                 dismiss( animated: true, completion: nil )
             }
+            
+        case .CloseScenario:
+            presentingViewController?.dismiss( animated: true, completion: nil )
+            
+        case .Close2Top:
+            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.dismiss( animated: true, completion: nil )
+            (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.popToRootViewController( animated: false )
             
         case .Error( let error ):
             let alert = UIAlertController.DialogText( title: NSLocalizedString( "Ошибка", comment: "" ), message: error )
