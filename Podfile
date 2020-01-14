@@ -7,3 +7,9 @@ target 'BaseMVVM' do
     pod 'RxCocoa',    '~> 5.0'
     pod 'RxRelay',    '~> 5.0'
 end
+
+target 'BaseMVVMTests' do
+    pod 'RxSwift',    '~> 5.0'
+    pod 'RxCocoa',    '~> 5.0'
+    pod 'RxRelay',    '~> 5.0'
+end
