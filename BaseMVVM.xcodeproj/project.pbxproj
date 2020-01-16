@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -38,6 +38,10 @@
 		FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */; };
 		FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */; };
 		FB1AAB64238C1B0500543878 /* SBObjectObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1AAB63238C1B0500543878 /* SBObjectObservableProtocol.swift */; };
+		FB2098F923CF33C000006EF5 /* SBApiClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098F823CF33C000006EF5 /* SBApiClientProtocol.swift */; };
+		FB2098FB23CF372C00006EF5 /* SBAlamofireApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */; };
+		FB2098FD23CF525200006EF5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FC23CF525200006EF5 /* String+Ext.swift */; };
+		FB2098FF23CF5F5700006EF5 /* StringExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +94,10 @@
 		FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtTests.swift; sourceTree = "<group>"; };
 		FB1AAB63238C1B0500543878 /* SBObjectObservableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBObjectObservableProtocol.swift; sourceTree = "<group>"; };
+		FB2098F823CF33C000006EF5 /* SBApiClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBApiClientProtocol.swift; sourceTree = "<group>"; };
+		FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBAlamofireApiClient.swift; sourceTree = "<group>"; };
+		FB2098FC23CF525200006EF5 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +167,7 @@
 				FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */,
 				FB061B17230D45B300202907 /* Podfile */,
 				FB061B01230D3DEE00202907 /* Ext */,
+				FB2098F723CF339B00006EF5 /* Repository */,
 				FB061B33230D58EC00202907 /* Service */,
 				FB061B02230D3DF700202907 /* Components */,
 				FB061B34230D590200202907 /* UI */,
@@ -183,6 +192,7 @@
 				FB061AF4230D39B300202907 /* BaseMVVMTests.swift */,
 				FB061AF6230D39B300202907 /* Info.plist */,
 				FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */,
+				FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */,
 			);
 			path = BaseMVVMTests;
 			sourceTree = "<group>";
@@ -190,6 +200,7 @@
 		FB061B01230D3DEE00202907 /* Ext */ = {
 			isa = PBXGroup;
 			children = (
+				FB2098FC23CF525200006EF5 /* String+Ext.swift */,
 				FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */,
 				FB061B1B230D460F00202907 /* UIAlertController+Ext.swift */,
 				FB061B25230D519800202907 /* UIViewController+Ext.swift */,
@@ -227,6 +238,15 @@
 				FB061B08230D452400202907 /* SBPreloaderController.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		FB2098F723CF339B00006EF5 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				FB2098F823CF33C000006EF5 /* SBApiClientProtocol.swift */,
+				FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -415,6 +435,8 @@
 				FB02A00E237EF7940042AE84 /* SBBaseTabBarController.swift in Sources */,
 				FB061B32230D57F800202907 /* SBServiceBaseVM.swift in Sources */,
 				FB061B11230D452400202907 /* SBBindUIProtocol.swift in Sources */,
+				FB2098F923CF33C000006EF5 /* SBApiClientProtocol.swift in Sources */,
+				FB2098FD23CF525200006EF5 /* String+Ext.swift in Sources */,
 				FB061B0E230D452400202907 /* SBMVVMHolderProtocol.swift in Sources */,
 				FB061B1A230D460600202907 /* SBPreloaderView.swift in Sources */,
 				FB061B1C230D460F00202907 /* UIAlertController+Ext.swift in Sources */,
@@ -423,6 +445,7 @@
 				FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */,
 				FB061B15230D452400202907 /* SBBindProtocol.swift in Sources */,
 				FB061B13230D452400202907 /* SBNavigationController.swift in Sources */,
+				FB2098FB23CF372C00006EF5 /* SBAlamofireApiClient.swift in Sources */,
 				FB061B12230D452400202907 /* SBPreloaderController.swift in Sources */,
 				FB061B0D230D452400202907 /* SBBaseController.swift in Sources */,
 				FB061B10230D452400202907 /* SBViewModel.swift in Sources */,
@@ -440,6 +463,7 @@
 			files = (
 				FB061AF5230D39B300202907 /* BaseMVVMTests.swift in Sources */,
 				FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */,
+				FB2098FF23CF5F5700006EF5 /* StringExtTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

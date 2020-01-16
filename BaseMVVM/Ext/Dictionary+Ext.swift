@@ -214,3 +214,14 @@ extension Dictionary where Key == String
         return ret
     }
 }
+
+extension Dictionary
+{
+    public mutating func Merge( src: [Key: Value] )
+    {
+        for (key, value) in src
+        {
+            self[key] = value;
+        }
+    }
+}
