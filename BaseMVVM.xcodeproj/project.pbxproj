@@ -37,7 +37,12 @@
 		FB061B36230D8A9200202907 /* SwiftMVVM-Rx-SOA.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */; };
 		FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */; };
 		FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */; };
-		FB1AAB64238C1B0500543878 /* SBObjectObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1AAB63238C1B0500543878 /* SBObjectObservableProtocol.swift */; };
+		FB1AAB64238C1B0500543878 /* SBEntityObservableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1AAB63238C1B0500543878 /* SBEntityObservableCollection.swift */; };
+		FB1BF88B23D88F2C00CCFA04 /* SBEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BF88A23D88F2C00CCFA04 /* SBEntity.swift */; };
+		FB1BF88D23D88F4600CCFA04 /* SBEntityObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BF88C23D88F4600CCFA04 /* SBEntityObservable.swift */; };
+		FB1BF88F23D88FDA00CCFA04 /* SBSingleObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BF88E23D88FDA00CCFA04 /* SBSingleObservable.swift */; };
+		FB1BF89123D88FFB00CCFA04 /* SBPaginatorObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BF89023D88FFB00CCFA04 /* SBPaginatorObservable.swift */; };
+		FB1BF89323D8931300CCFA04 /* SBEntityObservableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BF89223D8931300CCFA04 /* SBEntityObservableTests.swift */; };
 		FB2098F923CF33C000006EF5 /* SBApiClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098F823CF33C000006EF5 /* SBApiClientProtocol.swift */; };
 		FB2098FB23CF372C00006EF5 /* SBAlamofireApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */; };
 		FB2098FD23CF525200006EF5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FC23CF525200006EF5 /* String+Ext.swift */; };
@@ -93,7 +98,12 @@
 		FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SwiftMVVM-Rx-SOA.podspec"; sourceTree = SOURCE_ROOT; };
 		FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtTests.swift; sourceTree = "<group>"; };
-		FB1AAB63238C1B0500543878 /* SBObjectObservableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBObjectObservableProtocol.swift; sourceTree = "<group>"; };
+		FB1AAB63238C1B0500543878 /* SBEntityObservableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBEntityObservableCollection.swift; sourceTree = "<group>"; };
+		FB1BF88A23D88F2C00CCFA04 /* SBEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBEntity.swift; sourceTree = "<group>"; };
+		FB1BF88C23D88F4600CCFA04 /* SBEntityObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBEntityObservable.swift; sourceTree = "<group>"; };
+		FB1BF88E23D88FDA00CCFA04 /* SBSingleObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBSingleObservable.swift; sourceTree = "<group>"; };
+		FB1BF89023D88FFB00CCFA04 /* SBPaginatorObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBPaginatorObservable.swift; sourceTree = "<group>"; };
+		FB1BF89223D8931300CCFA04 /* SBEntityObservableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBEntityObservableTests.swift; sourceTree = "<group>"; };
 		FB2098F823CF33C000006EF5 /* SBApiClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBApiClientProtocol.swift; sourceTree = "<group>"; };
 		FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBAlamofireApiClient.swift; sourceTree = "<group>"; };
 		FB2098FC23CF525200006EF5 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
@@ -193,6 +203,7 @@
 				FB061AF6230D39B300202907 /* Info.plist */,
 				FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */,
 				FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */,
+				FB1BF89223D8931300CCFA04 /* SBEntityObservableTests.swift */,
 			);
 			path = BaseMVVMTests;
 			sourceTree = "<group>";
@@ -222,7 +233,11 @@
 				FB061B1D230D46E200202907 /* SBServiceFactoryProtocol.swift */,
 				FB061B21230D4E1600202907 /* SBAuthUserServiceProtocol.swift */,
 				FB061B2F230D55C700202907 /* SBDowloadServiceProtocol.swift */,
-				FB1AAB63238C1B0500543878 /* SBObjectObservableProtocol.swift */,
+				FB1BF88A23D88F2C00CCFA04 /* SBEntity.swift */,
+				FB1BF88C23D88F4600CCFA04 /* SBEntityObservable.swift */,
+				FB1BF88E23D88FDA00CCFA04 /* SBSingleObservable.swift */,
+				FB1BF89023D88FFB00CCFA04 /* SBPaginatorObservable.swift */,
+				FB1AAB63238C1B0500543878 /* SBEntityObservableCollection.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -431,16 +446,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB061B14230D452400202907 /* SBBaseTableController.swift in Sources */,
+				FB1BF89123D88FFB00CCFA04 /* SBPaginatorObservable.swift in Sources */,
 				FB061B1E230D46E200202907 /* SBServiceFactoryProtocol.swift in Sources */,
 				FB02A00E237EF7940042AE84 /* SBBaseTabBarController.swift in Sources */,
 				FB061B32230D57F800202907 /* SBServiceBaseVM.swift in Sources */,
 				FB061B11230D452400202907 /* SBBindUIProtocol.swift in Sources */,
 				FB2098F923CF33C000006EF5 /* SBApiClientProtocol.swift in Sources */,
+				FB1BF88F23D88FDA00CCFA04 /* SBSingleObservable.swift in Sources */,
 				FB2098FD23CF525200006EF5 /* String+Ext.swift in Sources */,
 				FB061B0E230D452400202907 /* SBMVVMHolderProtocol.swift in Sources */,
 				FB061B1A230D460600202907 /* SBPreloaderView.swift in Sources */,
 				FB061B1C230D460F00202907 /* UIAlertController+Ext.swift in Sources */,
-				FB1AAB64238C1B0500543878 /* SBObjectObservableProtocol.swift in Sources */,
+				FB1BF88B23D88F2C00CCFA04 /* SBEntity.swift in Sources */,
+				FB1AAB64238C1B0500543878 /* SBEntityObservableCollection.swift in Sources */,
+				FB1BF88D23D88F4600CCFA04 /* SBEntityObservable.swift in Sources */,
 				FB061B0F230D452400202907 /* SBBaseVM.swift in Sources */,
 				FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */,
 				FB061B15230D452400202907 /* SBBindProtocol.swift in Sources */,
@@ -463,6 +482,7 @@
 			files = (
 				FB061AF5230D39B300202907 /* BaseMVVMTests.swift in Sources */,
 				FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */,
+				FB1BF89323D8931300CCFA04 /* SBEntityObservableTests.swift in Sources */,
 				FB2098FF23CF5F5700006EF5 /* StringExtTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
