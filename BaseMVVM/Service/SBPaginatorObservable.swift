@@ -12,12 +12,28 @@ import RxRelay
 
 public let PAGINATOR_END = -1000
 
+public struct SBPageParams
+{
+    let page: Int
+    let perPage: Int
+    let refreshing: Bool
+    let first: Bool
+    
+    init( page: Int, perPage: Int, refreshing: Bool = false, first: Bool = false )
+    {
+        self.page = page
+        self.perPage = perPage
+        self.refreshing = refreshing
+        self.first = first
+    }
+}
+
 public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>, ObservableType
 {
     public typealias Element = [Entity]
     
     let rxPublish = BehaviorSubject<Element?>( value: nil )
-    let rxNext = PublishRelay<Int>()
+    let rxPage = PublishRelay<SBPageParams>()
 
     public private(set) var page = -1
     public private(set) var perPage = 30
@@ -32,16 +48,16 @@ public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>
         return entities ?? []
     }
         
-    public init( holder: SBEntityObservableCollection<Entity>, perPage: Int = 30, observeOn: ImmediateSchedulerType, fetch: @escaping (Int, Int) -> Single<Element> )
+    public init( holder: SBEntityObservableCollection<Entity>, perPage: Int = 30, observeOn: ImmediateSchedulerType, fetch: @escaping (SBPageParams) -> Single<Element> )
     {
         self.perPage = perPage
         super.init( holder: holder )
         
         weak var _self = self
-        rxNext
-            .filter { $0 >= 0 }
+        rxPage
+            .filter { $0.page >= 0 }
             .do( onNext: { _ in _self?.rxLoader.accept( true ) } )
-            .flatMapLatest( { fetch( $0, _self?.perPage ?? 30 ) } )
+            .flatMapLatest( { fetch( $0 ) } )
             .catchError
             {
                 _self?.rxError.accept( $0 )
@@ -54,7 +70,7 @@ public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>
             .bind( to: rxPublish )
             .disposed( by: dispBag )
         
-        Refresh()
+        rxPage.accept( SBPageParams( page: 0, perPage: perPage, first: true ) )
     }
     
     override func Update( source: String, entity: Entity )
@@ -89,14 +105,14 @@ public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>
     
     public func Next()
     {
-        rxNext.accept( page + 1 )
+        rxPage.accept( SBPageParams( page: page + 1, perPage: perPage ) )
     }
     
     public func Refresh()
     {
         page = -1
         rxPublish.onNext( nil )
-        Next()
+        rxPage.accept( SBPageParams( page: page + 1, perPage: perPage, refreshing: true ) )
     }
 
     private func Append( entities: [Entity] ) -> [Entity]

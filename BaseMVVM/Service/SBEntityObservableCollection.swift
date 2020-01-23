@@ -43,7 +43,7 @@ open class SBEntityObservableCollection<Entity: SBEntity>
         return SBSingleObservable<Entity>( holder: self, observeOn: queue, fetch: fetch )
     }
     
-    public func CreatePaginator( perPage: Int = 35, _ fetch: @escaping (Int, Int) -> Single<[Entity]> ) -> SBPaginatorObservable<Entity>
+    public func CreatePaginator( perPage: Int = 35, _ fetch: @escaping (SBPageParams) -> Single<[Entity]> ) -> SBPaginatorObservable<Entity>
     {
         return SBPaginatorObservable<Entity>( holder: self, perPage: perPage, observeOn: queue, fetch: fetch )
     }

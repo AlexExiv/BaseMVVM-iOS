@@ -41,7 +41,7 @@ class SBEntityObservableTests: XCTestCase
         XCTAssertEqual( f.id, "1" )
         XCTAssertEqual( f.value, "2" )
         
-        let pages = collection.CreatePaginator { _, _ in Single.just( [TestEnity( id: "1", value: "3" ), TestEnity( id: "2", value: "4" )] ) }
+        let pages = collection.CreatePaginator { _ in Single.just( [TestEnity( id: "1", value: "3" ), TestEnity( id: "2", value: "4" )] ) }
         let arr = try! pages
             .toBlocking()
             .first()!
