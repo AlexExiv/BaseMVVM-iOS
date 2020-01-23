@@ -14,10 +14,10 @@ public let PAGINATOR_END = -1000
 
 public struct SBPageParams
 {
-    let page: Int
-    let perPage: Int
-    let refreshing: Bool
-    let first: Bool
+    public let page: Int
+    public let perPage: Int
+    public let refreshing: Bool
+    public let first: Bool
     
     init( page: Int, perPage: Int, refreshing: Bool = false, first: Bool = false )
     {
