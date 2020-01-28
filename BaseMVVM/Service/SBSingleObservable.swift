@@ -13,12 +13,14 @@ import RxRelay
 public struct SBSingleParams<Extra>
 {
     public let refreshing: Bool
+    public let resetCache: Bool
     public let first: Bool
     public let extra: Extra?
     
-    init( refreshing: Bool = false, first: Bool = false, extra: Extra? = nil )
+    init( refreshing: Bool = false, resetCache: Bool = false, first: Bool = false, extra: Extra? = nil )
     {
         self.refreshing = refreshing
+        self.resetCache = resetCache
         self.first = first
         self.extra = extra
     }
@@ -28,7 +30,6 @@ public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservabl
 {
     public typealias Element = Entity
     
-    public let rxRefresh = PublishRelay<Extra?>()
     let _rxRefresh = PublishRelay<SBSingleParams<Extra>>()
     let rxPublish = BehaviorSubject<Entity?>( value: nil )
     
@@ -81,10 +82,10 @@ public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservabl
         }
     }
     
-    public func Refresh( extra: Extra? = nil )
+    public func Refresh( resetCache: Bool = false, extra: Extra? = nil )
     {
         self.extra = extra ?? self.extra
-        _rxRefresh.accept( SBSingleParams( refreshing: true, extra: self.extra ) )
+        _rxRefresh.accept( SBSingleParams( refreshing: true, resetCache: resetCache, extra: self.extra ) )
     }
     
     //MARK: - ObservableType
@@ -109,8 +110,8 @@ public typealias SBSingleObservable<Entity: SBEntity> = SBSingleObservableExtra<
 
 extension ObservableType
 {
-    public func bind<Entity: SBEntity>( refresh: SBSingleObservableExtra<Entity, Element> ) -> Disposable
+    public func bind<Entity: SBEntity>( refresh: SBSingleObservableExtra<Entity, Element>, resetCache: Bool = false ) -> Disposable
     {
-        return bind( to: refresh.rxRefresh )
+        return subscribe( onNext: { refresh.Refresh( resetCache: resetCache, extra: $0 ) } )
     }
 }
