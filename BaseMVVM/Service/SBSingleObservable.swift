@@ -10,26 +10,45 @@ import Foundation
 import RxSwift
 import RxRelay
 
-public class SBSingleObservable<Entity: SBEntity>: SBEntityObservable<Entity>, ObservableType
+public struct SBSingleParams<Extra>
+{
+    public let refreshing: Bool
+    public let first: Bool
+    public let extra: Extra?
+    
+    init( refreshing: Bool = false, first: Bool = false, extra: Extra? = nil )
+    {
+        self.refreshing = refreshing
+        self.first = first
+        self.extra = extra
+    }
+}
+
+public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservable<Entity>, ObservableType
 {
     public typealias Element = Entity
     
-    let rxRefresh = PublishRelay<Bool>()
+    public let rxRefresh = PublishRelay<Extra?>()
+    let _rxRefresh = PublishRelay<SBSingleParams<Extra>>()
     let rxPublish = BehaviorSubject<Entity?>( value: nil )
+    
+    public private(set) var extra: Extra? = nil
     
     public var entity: Entity?
     {
         return try! rxPublish.value()
     }
     
-    public init( holder: SBEntityObservableCollection<Entity>, observeOn: ImmediateSchedulerType, fetch: @escaping () -> Single<Entity> )
+    public init( holder: SBEntityObservableCollection<Entity>, extra: Extra? = nil, observeOn: ImmediateSchedulerType, fetch: @escaping (SBSingleParams<Extra>) -> Single<Entity> )
     {
+        self.extra = extra
+        
         super.init( holder: holder )
         
         weak var _self = self
-        rxRefresh
+        _rxRefresh
             .do( onNext: { _ in _self?.rxLoader.accept( true ) } )
-            .flatMapLatest { _ in fetch() }
+            .flatMapLatest { fetch( $0 ) }
             .catchError
             {
                 e -> Observable<Entity> in
@@ -43,7 +62,7 @@ public class SBSingleObservable<Entity: SBEntity>: SBEntityObservable<Entity>, O
             .bind( to: rxPublish )
             .disposed( by: dispBag )
         
-        Refresh()
+        _rxRefresh.accept( SBSingleParams( first: true, extra: extra ) )
     }
     
     override func Update( source: String, entity: Entity )
@@ -62,9 +81,10 @@ public class SBSingleObservable<Entity: SBEntity>: SBEntityObservable<Entity>, O
         }
     }
     
-    public func Refresh()
+    public func Refresh( extra: Extra? = nil )
     {
-        rxRefresh.accept( true )
+        self.extra = extra ?? self.extra
+        _rxRefresh.accept( SBSingleParams( refreshing: true, extra: self.extra ) )
     }
     
     //MARK: - ObservableType
@@ -82,5 +102,15 @@ public class SBSingleObservable<Entity: SBEntity>: SBEntityObservable<Entity>, O
             .filter { $0 != nil }
             .map { $0! }
             .asObservable()
+    }
+}
+
+public typealias SBSingleObservable<Entity: SBEntity> = SBSingleObservableExtra<Entity, SBEntityExtraParamsEmpty>
+
+extension ObservableType
+{
+    public func bind<Entity: SBEntity>( refresh: SBSingleObservableExtra<Entity, Element> ) -> Disposable
+    {
+        return bind( to: refresh.rxRefresh )
     }
 }

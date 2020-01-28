@@ -21,11 +21,16 @@ open class SBEntityObservableCollection<Entity: SBEntity>
     var sharedEntities = [SBEntityKey: Entity]()
     
     let queue: OperationQueueScheduler
-
+    
+    public convenience init( operationQueue: OperationQueue )
+    {
+        self.init( queue: OperationQueueScheduler( operationQueue: operationQueue ) )
+    }
+    
     public init( queue: OperationQueueScheduler )
     {
         self.queue = queue
-        queue.operationQueue.maxConcurrentOperationCount = 1
+        self.queue.operationQueue.maxConcurrentOperationCount = 1
     }
     
     func Add( object: SBEntityObservable<Entity> )
@@ -38,14 +43,24 @@ open class SBEntityObservableCollection<Entity: SBEntity>
         items.removeAll( where: { object.uuid == $0.ref?.uuid } )
     }
     
-    public func CreateSingle( _ fetch: @escaping () -> Single<Entity> ) -> SBSingleObservable<Entity>
+    public func CreateSingle( _ fetch: @escaping (SBSingleParams<SBEntityExtraParamsEmpty>) -> Single<Entity> ) -> SBSingleObservable<Entity>
     {
         return SBSingleObservable<Entity>( holder: self, observeOn: queue, fetch: fetch )
     }
     
-    public func CreatePaginator( perPage: Int = 35, _ fetch: @escaping (SBPageParams) -> Single<[Entity]> ) -> SBPaginatorObservable<Entity>
+    public func CreateSingleExtra<Extra>( extra: Extra? = nil, _ fetch: @escaping (SBSingleParams<Extra>) -> Single<Entity> ) -> SBSingleObservableExtra<Entity, Extra>
     {
-        return SBPaginatorObservable<Entity>( holder: self, perPage: perPage, observeOn: queue, fetch: fetch )
+        return SBSingleObservableExtra<Entity, Extra>( holder: self, extra: extra, observeOn: queue, fetch: fetch )
+    }
+    
+    public func CreatePaginator( perPage: Int = 35, _ fetch: @escaping (SBPageParams<SBEntityExtraParamsEmpty>) -> Single<[Entity]> ) -> SBPaginatorObservable<Entity>
+    {
+        return SBPaginatorObservableExtra<Entity, SBEntityExtraParamsEmpty>( holder: self, perPage: perPage, observeOn: queue, fetch: fetch )
+    }
+    
+    public func CreatePaginatorExtra<Extra>( extra: Extra? = nil, perPage: Int = 35, _ fetch: @escaping (SBPageParams<Extra>) -> Single<[Entity]> ) -> SBPaginatorObservableExtra<Entity, Extra>
+    {
+        return SBPaginatorObservableExtra<Entity, Extra>( holder: self, extra: extra, perPage: perPage, observeOn: queue, fetch: fetch )
     }
     
     public func RxRequestForUpdate( source: String = "", key: SBEntityKey, update: @escaping (Entity) -> Entity ) -> Single<Entity?>
@@ -86,6 +101,56 @@ open class SBEntityObservableCollection<Entity: SBEntity>
                         self?.sharedEntities[$0] = new
                         updArr.append( new )
                         updMap[$0] = new
+                    }
+                }
+                
+                self?.items.forEach { $0.ref?.Update( source: source, entities: updMap ) }
+                $0( .success( updArr ) )
+                return Disposables.create()
+            }
+            .observeOn( queue )
+            .subscribeOn( queue )
+    }
+    
+    public func RxRequestForUpdate( source: String = "", update: @escaping (Entity) -> Entity ) -> Single<[Entity]>
+    {
+        return RxRequestForUpdate( source: source, keys: sharedEntities.keys.map { $0 }, update: update )
+    }
+    
+    public func RxRequestForUpdate<EntityS: SBEntity>( source: String = "", entities: [SBEntityKey: EntityS], underPathes: [KeyPath<Entity, SBEntity>], update: @escaping (Entity, EntityS) -> Entity ) -> Single<[Entity]>
+    {
+        return Single.create
+            {
+                [weak self] in
+                
+                var updArr = [Entity](), updMap = [SBEntityKey: Entity]()
+                let Update: (Entity, EntityS) -> Void = {
+                    let new = update( $0, $1 )
+                    self?.sharedEntities[$0.key] = new
+                    updArr.append( new )
+                    updMap[$0.key] = new
+                }
+                self?.sharedEntities.forEach
+                {
+                    e0 in
+                    
+                    underPathes.forEach
+                    {
+                        if let v = e0.value[keyPath: $0] as? EntityS, let es = entities[v.key]
+                        {
+                            Update( e0.value, es )
+                        }
+                        else if let arr = e0.value[keyPath: $0] as? [EntityS]
+                        {
+                            arr.forEach
+                            {
+                                e1 in
+                                if let es = entities[e1.key]
+                                {
+                                    Update( e0.value, es )
+                                }
+                            }
+                        }
                     }
                 }
                 
@@ -141,5 +206,15 @@ open class SBEntityObservableCollection<Entity: SBEntity>
         
         entities.forEach { sharedEntities[$0.key] = $0 }
         items.forEach { $0.ref?.Update( source: source, entities: self.sharedEntities ) }
+    }
+    
+    public func DispatchUpdates<EntityS: SBEntity>( to: SBEntityObservableCollection, withPathes: [KeyPath<EntityS, SBEntity>] )
+    {
+        
+    }
+    
+    public func DispatchUpdates<V>( to: SBEntityObservableCollection, fromPathes: [KeyPath<Entity, V>], apply: (V) -> Entity )
+    {
+        
     }
 }

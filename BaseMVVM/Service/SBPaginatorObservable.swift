@@ -12,31 +12,35 @@ import RxRelay
 
 public let PAGINATOR_END = -1000
 
-public struct SBPageParams
+public struct SBPageParams<Extra>
 {
     public let page: Int
     public let perPage: Int
     public let refreshing: Bool
     public let first: Bool
+    public let extra: Extra?
     
-    init( page: Int, perPage: Int, refreshing: Bool = false, first: Bool = false )
+    init( page: Int, perPage: Int, refreshing: Bool = false, first: Bool = false, extra: Extra? = nil )
     {
         self.page = page
         self.perPage = perPage
         self.refreshing = refreshing
         self.first = first
+        self.extra = extra
     }
 }
 
-public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>, ObservableType
+public class SBPaginatorObservableExtra<Entity: SBEntity, Extra>: SBEntityObservable<Entity>, ObservableType
 {
     public typealias Element = [Entity]
     
+    public let rxRefresh = PublishRelay<Extra?>()
     let rxPublish = BehaviorSubject<Element?>( value: nil )
-    let rxPage = PublishRelay<SBPageParams>()
+    let rxPage = PublishRelay<SBPageParams<Extra>>()
 
     public private(set) var page = -1
     public private(set) var perPage = 30
+    public private(set) var extra: Extra? = nil
     
     public var entities: [Entity]?
     {
@@ -48,8 +52,9 @@ public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>
         return entities ?? []
     }
         
-    public init( holder: SBEntityObservableCollection<Entity>, perPage: Int = 30, observeOn: ImmediateSchedulerType, fetch: @escaping (SBPageParams) -> Single<Element> )
+    public init( holder: SBEntityObservableCollection<Entity>, extra: Extra? = nil, perPage: Int = 30, observeOn: ImmediateSchedulerType, fetch: @escaping (SBPageParams<Extra>) -> Single<Element> )
     {
+        self.extra = extra
         self.perPage = perPage
         super.init( holder: holder )
         
@@ -70,7 +75,12 @@ public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>
             .bind( to: rxPublish )
             .disposed( by: dispBag )
         
-        rxPage.accept( SBPageParams( page: 0, perPage: perPage, first: true ) )
+        rxRefresh
+            .observeOn( observeOn )
+            .subscribe( onNext: { _self?.Refresh( extra: $0 ) } )
+            .disposed( by: dispBag )
+        
+        rxPage.accept( SBPageParams( page: 0, perPage: perPage, first: true, extra: extra ) )
     }
     
     override func Update( source: String, entity: Entity )
@@ -105,14 +115,15 @@ public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>
     
     public func Next()
     {
-        rxPage.accept( SBPageParams( page: page + 1, perPage: perPage ) )
+        rxPage.accept( SBPageParams( page: page + 1, perPage: perPage, extra: extra ) )
     }
     
-    public func Refresh()
+    public func Refresh( extra: Extra? = nil )
     {
+        self.extra = extra ?? self.extra
         page = -1
-        rxPublish.onNext( nil )
-        rxPage.accept( SBPageParams( page: page + 1, perPage: perPage, refreshing: true ) )
+        rxPublish.onNext( [] )
+        rxPage.accept( SBPageParams( page: page + 1, perPage: perPage, refreshing: true, extra: self.extra ) )
     }
 
     private func Append( entities: [Entity] ) -> [Entity]
@@ -138,5 +149,15 @@ public class SBPaginatorObservable<Entity: SBEntity>: SBEntityObservable<Entity>
             .filter { $0 != nil }
             .map { $0! }
             .asObservable()
+    }
+}
+
+public typealias SBPaginatorObservable<Entity: SBEntity> = SBPaginatorObservableExtra<Entity, SBEntityExtraParamsEmpty>
+
+extension ObservableType
+{
+    public func bind<Entity: SBEntity>( refresh: SBPaginatorObservableExtra<Entity, Element> ) -> Disposable
+    {
+        return bind( to: refresh.rxRefresh )
     }
 }

@@ -10,10 +10,16 @@ import Foundation
 import RxSwift
 import RxRelay
 
+public struct SBEntityExtraParamsEmpty
+{
+    
+}
+
 public class SBEntityObservable<Entity: SBEntity>
 {
     let rxLoader = BehaviorRelay<Bool>( value: false )
     let rxError = PublishRelay<Error>()
+    
     let dispBag = DisposeBag()
     
     public let uuid = UUID().uuidString
@@ -30,17 +36,7 @@ public class SBEntityObservable<Entity: SBEntity>
         collection?.Remove( object: self )
         print( "EntityObservable has been deleted. UUID - \(uuid)" )
     }
-    
-    public func Bind( loader: BehaviorRelay<Bool> )
-    {
-        rxLoader.bind( to: loader ).disposed( by: dispBag )
-    }
-    
-    public func Bind( error: PublishRelay<Error> )
-    {
-        rxError.bind( to: error ).disposed( by: dispBag )
-    }
-    
+
     func Update( source: String, entity: Entity )
     {
         
@@ -49,5 +45,18 @@ public class SBEntityObservable<Entity: SBEntity>
     func Update( source: String, entities: [SBEntityKey: Entity] )
     {
         
+    }
+}
+
+extension SBEntityObservable
+{
+    public func bind( loader: BehaviorRelay<Bool> ) -> Disposable
+    {
+        return rxLoader.bind( to: loader )
+    }
+    
+    public func bind( error: PublishRelay<Error> ) -> Disposable
+    {
+        return rxError.bind( to: error )
     }
 }

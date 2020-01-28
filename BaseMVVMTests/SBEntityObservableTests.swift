@@ -28,16 +28,29 @@ struct TestEnity: SBEntity
     }
 }
 
+struct ExtraParams
+{
+    let test: String
+}
+
+
 class SBEntityObservableTests: XCTestCase
 {
     func test()
     {
         let collection = SBEntityObservableCollection<TestEnity>( queue: OperationQueueScheduler( operationQueue: OperationQueue() ) )
-        let single = collection.CreateSingle { Single.just( TestEnity( id: "1", value: "2" ) ) }
+        let single = collection.CreateSingle { _ in Single.just( TestEnity( id: "1", value: "2" ) ) }
         let f = try! single
             .toBlocking()
             .first()!
-        
+        /*
+        let kp = \TestEnity.id
+        let p = f[keyPath: kp]
+        f[keyPath: kp] = "23"
+        let m = Mirror( reflecting: f )
+        print( "\(m.children)" )
+        m.children.forEach( { print( "\($0.label) \($0.value)" ) } )
+        */
         XCTAssertEqual( f.id, "1" )
         XCTAssertEqual( f.value, "2" )
         
@@ -135,5 +148,60 @@ class SBEntityObservableTests: XCTestCase
         
         XCTAssertEqual( f5.id, "1" )
         XCTAssertEqual( f5.value, "3" )
+    }
+    
+    func testExtra()
+    {
+        let collection = SBEntityObservableCollection<TestEnity>( queue: OperationQueueScheduler( operationQueue: OperationQueue() ) )
+        let single = collection.CreateSingleExtra( extra: ExtraParams( test: "test" ) )
+        {
+            if $0.first
+            {
+                XCTAssertEqual( $0.extra!.test, "test" )
+            }
+            else
+            {
+                XCTAssertEqual( $0.extra!.test, "test2" )
+            }
+            
+            return Single.just( TestEnity( id: "1", value: "2" ) )
+            
+        }
+        
+        _ = try! single
+            .toBlocking()
+            .first()!
+        
+        single.Refresh( extra: ExtraParams( test: "test2" ) )
+        
+        _ = try! single
+            .toBlocking()
+            .first()!
+        
+        
+        let pages = collection.CreatePaginatorExtra( extra: ExtraParams( test: "test" ) )
+        {
+            if $0.first
+            {
+                XCTAssertEqual( $0.extra!.test, "test" )
+            }
+            else
+            {
+                XCTAssertEqual( $0.extra!.test, "test2" )
+            }
+            
+            return Single.just( [TestEnity( id: "1", value: "3" ), TestEnity( id: "2", value: "4" )] )
+            
+        }
+        
+        _ = try! pages
+            .toBlocking()
+            .first()!
+        
+        pages.Refresh( extra: ExtraParams( test: "test2" ) )
+        
+        _ = try! pages
+            .toBlocking()
+            .first()!
     }
 }
