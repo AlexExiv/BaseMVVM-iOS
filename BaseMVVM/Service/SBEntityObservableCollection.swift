@@ -21,6 +21,7 @@ open class SBEntityObservableCollection<Entity: SBEntity>
     var sharedEntities = [SBEntityKey: Entity]()
     
     let queue: OperationQueueScheduler
+    let dispBag = DisposeBag()
     
     public convenience init( operationQueue: OperationQueue )
     {
@@ -226,5 +227,37 @@ open class SBEntityObservableCollection<Entity: SBEntity>
     public func DispatchUpdates<V>( to: SBEntityObservableCollection, fromPathes: [KeyPath<Entity, V>], apply: (V) -> Entity )
     {
         
+    }
+    
+    public func Refresh( resetCache: Bool = false )
+    {
+        Single<Bool>.create
+            {
+                [weak self] in
+                
+                self?._Refresh( resetCache: resetCache )
+                $0( .success( true ) )
+                
+                return Disposables.create()
+            }
+            .subscribeOn( queue )
+            .observeOn( queue )
+            .subscribe()
+            .disposed( by: dispBag )
+    }
+    
+    func _Refresh( resetCache: Bool = false )
+    {
+        assert( queue.operationQueue == OperationQueue.current, "_Refresh can be called only from the specified in the constructor OperationQueue" )
+        items.forEach { $0.ref?.RefreshData( resetCache: resetCache ) }
+    }
+}
+
+extension ObservableType
+{
+    func bind<Entity: SBEntity>( refresh: SBEntityObservableCollection<Entity>, resetCache: Bool = false ) -> Disposable
+    {
+        return observeOn( refresh.queue )
+            .subscribe( onNext: { _ in refresh._Refresh( resetCache: resetCache ) } )
     }
 }

@@ -46,6 +46,11 @@ public class SBEntityObservable<Entity: SBEntity>
     {
         
     }
+    
+    func RefreshData( resetCache: Bool )
+    {
+        
+    }
 }
 
 extension SBEntityObservable

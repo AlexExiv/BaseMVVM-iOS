@@ -119,6 +119,11 @@ public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservabl
         started = true
     }
     
+    override func RefreshData( resetCache: Bool )
+    {
+        _Refresh( resetCache: resetCache )
+    }
+    
     //MARK: - ObservableType
     public func subscribe<Observer: ObserverType>( _ observer: Observer ) -> Disposable where Observer.Element == Element
     {

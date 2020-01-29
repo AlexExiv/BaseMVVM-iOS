@@ -149,7 +149,12 @@ public class SBArrayObservableExtra<Entity: SBEntity, Extra>: SBEntityObservable
         rxPage.accept( SBPageParams( page: page + 1, perPage: perPage, refreshing: true, resetCache: resetCache, first: !started, extra: self.extra ) )
         started = true
     }
-
+    
+    override func RefreshData( resetCache: Bool )
+    {
+        _Refresh( resetCache: resetCache )
+    }
+    
     func Append( entities: [Entity] ) -> [Entity]
     {
         assert( queue.operationQueue == OperationQueue.current, "Append can be updated only from the specified in the constructor OperationQueue" )
