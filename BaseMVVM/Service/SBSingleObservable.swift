@@ -30,18 +30,21 @@ public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservabl
 {
     public typealias Element = Entity
     
+    let queue: OperationQueueScheduler
     let _rxRefresh = PublishRelay<SBSingleParams<Extra>>()
     let rxPublish = BehaviorSubject<Entity?>( value: nil )
     
     public private(set) var extra: Extra? = nil
+    var started = false
     
     public var entity: Entity?
     {
         return try! rxPublish.value()
     }
     
-    public init( holder: SBEntityObservableCollection<Entity>, extra: Extra? = nil, observeOn: ImmediateSchedulerType, fetch: @escaping (SBSingleParams<Extra>) -> Single<Entity> )
+    init( holder: SBEntityObservableCollection<Entity>, extra: Extra? = nil, start: Bool = true, observeOn: OperationQueueScheduler, fetch: @escaping (SBSingleParams<Extra>) -> Single<Entity> )
     {
+        self.queue = observeOn
         self.extra = extra
         
         super.init( holder: holder )
@@ -63,11 +66,17 @@ public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservabl
             .bind( to: rxPublish )
             .disposed( by: dispBag )
         
-        _rxRefresh.accept( SBSingleParams( first: true, extra: extra ) )
+        if start
+        {
+            started = true
+            _rxRefresh.accept( SBSingleParams( first: true, extra: extra ) )
+        }
     }
     
     override func Update( source: String, entity: Entity )
     {
+        assert( queue.operationQueue == OperationQueue.current, "Single observable can be updated only from the same queue with the parent collection" )
+        
         if let key = self.entity?.key, key == entity.key, source != uuid
         {
             rxPublish.onNext( entity )
@@ -76,6 +85,8 @@ public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservabl
     
     override func Update( source: String, entities: [SBEntityKey: Entity] )
     {
+        assert( queue.operationQueue == OperationQueue.current, "Single observable can be updated only from the same queue with the parent collection" )
+        
         if let key = entity?.key, let entity = entities[key], source != uuid
         {
             rxPublish.onNext( entity )
@@ -84,8 +95,28 @@ public class SBSingleObservableExtra<Entity: SBEntity, Extra>: SBEntityObservabl
     
     public func Refresh( resetCache: Bool = false, extra: Extra? = nil )
     {
+        Single<Bool>.create
+            {
+                [weak self] in
+                
+                self?._Refresh( resetCache: resetCache, extra: extra )
+                $0( .success( true ) )
+                
+                return Disposables.create()
+            }
+            .subscribeOn( queue )
+            .observeOn( queue )
+            .subscribe()
+            .disposed( by: dispBag )
+    }
+    
+    public func _Refresh( resetCache: Bool = false, extra: Extra? = nil )
+    {
+        assert( queue.operationQueue == OperationQueue.current, "_Refresh can be updated only from the specified in the constructor OperationQueue" )
+        
         self.extra = extra ?? self.extra
-        _rxRefresh.accept( SBSingleParams( refreshing: true, resetCache: resetCache, extra: self.extra ) )
+        _rxRefresh.accept( SBSingleParams( refreshing: true, resetCache: resetCache, first: !started, extra: self.extra ) )
+        started = true
     }
     
     //MARK: - ObservableType
@@ -112,6 +143,7 @@ extension ObservableType
 {
     public func bind<Entity: SBEntity>( refresh: SBSingleObservableExtra<Entity, Element>, resetCache: Bool = false ) -> Disposable
     {
-        return subscribe( onNext: { refresh.Refresh( resetCache: resetCache, extra: $0 ) } )
+        return observeOn( refresh.queue )
+            .subscribe( onNext: { refresh._Refresh( resetCache: resetCache, extra: $0 ) } )
     }
 }

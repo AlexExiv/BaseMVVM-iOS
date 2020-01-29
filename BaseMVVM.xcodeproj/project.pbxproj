@@ -37,6 +37,7 @@
 		FB061B36230D8A9200202907 /* SwiftMVVM-Rx-SOA.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */; };
 		FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */; };
 		FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */; };
+		FB17A75A23E17A71006B3035 /* SBArrayObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17A75923E17A71006B3035 /* SBArrayObservable.swift */; };
 		FB1AAB64238C1B0500543878 /* SBEntityObservableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1AAB63238C1B0500543878 /* SBEntityObservableCollection.swift */; };
 		FB1BF88B23D88F2C00CCFA04 /* SBEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BF88A23D88F2C00CCFA04 /* SBEntity.swift */; };
 		FB1BF88D23D88F4600CCFA04 /* SBEntityObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1BF88C23D88F4600CCFA04 /* SBEntityObservable.swift */; };
@@ -98,6 +99,7 @@
 		FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SwiftMVVM-Rx-SOA.podspec"; sourceTree = SOURCE_ROOT; };
 		FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtTests.swift; sourceTree = "<group>"; };
+		FB17A75923E17A71006B3035 /* SBArrayObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBArrayObservable.swift; sourceTree = "<group>"; };
 		FB1AAB63238C1B0500543878 /* SBEntityObservableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBEntityObservableCollection.swift; sourceTree = "<group>"; };
 		FB1BF88A23D88F2C00CCFA04 /* SBEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBEntity.swift; sourceTree = "<group>"; };
 		FB1BF88C23D88F4600CCFA04 /* SBEntityObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBEntityObservable.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				FB1BF88A23D88F2C00CCFA04 /* SBEntity.swift */,
 				FB1BF88C23D88F4600CCFA04 /* SBEntityObservable.swift */,
 				FB1BF88E23D88FDA00CCFA04 /* SBSingleObservable.swift */,
+				FB17A75923E17A71006B3035 /* SBArrayObservable.swift */,
 				FB1BF89023D88FFB00CCFA04 /* SBPaginatorObservable.swift */,
 				FB1AAB63238C1B0500543878 /* SBEntityObservableCollection.swift */,
 			);
@@ -460,6 +463,7 @@
 				FB1BF88B23D88F2C00CCFA04 /* SBEntity.swift in Sources */,
 				FB1AAB64238C1B0500543878 /* SBEntityObservableCollection.swift in Sources */,
 				FB1BF88D23D88F4600CCFA04 /* SBEntityObservable.swift in Sources */,
+				FB17A75A23E17A71006B3035 /* SBArrayObservable.swift in Sources */,
 				FB061B0F230D452400202907 /* SBBaseVM.swift in Sources */,
 				FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */,
 				FB061B15230D452400202907 /* SBBindProtocol.swift in Sources */,

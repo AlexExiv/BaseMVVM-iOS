@@ -43,24 +43,34 @@ open class SBEntityObservableCollection<Entity: SBEntity>
         items.removeAll( where: { object.uuid == $0.ref?.uuid } )
     }
     
-    public func CreateSingle( _ fetch: @escaping (SBSingleParams<SBEntityExtraParamsEmpty>) -> Single<Entity> ) -> SBSingleObservable<Entity>
+    public func CreateSingle( start: Bool = true, _ fetch: @escaping (SBSingleParams<SBEntityExtraParamsEmpty>) -> Single<Entity> ) -> SBSingleObservable<Entity>
     {
-        return SBSingleObservable<Entity>( holder: self, observeOn: queue, fetch: fetch )
+        return SBSingleObservable<Entity>( holder: self, start: start, observeOn: queue, fetch: fetch )
     }
     
-    public func CreateSingleExtra<Extra>( extra: Extra? = nil, _ fetch: @escaping (SBSingleParams<Extra>) -> Single<Entity> ) -> SBSingleObservableExtra<Entity, Extra>
+    public func CreateSingleExtra<Extra>( extra: Extra? = nil, start: Bool = true, _ fetch: @escaping (SBSingleParams<Extra>) -> Single<Entity> ) -> SBSingleObservableExtra<Entity, Extra>
     {
-        return SBSingleObservableExtra<Entity, Extra>( holder: self, extra: extra, observeOn: queue, fetch: fetch )
+        return SBSingleObservableExtra<Entity, Extra>( holder: self, extra: extra, start: start, observeOn: queue, fetch: fetch )
     }
     
-    public func CreatePaginator( perPage: Int = 35, _ fetch: @escaping (SBPageParams<SBEntityExtraParamsEmpty>) -> Single<[Entity]> ) -> SBPaginatorObservable<Entity>
+    public func CreateArray( start: Bool = true, _ fetch: @escaping (SBPageParams<SBEntityExtraParamsEmpty>) -> Single<[Entity]> ) -> SBArrayObservable<Entity>
     {
-        return SBPaginatorObservableExtra<Entity, SBEntityExtraParamsEmpty>( holder: self, perPage: perPage, observeOn: queue, fetch: fetch )
+        return SBArrayObservableExtra<Entity, SBEntityExtraParamsEmpty>( holder: self, start: start, observeOn: queue, fetch: fetch )
     }
     
-    public func CreatePaginatorExtra<Extra>( extra: Extra? = nil, perPage: Int = 35, _ fetch: @escaping (SBPageParams<Extra>) -> Single<[Entity]> ) -> SBPaginatorObservableExtra<Entity, Extra>
+    public func CreateArrayExtra<Extra>( extra: Extra? = nil, start: Bool = true, _ fetch: @escaping (SBPageParams<Extra>) -> Single<[Entity]> ) -> SBArrayObservableExtra<Entity, Extra>
     {
-        return SBPaginatorObservableExtra<Entity, Extra>( holder: self, extra: extra, perPage: perPage, observeOn: queue, fetch: fetch )
+        return SBArrayObservableExtra<Entity, Extra>( holder: self, extra: extra, start: start, observeOn: queue, fetch: fetch )
+    }
+    
+    public func CreatePaginator( perPage: Int = 35, start: Bool = true, _ fetch: @escaping (SBPageParams<SBEntityExtraParamsEmpty>) -> Single<[Entity]> ) -> SBPaginatorObservable<Entity>
+    {
+        return SBPaginatorObservableExtra<Entity, SBEntityExtraParamsEmpty>( holder: self, perPage: perPage, start: start, observeOn: queue, fetch: fetch )
+    }
+    
+    public func CreatePaginatorExtra<Extra>( extra: Extra? = nil, perPage: Int = 35, start: Bool = true, _ fetch: @escaping (SBPageParams<Extra>) -> Single<[Entity]> ) -> SBPaginatorObservableExtra<Entity, Extra>
+    {
+        return SBPaginatorObservableExtra<Entity, Extra>( holder: self, extra: extra, perPage: perPage, start: start, observeOn: queue, fetch: fetch )
     }
     
     public func RxRequestForUpdate( source: String = "", key: SBEntityKey, update: @escaping (Entity) -> Entity ) -> Single<Entity?>
@@ -194,7 +204,7 @@ open class SBEntityObservableCollection<Entity: SBEntity>
     
     open func Update( source: String = "", entity: Entity )
     {
-        assert( queue.operationQueue == OperationQueue.current, "Observable objects collestion can be updated only from the specified in the constructor OperationQueue" )
+        assert( queue.operationQueue == OperationQueue.current, "Observable objects collection can be updated only from the specified in the constructor OperationQueue" )
         
         sharedEntities[entity.key] = entity
         items.forEach { $0.ref?.Update( source: source, entity: entity ) }
@@ -202,7 +212,7 @@ open class SBEntityObservableCollection<Entity: SBEntity>
     
     open func Update( source: String = "", entities: [Entity] )
     {
-        assert( queue.operationQueue == OperationQueue.current, "Observable objects collestion can be updated only from the specified in the constructor OperationQueue" )
+        assert( queue.operationQueue == OperationQueue.current, "Observable objects collection can be updated only from the specified in the constructor OperationQueue" )
         
         entities.forEach { sharedEntities[$0.key] = $0 }
         items.forEach { $0.ref?.Update( source: source, entities: self.sharedEntities ) }
