@@ -21,10 +21,12 @@ class SBAlamofireApiClient: SBApiClientProtocol
     var deviceInfoProvider: SBApiDeviceInfoProvider? = nil
     
     let baseURL: String
+    let defaultEncoding: ParameterEncoding
     
-    init( baseURL: String )
+    init( baseURL: String, defaultEncoding: ParameterEncoding = URLEncoding.default )
     {
         self.baseURL = baseURL
+        self.defaultEncoding = defaultEncoding
     }
     
     func RegisterProvider( user: SBApiUserInfoProvider )
@@ -89,7 +91,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 }
                 #endif
                 
-                let rReq = Alamofire.request( sURL, method: _method, parameters: params, headers: rFullHeaders )
+                let rReq = Alamofire.request( sURL, method: _method, parameters: params, encoding: self_.defaultEncoding, headers: rFullHeaders )
                     .responseJSON( completionHandler:
                         {
                             (response) in
