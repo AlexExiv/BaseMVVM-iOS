@@ -19,3 +19,7 @@ target 'BaseMVVMTests' do
     pod 'RxBlocking', '~> 5.0'
     pod 'RxTest', '~> 5.0'
 end
+
+target 'Examples' do
+    shared_pods
+end
