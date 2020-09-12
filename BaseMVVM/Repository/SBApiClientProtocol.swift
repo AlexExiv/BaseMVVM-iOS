@@ -42,7 +42,7 @@ public typealias ErrorDispatcher = (Int, JsonWrapper) -> String
 
 public enum HTTPMethod: String
 {
-    case get = "GET", post = "POST", put = "PUT", PATCH = "PATCH", header = "HEADER"
+    case get = "GET", post = "POST", put = "PUT", patch = "PATCH", delete = "DELETE", header = "HEADER"
 }
 
 public let ERROR_MESSAGE_KEY = "ERROR_MESSAGE_KEY"
@@ -66,12 +66,4 @@ public protocol SBApiClientProtocol
     func RxDownload( path: String ) -> Single<URL?>
     func RxDownload( path: String, params: [String: Any]? ) -> Single<URL?>
     func RxDownload( path: String, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
-}
-
-extension SBApiClientProtocol
-{
-    public func CreateAlamofire( baseURL: String ) -> SBApiClientProtocol
-    {
-        return SBAlamofireApiClient( baseURL: baseURL )
-    }
 }
