@@ -67,3 +67,9 @@ public protocol SBApiClientProtocol
     func RxDownload( path: String, params: [String: Any]? ) -> Single<URL?>
     func RxDownload( path: String, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
 }
+
+
+public struct SBApiClientFactory
+{
+    
+}
