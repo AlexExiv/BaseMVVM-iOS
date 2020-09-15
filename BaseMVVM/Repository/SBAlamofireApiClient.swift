@@ -10,9 +10,9 @@ import Foundation
 import Alamofire
 import RxSwift
 
-extension SBApiClientProtocol
+public extension SBApiClientProtocol
 {
-    public func CreateAlamofire( baseURL: String, defaultEncoding: ParameterEncoding = URLEncoding.default ) -> SBApiClientProtocol
+    static func CreateAlamofire( baseURL: String, defaultEncoding: ParameterEncoding = URLEncoding.default ) -> SBApiClientProtocol
     {
         return SBAlamofireApiClient( baseURL: baseURL, defaultEncoding: defaultEncoding )
     }
