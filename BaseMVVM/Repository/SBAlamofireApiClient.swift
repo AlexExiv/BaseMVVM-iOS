@@ -54,6 +54,11 @@ class SBAlamofireApiClient: SBApiClientProtocol
         return RxJSON( path: path, method: .get, params: nil )
     }
     
+    func RxJSON( path: String, params: [String: Any]? ) -> Single<JsonWrapper>
+    {
+        return RxJSON( path: path, method: .get, params: params, headers: nil )
+    }
+    
     func RxJSON( path: String, method: HTTPMethod, params: [String: Any]? ) -> Single<JsonWrapper>
     {
         return RxJSON( path: path, method: method, params: params, headers: nil )
@@ -61,7 +66,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
     
     func RxJSON( path: String, method: HTTPMethod, params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
     {
-        let _method = Alamofire.HTTPMethod( rawValue: method.rawValue )!
+        let _method = method == .deleteBody ? .delete : Alamofire.HTTPMethod( rawValue: method.rawValue )!
         return Single.create( subscribe:
         {
             [weak self] (subs) -> Disposable in
@@ -98,8 +103,8 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     print( "PARAMETERS - \(params)" );
                 }
                 #endif
-                
-                let rReq = Alamofire.request( sURL, method: _method, parameters: params, encoding: self_.defaultEncoding, headers: rFullHeaders )
+                let encoding = (method == .get || method == .delete) ? URLEncoding.default : self_.defaultEncoding
+                let rReq = Alamofire.request( sURL, method: _method, parameters: params, encoding: encoding, headers: rFullHeaders )
                     .responseJSON( completionHandler:
                         {
                             (response) in

@@ -42,7 +42,7 @@ public typealias ErrorDispatcher = (Int, JsonWrapper) -> String
 
 public enum HTTPMethod: String
 {
-    case get = "GET", post = "POST", put = "PUT", patch = "PATCH", delete = "DELETE", header = "HEADER"
+    case get = "GET", post = "POST", put = "PUT", patch = "PATCH", delete = "DELETE", deleteBody = "DELETE_BODY", header = "HEADER"
 }
 
 public let ERROR_MESSAGE_KEY = "ERROR_MESSAGE_KEY"
@@ -58,6 +58,7 @@ public protocol SBApiClientProtocol
     func RegisterProvider( device: SBApiDeviceInfoProvider )
     
     func RxJSON( path: String ) -> Single<JsonWrapper>
+    func RxJSON( path: String, params: [String: Any]? ) -> Single<JsonWrapper>
     func RxJSON( path: String, method: HTTPMethod, params: [String: Any]? ) -> Single<JsonWrapper>
     func RxJSON( path: String, method: HTTPMethod, params: [String: Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
     
@@ -67,7 +68,6 @@ public protocol SBApiClientProtocol
     func RxDownload( path: String, params: [String: Any]? ) -> Single<URL?>
     func RxDownload( path: String, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
 }
-
 
 public struct SBApiClientFactory
 {
