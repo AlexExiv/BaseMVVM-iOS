@@ -190,7 +190,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
         updateViewConstraints()
     }
     
-    public func Add( header: UIView, height: CGFloat, table2bottom: Bool = false )
+    public func Add( header: UIView, height: CGFloat )
     {
         headerView = header
         headerHeight = height

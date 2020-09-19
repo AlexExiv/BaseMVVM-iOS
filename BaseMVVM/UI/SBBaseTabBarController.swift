@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-open class SBBaseTabBarController<VM: SBViewModel>: UITabBarController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
+open class SBBaseTabBarController<VM: SBViewModel & SBTabViewModel>: UITabBarController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
 {
     public var preloaderView: SBPreloaderView!
     public var screenPreloaderCntrl: SBPreloaderController!
@@ -25,6 +25,7 @@ open class SBBaseTabBarController<VM: SBViewModel>: UITabBarController, SBMVVMHo
     {
         super.viewDidLoad()
         isInitRx = isInitRx || InvokeInitRx( b: viewModel != nil )
+        BindTabViewModels()
     }
     
     override open func viewWillAppear( _ animated: Bool )
@@ -39,6 +40,12 @@ open class SBBaseTabBarController<VM: SBViewModel>: UITabBarController, SBMVVMHo
         messagesDisp?.dispose()
     }
     
+    open override func setViewControllers( _ viewControllers: [UIViewController]?, animated: Bool )
+    {
+        super.setViewControllers( viewControllers, animated: animated )
+        BindTabViewModels()
+    }
+    
     //MARK: - MVVM
     open func InitRx()
     {
@@ -49,6 +56,25 @@ open class SBBaseTabBarController<VM: SBViewModel>: UITabBarController, SBMVVMHo
     {
         viewModel = (vm as! VM)
         isInitRx = isInitRx || InvokeInitRx( b: isViewLoaded )
+    }
+    
+    public func BindTabVM( i: Int, id: String )
+    {
+        (viewControllers?[i] as? SBMVVMHolderProtocol)?.BindVM( vm: viewModel.GetChildVM( id: id ) )
+    }
+    
+    public func BindTabVM( vms: [SBViewModel] )
+    {
+        if let vcs = viewControllers
+        {
+            precondition( vms.count == vcs.count, "The number of tabs view models is not equals to the number of view controllers" )
+            vcs.enumerated().forEach { ($0.element as? SBMVVMHolderProtocol)?.BindVM( vm: vms[$0.offset] ) }
+        }
+    }
+    
+    public func BindTabVM( vms: [Int: SBViewModel] )
+    {
+        viewControllers?.forEach { ($0 as? SBMVVMHolderProtocol)?.BindVM( vm: vms[$0.tabBarItem.tag]! ) }
     }
     
     open func DispatchMessage( message: SBViewModel.Message )
@@ -64,6 +90,22 @@ open class SBBaseTabBarController<VM: SBViewModel>: UITabBarController, SBMVVMHo
     open func CreateScreenPreloaderCntrl()
     {
         screenPreloaderCntrl = SBPreloaderController.Create()
+    }
+    
+    func BindTabViewModels()
+    {
+        if let tm = viewModel.tabViewModelsMap
+        {
+            BindTabVM( vms: tm )
+        }
+        else if let ta = viewModel.tabViewModelsArray
+        {
+            BindTabVM( vms: ta )
+        }
+        else
+        {
+            preconditionFailure( "The view model \(viewModel.debugDescription) is not implementing children view models" )
+        }
     }
     
     //MARK: - SEGUE

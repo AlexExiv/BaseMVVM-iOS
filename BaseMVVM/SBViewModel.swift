@@ -94,3 +94,15 @@ open class SBViewModel: SBBindProtocol
         rxMessages.accept( .Custom( tag: tag, userInfo: userInfo ) )
     }
 }
+
+public protocol SBTabViewModel
+{
+    var tabViewModelsMap: [Int: SBViewModel]? { get }
+    var tabViewModelsArray: [SBViewModel]? { get }
+}
+
+public extension SBTabViewModel
+{
+    var tabViewModelsMap: [Int: SBViewModel]? { nil }
+    var tabViewModelsArray: [SBViewModel]? { nil }
+}
