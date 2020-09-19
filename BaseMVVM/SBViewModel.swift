@@ -23,7 +23,7 @@ open class SBViewModel: SBBindProtocol
     
     public let rxIsLogin = BehaviorRelay( value: false )
     public let rxLoading = BehaviorRelay( value: false )
-    public let rxScreenLoading = BehaviorRelay( value: false )
+    public let rxScreenLoading = BehaviorRelay( value: "" )
     
     public let bindScheduler: SchedulerType = MainScheduler.asyncInstance
     public let dispBag = DisposeBag()
@@ -47,19 +47,19 @@ open class SBViewModel: SBBindProtocol
     //MARK: - SEND MESSAGES
     open func SendClose()
     {
-        rxScreenLoading.accept( false )
+        rxScreenLoading.accept( "" )
         rxMessages.accept( .Close )
     }
     
     open func SendCloseScenario()
     {
-        rxScreenLoading.accept( false )
+        rxScreenLoading.accept( "" )
         rxMessages.accept( .CloseScenario )
     }
     
     open func SendClose2Top()
     {
-        rxScreenLoading.accept( false )
+        rxScreenLoading.accept( "" )
         rxMessages.accept( .Close2Top )
     }
     
@@ -78,7 +78,7 @@ open class SBViewModel: SBBindProtocol
         if hidePreloaders
         {
             rxLoading.accept( false )
-            rxScreenLoading.accept( false )
+            rxScreenLoading.accept( "" )
         }
         
         rxMessages.accept( .Error( error: error ) )

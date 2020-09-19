@@ -23,6 +23,11 @@ public extension SBBindProtocol
         BindT( from: from.asObservable(), to: to, map: map, dispBag: dispBag )
     }
     
+    func BindT<V, T> ( from: PublishRelay<V>, to: BehaviorRelay<T>, map: @escaping (V) -> T, dispBag: DisposeBag? = nil )
+    {
+        BindT( from: from.asObservable(), to: to, map: map, dispBag: dispBag )
+    }
+    
     func BindT<V, T> ( from: Observable<V>, to: BehaviorRelay<T>, map: @escaping (V) -> T, dispBag: DisposeBag? = nil )
     {
         from
@@ -37,12 +42,22 @@ public extension SBBindProtocol
         BindT( from: from, to: to, map: { $0 }, dispBag: dispBag )
     }
     
+    func Bind<V> ( from: PublishRelay<V>, to: BehaviorRelay<V>, dispBag: DisposeBag? = nil )
+    {
+        BindT( from: from, to: to, map: { $0 }, dispBag: dispBag )
+    }
+    
     func Bind<V> ( from: Observable<V>, to: BehaviorRelay<V>, dispBag: DisposeBag? = nil )
     {
         BindT( from: from, to: to, map: { $0 }, dispBag: dispBag )
     }
     
     func BindAction<V> ( from: BehaviorRelay<V>, action: @escaping (V) -> Void, dispBag: DisposeBag? = nil )
+    {
+        BindAction( from: from.asObservable(), action: action, dispBag: dispBag )
+    }
+    
+    func BindAction<V> ( from: PublishRelay<V>, action: @escaping (V) -> Void, dispBag: DisposeBag? = nil )
     {
         BindAction( from: from.asObservable(), action: action, dispBag: dispBag )
     }
@@ -68,6 +83,7 @@ public extension SBBindProtocol
         
         to
             .asObservable()
+            //.debounce( .milliseconds( 100 ), scheduler: MainScheduler.asyncInstance )
             .observeOn( bindScheduler )
             .distinctUntilChanged()
             .skip( 1 )

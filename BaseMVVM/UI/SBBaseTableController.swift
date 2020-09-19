@@ -69,21 +69,11 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
         viewModel = (vm as! VM)
         isInitRx = isInitRx || InvokeInitRx( b: isViewLoaded )
     }
-    
-    open func BindReload<T>( rxEvent: Observable<T> )
-    {
-        BindReload( rxEvent: rxEvent, table: tableView )
-    }
-    
-    open func BindReload<T>( rxEvent: BehaviorRelay<T> )
-    {
-        BindReload( rxEvent: rxEvent.asObservable(), table: tableView )
-    }
-    
-    open func BindRefresh()
+
+    open func BindRefreshTable()
     {
         tableView.refreshControl = UIRefreshControl()
-        BindRefresh( refresh: tableView.refreshControl!, scrollView: tableView )
+        BindRefreshTable( refresh: tableView.refreshControl! )
     }
     
     open func DispatchMessage( message: SBViewModel.Message )
@@ -104,14 +94,17 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
     //MARK: - EXCHANGE VIEWS
     func ExchangeTableView()
     {
-        _tableView = tableView;
-        _tableView?.removeFromSuperview();
-        
-        view = UIView();
-        view.backgroundColor = UIColor.white;
-        view.addSubview( _tableView! );
-        
-        DidExchangedTableView()
+        if _tableView == nil
+        {
+            _tableView = tableView;
+            _tableView?.removeFromSuperview();
+            
+            view = UIView();
+            view.backgroundColor = UIColor.white;
+            view.addSubview( _tableView! );
+            
+            DidExchangedTableView()
+        }
     }
     
     open func DidExchangedTableView()
@@ -119,7 +112,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
         
     }
     
-    func UpdateConstaints( table2bottom bTable2Bottom: Bool = false )
+    func UpdateConstaints( table2bottom: Bool = false )
     {
         guard let _tableView = _tableView else
         {
@@ -135,7 +128,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
             view.addSubview( footer );
             
             view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "H:|-(0)-[footer]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["footer": footer] ) );
-            if bTable2Bottom
+            if table2bottom
             {
                 view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView] ) );
                 view.addConstraint( NSLayoutConstraint( item: footer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: footerHeight ) );

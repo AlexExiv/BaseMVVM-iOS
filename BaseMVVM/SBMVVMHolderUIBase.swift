@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxRelay
 
 public protocol SBMVVMHolderUIBase: SBMVVMHolderBase, SBBindUIProtocol
 {
@@ -66,9 +67,19 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
         }
     }
     
-    func BindReload<T>( rxEvent: Observable<T>, table: UITableView )
+    func BindReload<T>( from: Observable<T>, table: UITableView )
     {
-        BindAction( from: rxEvent, action: { _ in table.reloadData() } )
+        BindAction( from: from, action: { _ in table.reloadData() } )
+    }
+    
+    func BindReload<T>( from: PublishRelay<T>, table: UITableView )
+    {
+        BindReload( from: from.asObservable(), table: table )
+    }
+    
+    func BindReload<T>( from: BehaviorRelay<T>, table: UITableView )
+    {
+        BindReload( from: from.asObservable(), table: table )
     }
     
     func BindRefresh( refresh: UIRefreshControl, scrollView: UIScrollView )
@@ -106,19 +117,48 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
             [weak self] in
             guard let self = self else { return }
             
-            if self.screenPreloaderCntrl == nil, $0
+            if self.screenPreloaderCntrl == nil && !$0.isEmpty
             {
                 self.CreateScreenPreloaderCntrl()
             }
             
-            if $0
+            if !$0.isEmpty
             {
-                self.screenPreloaderCntrl?.Show( title: "" )
+                self.screenPreloaderCntrl?.Show( title: $0 )
             }
             else
             {
                 self.screenPreloaderCntrl?.Hide()
             }
         })
+    }
+}
+
+public extension SBMVVMHolderUIBase where Self: UITableViewController
+{
+    
+    func BindReloadTable<T>( from: Observable<T> )
+    {
+        BindReload( from: from, table: tableView )
+    }
+    
+    func BindReloadTable<T>( from: PublishRelay<T> )
+    {
+        BindReloadTable( from: from.asObservable() )
+    }
+    
+    func BindReloadTable<T>( from: BehaviorRelay<T> )
+    {
+        BindReloadTable( from: from.asObservable() )
+    }
+    
+    func BindRefreshTable( refresh: UIRefreshControl )
+    {
+        BindRefresh( refresh: refresh, scrollView: tableView )
+    }
+
+    func BindLoadingTable()
+    {
+        BindLoading( table: tableView )
     }
 }
