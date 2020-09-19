@@ -24,18 +24,21 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
     
     var cellHeights = [Int: CGFloat]()
     private var _tableView: UITableView? = nil
-    private var footer: UIView? = nil
+    private(set) var table2bottom = false
+    private var footerView: UIView? = nil
     private var footerHeight: CGFloat = 0.0
+    private var headerView: UIView? = nil
+    private var headerHeight: CGFloat = 0.0
     
     override open var tableView: UITableView!
     {
         get
         {
-            return _tableView == nil ? super.tableView : _tableView!;
+            return _tableView == nil ? super.tableView : _tableView!
         }
         set
         {
-            super.tableView = newValue;
+            super.tableView = newValue
         }
     }
     
@@ -96,12 +99,12 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
     {
         if _tableView == nil
         {
-            _tableView = tableView;
-            _tableView?.removeFromSuperview();
+            _tableView = tableView
+            _tableView?.removeFromSuperview()
             
-            view = UIView();
-            view.backgroundColor = UIColor.white;
-            view.addSubview( _tableView! );
+            view = UIView()
+            view.backgroundColor = UIColor.white
+            view.addSubview( _tableView! )
             
             DidExchangedTableView()
         }
@@ -112,58 +115,99 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
         
     }
     
-    func UpdateConstaints( table2bottom: Bool = false )
+    func UpdateConstaints()
     {
         guard let _tableView = _tableView else
         {
-            return;
+            return
         }
         
-        _tableView.translatesAutoresizingMaskIntoConstraints = false;
-        view.addConstraints( NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView] ) );
+        _tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addConstraints( NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView] ) )
         
-        if let footer = footer
+        if (footerView == nil) && (headerView == nil)
         {
-            footer.translatesAutoresizingMaskIntoConstraints = false;
-            view.addSubview( footer );
+            view.addConstraint( NSLayoutConstraint( item: _tableView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0 ) )
+            view.addConstraint( NSLayoutConstraint( item: _tableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1.0, constant: 0.0 ) )
+        }
+        else if let footerView = footerView
+        {
+            footerView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview( footerView )
+            view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "H:|-(0)-[footerView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["footerView": footerView] ) )
             
-            view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "H:|-(0)-[footer]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["footer": footer] ) );
             if table2bottom
             {
-                view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView] ) );
-                view.addConstraint( NSLayoutConstraint( item: footer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: footerHeight ) );
+                if let headerView = headerView
+                {
+                    view.addSubview( headerView )
+                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[headerView(\(headerHeight)]-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView, "headerView": headerView] ) )
+                }
+                else
+                {
+                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView] ) )
+                }
+                
+                view.addConstraint( NSLayoutConstraint( item: footerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: footerHeight ) )
             }
             else
             {
-                view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[_tableView]-(0)-[footer(\(footerHeight))]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["footer": footer, "_tableView": _tableView] ) );
+                if let headerView = headerView
+                {
+                    view.addSubview( headerView )
+                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[headerView(\(headerHeight)]-(0)-[_tableView]-(0)-[footerView(\(footerHeight))]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["headerView": headerView, "footerView": footerView, "_tableView": _tableView] ) )
+                }
+                else
+                {
+                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[_tableView]-(0)-[footerView(\(footerHeight))]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["footerView": footerView, "_tableView": _tableView] ) )
+                }
             }
-            footer.bottomAnchor.constraint( equalTo: BottomGuide ).isActive = true;
+            
+            footerView.bottomAnchor.constraint( equalTo: BottomGuide ).isActive = true
         }
-        else
+        else if let headerView = headerView
         {
-            view.addConstraint( NSLayoutConstraint( item: _tableView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0 ) );
-            view.addConstraint( NSLayoutConstraint( item: _tableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0.0 ) );
+            view.addSubview( headerView )
+            view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:[headerView(\(headerHeight)]-(0)-[_tableView]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["headerView": headerView, "_tableView": _tableView] ) )
+            view.addConstraint( NSLayoutConstraint( item: _tableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1.0, constant: 0.0 ) )
+        }
+        
+        if let headerView = headerView
+        {
+            headerView.translatesAutoresizingMaskIntoConstraints = false
+            view.addConstraint( NSLayoutConstraint( item: headerView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .topMargin, multiplier: 1.0, constant: 0.0 ) )
+            view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "H:|-(0)-[headerView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["headerView": headerView] ) )
         }
     }
     
-    public func Add( footer footer_: UIView, height: CGFloat, table2bottom: Bool = false )
+    public func Add( footer: UIView, height: CGFloat, table2bottom: Bool = false )
     {
-        footer = footer_;
-        footerHeight = height;
-        ExchangeTableView();
-        UpdateConstaints( table2bottom: table2bottom );
-        updateViewConstraints();
+        footerView = footer
+        footerHeight = height
+        self.table2bottom = table2bottom
+        ExchangeTableView()
+        UpdateConstaints()
+        updateViewConstraints()
+    }
+    
+    public func Add( header: UIView, height: CGFloat, table2bottom: Bool = false )
+    {
+        headerView = header
+        headerHeight = height
+        ExchangeTableView()
+        UpdateConstaints()
+        updateViewConstraints()
     }
     
     //MARK - UITableViewDelegate
     override open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return cellHeights[indexPath.section*10000 + indexPath.row] ?? UITableView.automaticDimension;
+        return cellHeights[indexPath.section*10000 + indexPath.row] ?? UITableView.automaticDimension
     }
 
     override open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
     {
-        cellHeights[indexPath.section*10000 + indexPath.row] = cell.bounds.size.height;
+        cellHeights[indexPath.section*10000 + indexPath.row] = cell.bounds.size.height
     }
     
     //MARK: - SEGUE
