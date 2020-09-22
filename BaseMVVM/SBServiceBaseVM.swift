@@ -23,7 +23,7 @@ open class SBServiceBaseVM<SF: SBServiceFactoryProtocol>: SBBaseVM
     
     public func RxDownloadImage( url: String, width: Int = 0, height: Int = 0 ) -> Single<String>
     {
-        return serviceParent!
-            .RxDownloadImage( url: url, width: width, height: height )
+        return serviceParent?
+            .RxDownloadImage( url: url, width: width, height: height ) ?? Single.just( "" )
     }
 }
