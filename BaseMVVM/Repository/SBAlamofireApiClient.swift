@@ -233,6 +233,116 @@ class SBAlamofireApiClient: SBApiClientProtocol
         });
     }
     
+    //MARK: - UPLOAD REQUESTS
+    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String ) -> Single<JsonWrapper>
+    {
+        return RxUpload( path: path, method: method, data: data, name: name, fileName: fileName, mimeType: mimeType, params: nil, headers: nil )
+    }
+    
+    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String, params: [String : Any]? ) -> Single<JsonWrapper>
+    {
+        return RxUpload( path: path, method: method, data: data, name: name, fileName: fileName, mimeType: mimeType, params: params, headers: nil )
+    }
+    
+    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String, params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
+    {
+        let _method = Alamofire.HTTPMethod( rawValue: method.rawValue )!
+        return Single.create( subscribe:
+        {
+            [weak self] (subs) -> Disposable in
+            if let self_ = self
+            {
+                var rFullHeaders = HTTPHeaders();
+                
+                if let provider = self_.userInfoProvider
+                {
+                    rFullHeaders[self_.tokenHeader] = provider.token
+                    print( "X-Access-Token: \(provider.token)" )
+                }
+
+                if let provider = self_.deviceInfoProvider
+                {
+                    rFullHeaders[self_.deviceHeader] = provider.deviceId
+                    print( "X-Device-ID: \(provider.deviceId)" )
+                    
+                    rFullHeaders[self_.deviceHeader] = provider.interfaceLanguage
+                    print( "X-User-Language: \(provider.interfaceLanguage)" )
+                }
+                
+                if let headers = headers
+                {
+                    rFullHeaders.Merge( src: headers );
+                }
+                
+                let sURL = "\(self_.baseURL)/\(path)";
+                #if DEBUG
+                print( "REQUEST URL - \(sURL)" );
+                print( "METHOD - \(method.rawValue)" );
+                print( "PARAMETERS - \(params)" );
+                #endif
+                
+                let multipartFormData: (MultipartFormData) -> Void =
+                {
+                    mfd in
+                    params?.forEach
+                    {
+                        if let v = $0.value as? String
+                        {
+                            mfd.append( v.data( using: .utf8 )!, withName: $0.key )
+                        }
+                        else if let v = $0.value as? Int
+                        {
+                            mfd.append( String( v ).data( using: .utf8 )!, withName: $0.key )
+                        }
+                        else if let v = $0.value as? Double
+                        {
+                            mfd.append( String( v ).data( using: .utf8 )!, withName: $0.key )
+                        }
+                    }
+                    
+                    mfd.append( data, withName: name, fileName: fileName, mimeType: mimeType )
+                }
+                
+                let urlReq = try! URLRequest( url: sURL, method: _method, headers: headers )
+                Alamofire.upload( multipartFormData: multipartFormData, with: urlReq, encodingCompletion:
+                {
+                    result in
+                    switch result
+                    {
+                    case .success( let upload, _, _ ):
+                        upload.responseJSON
+                        {
+                            (response: DataResponse) in
+                            #if DEBUG
+                            print( "RESPONSE - \(response.result.value)" );
+                            #endif
+                            let iCode = response.response?.statusCode ?? 0;
+                            if 200..<400 ~= iCode
+                            {
+                                subs( .success( JsonWrapper( result: response.result.value! )  ) );
+                            }
+                            else
+                            {
+                                if let code = response.response?.statusCode, (code == 401 || code == 403)
+                                {
+                                    self_.userInfoProvider?.ResetLogin()
+                                }
+                                
+                                subs( .error( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
+                            }
+                        }
+                    case .failure( let error ):
+                        break
+                    }
+                })
+               
+                return Disposables.create()
+            }
+            
+            return Disposables.create();
+        });
+    }
+    
     //MARK: - COMMON
     func ParseError( error: Error?, status: Int, json: Any? ) -> NSError
     {
