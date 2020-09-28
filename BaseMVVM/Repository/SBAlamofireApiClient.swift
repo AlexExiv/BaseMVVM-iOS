@@ -303,7 +303,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     mfd.append( data, withName: name, fileName: fileName, mimeType: mimeType )
                 }
                 
-                let urlReq = try! URLRequest( url: sURL, method: _method, headers: headers )
+                let urlReq = try! URLRequest( url: sURL, method: _method, headers: rFullHeaders )
                 Alamofire.upload( multipartFormData: multipartFormData, with: urlReq, encodingCompletion:
                 {
                     result in
