@@ -13,7 +13,7 @@ import RxRelay
 open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
 {
     public var preloaderView: SBPreloaderView!
-    public var screenPreloaderCntrl: SBPreloaderController!
+    public var screenPreloaderCntrl: SBPreloaderControllerProtocol!
     
     public let dispBag = DisposeBag()
     public let bindScheduler: SchedulerType = MainScheduler.asyncInstance

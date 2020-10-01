@@ -12,7 +12,7 @@ import RxSwift
 open class SBBaseTabBarController<VM: SBViewModel & SBTabViewModel>: UITabBarController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
 {
     public var preloaderView: SBPreloaderView!
-    public var screenPreloaderCntrl: SBPreloaderController!
+    public var screenPreloaderCntrl: SBPreloaderControllerProtocol!
     
     public let dispBag = DisposeBag()
     public let bindScheduler: SchedulerType = MainScheduler.asyncInstance

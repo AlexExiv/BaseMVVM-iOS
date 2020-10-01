@@ -12,7 +12,7 @@ import RxSwift
 open class SBBaseController<VM: SBViewModel>: UIViewController, SBMVVMHolderProtocol, SBMVVMHolderUIBase
 {
     public var preloaderView: SBPreloaderView!
-    public var screenPreloaderCntrl: SBPreloaderController!
+    public var screenPreloaderCntrl: SBPreloaderControllerProtocol!
     
     public let dispBag = DisposeBag()
     public let bindScheduler: SchedulerType = MainScheduler.asyncInstance

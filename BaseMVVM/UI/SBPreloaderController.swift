@@ -8,11 +8,17 @@
 
 import UIKit
 
-open class SBPreloaderController: UIViewController
+public protocol SBPreloaderControllerProtocol
+{
+    func Show( title: String )
+    func Hide()
+}
+
+open class SBPreloaderController: UIViewController, SBPreloaderControllerProtocol
 {
     static func Create() -> SBPreloaderController
     {
-        return UIStoryboard( name: "Preloader", bundle: nil ).instantiateViewController(withIdentifier: "SBPreloaderController") as! SBPreloaderController;
+        return UIStoryboard( name: "Preloader", bundle: Bundle( for: Self.self ) ).instantiateViewController( withIdentifier: "SBPreloaderController" ) as! SBPreloaderController;
     }
     
     @IBOutlet weak var titleLab: UILabel!

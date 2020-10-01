@@ -13,7 +13,7 @@ import RxRelay
 public protocol SBMVVMHolderUIBase: SBMVVMHolderBase, SBBindUIProtocol
 {
     var preloaderView: SBPreloaderView! { get }
-    var screenPreloaderCntrl: SBPreloaderController! { get }
+    var screenPreloaderCntrl: SBPreloaderControllerProtocol! { get }
     
     func CreatePreloaderView()
     func CreateScreenPreloaderCntrl()
