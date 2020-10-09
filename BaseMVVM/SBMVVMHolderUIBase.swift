@@ -51,7 +51,7 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
             presentingViewController?.dismiss( animated: true, completion: nil )
             
         case .Close2Top:
-            UIApplication.shared.keyWindow?.rootViewController?.presentedViewController?.dismiss( animated: true, completion: nil )
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss( animated: true, completion: nil )
             (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.popToRootViewController( animated: false )
             
         case .Error( let error ):
