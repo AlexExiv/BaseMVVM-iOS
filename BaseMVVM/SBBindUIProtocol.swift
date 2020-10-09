@@ -20,148 +20,190 @@ public protocol SBBindUIProtocol: SBBindProtocol
 public extension SBBindUIProtocol where Self: UIViewController
 {
     //MARK: - FROM DATA TO TITLE
-    func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> String, to: UILabel )
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, to: UILabel )
     {
         from
-            .asDriver()
-            .map( { map( $0 ) } )
-            .drive( to.rx.text )
-            .disposed( by: dispBag );
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.text )
+            .disposed( by: dispBag )
     }
     
-    func Bind( from: BehaviorRelay<String>, map: @escaping (String) -> String = { $0 }, to: UILabel )
+    func Bind<O: ObservableType>( from: O, to: UILabel ) where O.Element == String
     {
-        BindT( from: from, map: map, to: to );
+        BindT( from: from, map: { $0 }, to: to )
     }
     
-    func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> NSAttributedString, to: UILabel )
-    {
-        from
-            .asDriver()
-            .map( { map( $0 ) } )
-            .drive( to.rx.attributedText )
-            .disposed( by: dispBag );
-    }
-    
-    func Bind( from: BehaviorRelay<NSAttributedString>, to: UILabel )
-    {
-        BindT( from: from, map: { $0 }, to: to );
-    }
-    
-    func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> String, to: UITextView )
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> NSAttributedString, to: UILabel )
     {
         from
-            .asDriver()
-            .map( { map( $0 ) } )
-            .drive( to.rx.text )
-            .disposed( by: dispBag );
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.attributedText )
+            .disposed( by: dispBag )
     }
     
-    func Bind( from: BehaviorRelay<String>, map: @escaping (String) -> String = { $0 }, to: UITextView )
+    func Bind<O: ObservableType>( from: O, to: UILabel ) where O.Element: NSAttributedString
     {
-        BindT( from: from, map: map, to: to );
+        BindT( from: from, map: { $0 }, to: to )
     }
     
-    func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> String, to: UIButton )
-    {
-        from
-            .asDriver()
-            .map( { map( $0 ) } )
-            .drive( to.rx.title( for: .normal ) )
-            .disposed( by: dispBag );
-    }
-    
-    func Bind( from: BehaviorRelay<String>, map: @escaping (String) -> String = { $0 }, to: UIButton )
-    {
-        BindT( from: from, map: map, to: to );
-    }
-    
-    func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> String, to: UITextField )
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, to: UITextView )
     {
         from
-            .asDriver()
-            .map( { map( $0 ) } )
-            .drive( to.rx.text )
-            .disposed( by: dispBag );
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.text )
+            .disposed( by: dispBag )
     }
     
-    func Bind( from: BehaviorRelay<String>, map: @escaping (String) -> String = { $0 }, to: UITextField )
+    func Bind<O: ObservableType>( from: O, to: UITextView ) where O.Element == String
     {
-        BindT( from: from, map: map, to: to );
+        BindT( from: from, map: { $0 }, to: to )
     }
     
-    func Bind( from: BehaviorRelay<String>, to: UINavigationItem )
-    {
-        from
-            .asDriver()
-            .drive( to.rx.title )
-            .disposed( by: dispBag );
-    }
-    
-    func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> String, to: UIImageView )
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, to: UITextField )
     {
         from
-            .asDriver()
-            .map( { UIImage( named: map( $0 )) } )
-            .drive( to.rx.image )
-            .disposed( by: dispBag );
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.text )
+            .disposed( by: dispBag )
     }
     
-    func Bind( from: BehaviorRelay<String>, to: UIImageView )
+    func Bind<O: ObservableType>( from: O, to: UITextField ) where O.Element == String
+    {
+        BindT( from: from, map: { $0 }, to: to )
+    }
+    
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, to: UIImageView )
+    {
+        from
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .map( { UIImage( named: $0 ) } )
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.image )
+            .disposed( by: dispBag )
+    }
+    
+    func Bind<O: ObservableType>( from: O, to: UIImageView ) where O.Element == String
     {
         BindT( from:  from, map: { $0 }, to: to )
     }
     
-    func Bind( text: BehaviorRelay<String>? = nil, detail: BehaviorRelay<String>? = nil, to: UITableViewCell )
+    func Bind<O: ObservableType>( text: O? = nil, detail: O? = nil, to: UITableViewCell ) where O.Element == String
     {
         if let text = text, let textLabel = to.textLabel
         {
             text
-                .asDriver()
-                .drive( textLabel.rx.text )
-                .disposed( by: dispBag );
+                .distinctUntilChanged()
+                .observeOn( bindScheduler )
+                .bind( to: textLabel.rx.text )
+                .disposed( by: dispBag )
         }
         
         if let detail = detail, let detailLabel = to.detailTextLabel
         {
             detail
-                .asDriver()
-                .drive( detailLabel.rx.text )
-                .disposed( by: dispBag );
+                .distinctUntilChanged()
+                .observeOn( bindScheduler )
+                .bind( to: detailLabel.rx.text )
+                .disposed( by: dispBag )
         }
+    }
+    
+    //MARK: - UINavigationItem
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, to: UINavigationItem )
+    {
+        from
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.title )
+            .disposed( by: dispBag )
+    }
+    
+    func Bind<O: ObservableType>( from: O, to: UINavigationItem ) where O.Element == String
+    {
+        BindT( from: from, map: { $0 }, to: to )
+    }
+    
+    //MARK: - UIButton
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, to: UIButton )
+    {
+        from
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.title( for: .normal ) )
+            .disposed( by: dispBag )
+    }
+    
+    func Bind<O: ObservableType>( from: O, to: UIButton ) where O.Element == String
+    {
+        BindT( from: from, map: { $0 }, to: to )
+    }
+    
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, toIcon: UIButton )
+    {
+        from.asObservable()
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .map { UIImage( named: $0 ) }
+            .observeOn( bindScheduler )
+            .bind( to: toIcon.rx.image( for: .normal ) )
+            .disposed( by: dispBag )
     }
     
     //MARK: - FROM DATA TO COLOR
-    func Bind( from: BehaviorRelay<UIColor>, toBG: UIView )
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> UIColor, toBG: UIView )
     {
         from
-            .asDriver()
-            .drive( onNext: { toBG.backgroundColor = $0 } )
-            .disposed( by: dispBag );
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( onNext: { toBG.backgroundColor = $0 } )
+            .disposed( by: dispBag )
     }
     
-    func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> UIColor, toTC: UIView )
+    func Bind<O: ObservableType>( from: O, toBG: UIView ) where O.Element: UIColor
     {
-        let driver = from.asDriver();
-        var disp: Disposable? = nil;
+        BindT( from: from, map: { $0 }, toBG: toBG )
+    }
+    
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> UIColor, toTC: UIView )
+    {
+        let driver = from
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+        
+        var disp: Disposable? = nil
+        
         if let label = toTC as? UILabel
         {
-            disp = driver.drive( onNext: { label.textColor = map( $0 ) } );
+            disp = driver.bind( onNext: { label.textColor = $0 } )
         }
         else if let textView = toTC as? UITextView
         {
-            disp = driver.drive( onNext: { textView.textColor = map( $0 ) } );
+            disp = driver.bind( onNext: { textView.textColor = $0 } )
         }
         else if let textField = toTC as? UITextField
         {
-            disp = driver.drive( onNext: { textField.textColor = map( $0 ) } );
+            disp = driver.bind( onNext: { textField.textColor = $0 } )
         }
-        disp?.disposed( by: dispBag );
+        
+        disp?.disposed( by: dispBag )
     }
     
-    func Bind( from: BehaviorRelay<UIColor>, toTC: UIView )
+    func Bind<O: ObservableType>( from: O, toTC: UIView ) where O.Element: UIColor
     {
-        BindT( from: from, map: { $0 }, toTC: toTC );
+        BindT( from: from, map: { $0 }, toTC: toTC )
     }
     
     func BindT<T>( from: BehaviorRelay<T>, map: @escaping (T) -> CGFloat, toAlpha: UIView )
@@ -174,7 +216,7 @@ public extension SBBindUIProtocol where Self: UIViewController
     }
     
     //MARK: - HIDDEN
-    func BindHidden<T>( from: BehaviorRelay<T>, map: @escaping (T) -> Bool, to: UIView, duration: TimeInterval = 0 )
+    func BindHidden<O: ObservableType>( from: O, map: @escaping (O.Element) -> Bool, to: UIView, duration: TimeInterval = 0 )
     {
 //        if duration == 0.0
 //        {
@@ -182,15 +224,15 @@ public extension SBBindUIProtocol where Self: UIViewController
 //                .asDriver()
 //                .map( { map( $0 ) } )
 //                .drive( to.rx.isHidden )
-//                .disposed( by: dispBag );
+//                .disposed( by: dispBag )
 //        }
 //        else
 //        {
             from
-                .asDriver()
-                .map( { map( $0 ) } )
+                .map { map( $0 ) }
                 .distinctUntilChanged()
-                .drive( onNext:
+                .observeOn( bindScheduler )
+                .bind( onNext:
                 {
                     hidden in
                     
@@ -200,36 +242,44 @@ public extension SBBindUIProtocol where Self: UIViewController
                         to.isHidden = hidden
                     })
                 })
-                .disposed( by: dispBag );
+                .disposed( by: dispBag )
 //        }
     }
     
-    func BindHidden( from: BehaviorRelay<Bool>, invert: Bool = false, to: UIView, duration: TimeInterval = 0 )
+    func BindHidden<O: ObservableType>( from: O, invert: Bool = false, to: UIView, duration: TimeInterval = 0 ) where O.Element == Bool
     {
-        return BindHidden( from: from, map: { $0 != invert }, to: to, duration: duration );
+        return BindHidden( from: from, map: { $0 != invert }, to: to, duration: duration )
     }
     
     //MARK: - ENABLE
-    func BindEnabled<T>( from: BehaviorRelay<T>, map: @escaping (T) -> Bool, to: UIControl )
+    func BindEnabled<O: ObservableType>( from: O, map: @escaping (O.Element) -> Bool, to: UIControl )
     {
         from
-            .asDriver()
-            .map( { map( $0 ) } )
-            .drive( to.rx.isEnabled )
-            .disposed( by: dispBag );
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.isEnabled )
+            .disposed( by: dispBag )
     }
     
-    func BindEnabled( from: BehaviorRelay<Bool>, invert: Bool = false, to: UIControl )
+    func BindEnabled<O: ObservableType>( from: O, invert: Bool = false, to: UIControl ) where O.Element == Bool
     {
-        return BindEnabled( from: from, map: { $0 != invert }, to: to );
+        BindEnabled( from: from, map: { $0 != invert }, to: to )
     }
     
-    func Bind( from: BehaviorRelay<Bool>, to: UISwitch )
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> Bool, to: UISwitch ) where O.Element == Bool
     {
         from
-            .asDriver()
-            .drive( to.rx.isOn )
-            .disposed( by: dispBag );
+            .map { map( $0 ) }
+            .distinctUntilChanged()
+            .observeOn( bindScheduler )
+            .bind( to: to.rx.isOn )
+            .disposed( by: dispBag )
+    }
+    
+    func Bind<O: ObservableType>( from: O, invert: Bool = false, to: UISwitch ) where O.Element == Bool
+    {
+        BindT( from: from, map: { $0 != invert }, to: to )
     }
     
     //MARK: - 2WAY
@@ -239,7 +289,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .asDriver()
             .distinctUntilChanged()
             .drive( to.rx.text )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
         
         to.rx.text
             .asDriver()
@@ -247,7 +297,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .filter( { from.value != $0 } )
             //.distinctUntilChanged()
             .drive( from )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
     }
     
     func Bind2Way( from: BehaviorRelay<String>, to: UITextView )
@@ -256,7 +306,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .asDriver()
             .distinctUntilChanged()
             .drive( to.rx.text )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
         
         to.rx.text
             .asDriver()
@@ -264,7 +314,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .filter( { from.value != $0 } )
             //.distinctUntilChanged()
             .drive( from )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
     }
     
     func Bind2Way( from: BehaviorRelay<Bool>, to: UISwitch )
@@ -273,7 +323,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .asDriver()
             .distinctUntilChanged()
             .drive( to.rx.isOn )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
         
         to.rx.isOn
             .asDriver()
@@ -282,7 +332,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .skip( 1 )
             .filter( { from.value != $0 } )
             .drive( from )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
     }
     
     func Bind2Way( from: BehaviorRelay<Int>, to: UISegmentedControl )
@@ -291,7 +341,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .asDriver()
             .distinctUntilChanged()
             .drive( to.rx.selectedSegmentIndex )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
         
         to.rx.selectedSegmentIndex
             .asDriver()
@@ -300,7 +350,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .skip( 1 )
             .filter( { from.value != $0 } )
             .drive( from )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
     }
     
     func Bind2WayEnumInt<T: RawRepresentable>( from: BehaviorRelay<T>, to: UISegmentedControl ) where T.RawValue == Int
@@ -310,7 +360,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .map( { $0.rawValue } )
             .distinctUntilChanged()
             .drive( to.rx.selectedSegmentIndex )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
         
         to.rx.selectedSegmentIndex
             .asDriver()
@@ -319,7 +369,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .map( { T( rawValue: $0 )! } )
             .filter( { from.value != $0 } )
             .drive( from )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
     }
     
     func Bind2Way<T: BinaryFloatingPoint>( from: BehaviorRelay<T>, to: UISlider )
@@ -329,7 +379,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .map( { Float( $0 ) } )
             .distinctUntilChanged()
             .drive( to.rx.value )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
         
         to.rx.value
             .asDriver()
@@ -338,7 +388,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .map( { T( $0 ) } )
             .filter( { from.value != $0 } )
             .drive( from )
-            .disposed( by: dispBag );
+            .disposed( by: dispBag )
     }
     
     //MARK: - ACTIONS
@@ -350,3 +400,4 @@ public extension SBBindUIProtocol where Self: UIViewController
             .disposed( by: dispBag )
     }
 }
+
