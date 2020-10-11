@@ -149,12 +149,12 @@ public extension SBBindUIProtocol where Self: UIViewController
         BindT( from: from, map: { $0 }, to: to )
     }
     
-    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, toIcon: UIButton )
+    func BindT<O: ObservableType>( from: O, map: @escaping (O.Element) -> String, toIcon: UIButton, renderingMode: UIImage.RenderingMode = .alwaysOriginal )
     {
         from.asObservable()
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .map { UIImage( named: $0 ) }
+            .map { UIImage( named: $0 )?.withRenderingMode( renderingMode ) }
             .observeOn( bindScheduler )
             .bind( to: toIcon.rx.image( for: .normal ) )
             .disposed( by: dispBag )
