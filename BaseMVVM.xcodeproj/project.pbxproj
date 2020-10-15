@@ -53,6 +53,7 @@
 		FB2098FD23CF525200006EF5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FC23CF525200006EF5 /* String+Ext.swift */; };
 		FB2098FF23CF5F5700006EF5 /* StringExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */; };
 		FB326B39246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */; };
+		FB43BE922538879200492795 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB43BE912538879200492795 /* Observable+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		FB2098FC23CF525200006EF5 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtTests.swift; sourceTree = "<group>"; };
 		FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBDiffCalculator+RxSwift.swift"; sourceTree = "<group>"; };
+		FB43BE912538879200492795 /* Observable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +280,7 @@
 				FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */,
 				FB061B1B230D460F00202907 /* UIAlertController+Ext.swift */,
 				FB061B25230D519800202907 /* UIViewController+Ext.swift */,
+				FB43BE912538879200492795 /* Observable+Ext.swift */,
 			);
 			path = Ext;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				FB061B10230D452400202907 /* SBViewModel.swift in Sources */,
 				FB061B22230D4E1600202907 /* SBAuthUserServiceProtocol.swift in Sources */,
 				FB061B16230D452400202907 /* SBMVVMHolderUIBase.swift in Sources */,
+				FB43BE922538879200492795 /* Observable+Ext.swift in Sources */,
 				FB061B26230D519800202907 /* UIViewController+Ext.swift in Sources */,
 				FB061B20230D4CCE00202907 /* SBServiceViewModel.swift in Sources */,
 				FB061B30230D55C700202907 /* SBDowloadServiceProtocol.swift in Sources */,

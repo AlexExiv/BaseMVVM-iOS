@@ -53,7 +53,7 @@ public extension SBBindProtocol
             .observeOn( bindScheduler )
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .bind( to: to )
+            .bindDistinct( to: to )
             .disposed( by: dispBag ?? self.dispBag )
     }
     
@@ -84,8 +84,8 @@ public extension SBBindProtocol
             .asObservable()
             .observeOn( bindScheduler )
             .distinctUntilChanged()
-            .map( { mapFrom( $0 ) } )
-            .bind( to: to )
+            .map { mapFrom( $0 ) }
+            .bindDistinct( to: to )
             .disposed( by: dispBag ?? self.dispBag )
         
         to
@@ -94,9 +94,9 @@ public extension SBBindProtocol
             .observeOn( bindScheduler )
             .distinctUntilChanged()
             .skip( 1 )
-            .map( { mapTo( $0 ) } )
-            .filter( { from.value != $0 } )
-            .bind( to: from )
+            .map { mapTo( $0 ) }
+            .filter { from.value != $0 }
+            .bindDistinct( to: from )
             .disposed( by: dispBag ?? self.dispBag )
     }
     
