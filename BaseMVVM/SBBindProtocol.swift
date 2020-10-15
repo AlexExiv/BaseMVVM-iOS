@@ -90,9 +90,9 @@ public extension SBBindProtocol
         
         to
             .asObservable()
-            //.debounce( .milliseconds( 100 ), scheduler: MainScheduler.asyncInstance )
+            .debounce( .milliseconds( 100 ), scheduler: MainScheduler.asyncInstance )
             .observeOn( bindScheduler )
-            .distinctUntilChanged()
+            //.distinctUntilChanged()
             .skip( 1 )
             .map { mapTo( $0 ) }
             .filter { from.value != $0 }
