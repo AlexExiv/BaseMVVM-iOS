@@ -141,7 +141,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
                 if let headerView = headerView
                 {
                     view.addSubview( headerView )
-                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[headerView(\(headerHeight)]-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView, "headerView": headerView] ) )
+                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[headerView(\(headerHeight))]-(0)-[_tableView]-(0)-|", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["_tableView": _tableView, "headerView": headerView] ) )
                 }
                 else
                 {
@@ -155,7 +155,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
                 if let headerView = headerView
                 {
                     view.addSubview( headerView )
-                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[headerView(\(headerHeight)]-(0)-[_tableView]-(0)-[footerView(\(footerHeight))]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["headerView": headerView, "footerView": footerView, "_tableView": _tableView] ) )
+                    view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:|-(0)-[headerView(\(headerHeight))]-(0)-[_tableView]-(0)-[footerView(\(footerHeight))]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["headerView": headerView, "footerView": footerView, "_tableView": _tableView] ) )
                 }
                 else
                 {
@@ -168,7 +168,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
         else if let headerView = headerView
         {
             view.addSubview( headerView )
-            view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:[headerView(\(headerHeight)]-(0)-[_tableView]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["headerView": headerView, "_tableView": _tableView] ) )
+            view.addConstraints( NSLayoutConstraint.constraints( withVisualFormat: "V:[headerView(\(headerHeight))]-(0)-[_tableView]", options: NSLayoutConstraint.FormatOptions( rawValue: 0 ), metrics: nil, views: ["headerView": headerView, "_tableView": _tableView] ) )
             view.addConstraint( NSLayoutConstraint( item: _tableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottomMargin, multiplier: 1.0, constant: 0.0 ) )
         }
         
