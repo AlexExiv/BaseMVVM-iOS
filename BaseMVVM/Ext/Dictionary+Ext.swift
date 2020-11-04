@@ -81,7 +81,7 @@ extension Dictionary where Key == String
         return (self[key] as? [Any])?.map { self.GetBoolValue( v: $0 ) } ?? def
     }
     
-    public func GetStringAnyDictArray( _ key: String, def: [[String: Any]] = [[:]] ) -> [[String: Any]]
+    public func GetStringAnyDictArray( _ key: String, def: [[String: Any]] = [] ) -> [[String: Any]]
     {
         var ret = def
         if let arr = self[key] as? [[String: Any]]
