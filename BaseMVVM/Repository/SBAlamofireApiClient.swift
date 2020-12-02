@@ -155,12 +155,17 @@ class SBAlamofireApiClient: SBApiClientProtocol
             return Single.just( nil );
         }
 
-        let docPath = FileManager.default.urls( for: .documentDirectory, in: .userDomainMask ).last!.absoluteString
-        let fullPath = "\(docPath)\((store?.isEmpty ?? true) ? "" : "/\(store!)")\(path.urlPath)/\(path.lastURLComponent)"
-        
-        if FileManager.default.fileExists( atPath: fullPath )
+        var docPath = FileManager.default.urls( for: .documentDirectory, in: .userDomainMask ).last!
+        if let s = store
         {
-            return Single.just( URL( fileURLWithPath: fullPath ) );
+            docPath.appendPathComponent( s )
+        }
+        docPath.appendPathComponent( path.urlPath )
+        docPath.appendPathComponent( path.lastURLComponent )
+        
+        if FileManager.default.fileExists( atPath: docPath.absoluteString )
+        {
+            return Single.just( docPath );
         }
         
         return Single.create( subscribe:
@@ -173,7 +178,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 let downloadReq = Alamofire.download( path.starts( with: "http://" ) || path.starts( with: "https://" ) ? path : "\(self_.baseURL)/\(path)", method: .get, parameters: params, headers: headers )
                 {
                     (_, _)  in
-                    return ( destinationURL: URL( fileURLWithPath: fullPath ), options: [.removePreviousFile, .createIntermediateDirectories] )
+                    return ( destinationURL: docPath, options: [.removePreviousFile, .createIntermediateDirectories] )
                 }
                 .responseData( completionHandler:
                 {
@@ -187,7 +192,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     }
                     else if 200..<400 ~= response.response!.statusCode
                     {
-                        subs( .success( URL( fileURLWithPath: fullPath ) ) );
+                        subs( .success( docPath ) );
                     }
                     else
                     {
@@ -207,7 +212,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     {
                         do
                         {
-                            try FileManager.default.removeItem( atPath: fullPath );
+                            try FileManager.default.removeItem( atPath: docPath.absoluteString )
                         }
                         catch
                         {
