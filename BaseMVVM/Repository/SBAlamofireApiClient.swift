@@ -155,7 +155,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
             return Single.just( nil );
         }
 
-        let docPath = FileManager.default.urls( for: .cachesDirectory, in: .userDomainMask ).last!.absoluteString
+        let docPath = FileManager.default.urls( for: .documentDirectory, in: .userDomainMask ).last!.absoluteString
         let fullPath = "\(docPath)\((store?.isEmpty ?? true) ? "" : "/\(store!)")\(path.urlPath)/\(path.lastURLComponent)"
         
         if FileManager.default.fileExists( atPath: fullPath )
