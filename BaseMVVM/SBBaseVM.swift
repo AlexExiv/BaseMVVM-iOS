@@ -18,22 +18,22 @@ open class SBBaseVM
         self.parent = parent
     }
     
-    func IsEqual( vm: SBBaseVM ) -> Bool
+    open func IsEqual( vm: SBBaseVM ) -> Bool
     {
         return false
     }
     
-    func IsContentSame( vm: SBBaseVM ) -> Bool
+    open func IsContentSame( vm: SBBaseVM ) -> Bool
     {
         return false
     }
 
-    static func == ( l: SBBaseVM, r: SBBaseVM ) -> Bool
+    static public func == ( l: SBBaseVM, r: SBBaseVM ) -> Bool
     {
         return l.IsEqual( vm: r )
     }
     
-    static func ~= ( l: SBBaseVM, r: SBBaseVM ) -> Bool
+    static public func ~= ( l: SBBaseVM, r: SBBaseVM ) -> Bool
     {
         return l.IsContentSame( vm: r )
     }

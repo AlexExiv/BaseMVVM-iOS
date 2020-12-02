@@ -64,9 +64,9 @@ public protocol SBApiClientProtocol
     
     /// Download the resource from the specified path
     /// - Parameter path: path to the resource can be realtive and absolute.
-    func RxDownload( path: String ) -> Single<URL?>
-    func RxDownload( path: String, params: [String: Any]? ) -> Single<URL?>
-    func RxDownload( path: String, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
+    func RxDownload( path: String, store: String? ) -> Single<URL?>
+    func RxDownload( path: String, store: String?, params: [String: Any]? ) -> Single<URL?>
+    func RxDownload( path: String, store: String?, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
     
     func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String ) -> Single<JsonWrapper>
     func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String, params: [String : Any]? ) -> Single<JsonWrapper>

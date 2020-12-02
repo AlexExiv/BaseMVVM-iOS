@@ -138,17 +138,17 @@ class SBAlamofireApiClient: SBApiClientProtocol
     }
     
     //MARK: - DOWNLOAD REQUESTS
-    func RxDownload( path: String ) -> Single<URL?>
+    func RxDownload( path: String, store: String? ) -> Single<URL?>
     {
-        return RxDownload( path: path, params: nil )
+        return RxDownload( path: path, store: store, params: nil )
     }
     
-    func RxDownload( path: String, params: [String: Any]? ) -> Single<URL?>
+    func RxDownload( path: String, store: String?, params: [String: Any]? ) -> Single<URL?>
     {
-        return RxDownload( path: path, params: params, headers: nil )
+        return RxDownload( path: path, store: store, params: params, headers: nil )
     }
     
-    func RxDownload( path: String, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
+    func RxDownload( path: String, store: String?, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
     {
         if path.isEmpty
         {
@@ -156,7 +156,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
         }
 
         let docPath = FileManager.default.urls( for: .cachesDirectory, in: .userDomainMask ).last!.absoluteString
-        let fullPath = "\(docPath)/\(path.urlPath)/\(path.lastURLComponent)"
+        let fullPath = "\(docPath)\((store?.isEmpty ?? true) ? "" : "/\(store!)")\(path.urlPath)/\(path.lastURLComponent)"
         
         if FileManager.default.fileExists( atPath: fullPath )
         {
