@@ -163,7 +163,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
         docPath.appendPathComponent( path.urlPath )
         docPath.appendPathComponent( path.lastURLComponent )
         
-        if FileManager.default.fileExists( atPath: docPath.absoluteString )
+        if FileManager.default.fileExists( atPath: docPath.path )
         {
             return Single.just( docPath );
         }
@@ -212,7 +212,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     {
                         do
                         {
-                            try FileManager.default.removeItem( atPath: docPath.absoluteString )
+                            try FileManager.default.removeItem( atPath: docPath.path )
                         }
                         catch
                         {
