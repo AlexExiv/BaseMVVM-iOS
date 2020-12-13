@@ -4,9 +4,9 @@ use_frameworks!
 
 def shared_pods
   pod 'Alamofire', '~> 4.7'
-  pod 'RxSwift',    '~> 5.0'
-  pod 'RxCocoa',    '~> 5.0'
-  pod 'RxRelay',    '~> 5.0'
+  pod 'RxSwift',    '~> 5.1'
+  pod 'RxCocoa',    '~> 5.1'
+  pod 'RxRelay',    '~> 5.1'
 end
 
 target 'BaseMVVM' do
@@ -16,8 +16,8 @@ end
 target 'BaseMVVMTests' do
     shared_pods
     
-    pod 'RxBlocking', '~> 5.0'
-    pod 'RxTest', '~> 5.0'
+    pod 'RxBlocking', '~> 5.1'
+    pod 'RxTest', '~> 5.1'
 end
 
 target 'Examples' do
