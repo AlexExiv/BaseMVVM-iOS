@@ -67,19 +67,27 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
         }
     }
     
-    func BindReload<T>( from: Observable<T>, table: UITableView )
+    func BindReload<O: ObservableType>( from: O, table: UITableView )
     {
         BindAction( from: from, action: { _ in table.reloadData() } )
     }
     
-    func BindReload<T>( from: PublishRelay<T>, table: UITableView )
+    func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, table: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) where O.Element == Array<E>
     {
-        BindReload( from: from.asObservable(), table: table )
+        SBDiffCalculator.BindUpdates( from: from, table: table, change: change, insert: insert, delete: delete, all: all, scheduler: bindScheduler, dispBag: dispBag )
     }
     
-    func BindReload<T>( from: BehaviorRelay<T>, table: UITableView )
+    func BindReload<O: ObservableType>( from: O, collection: UICollectionView )
     {
-        BindReload( from: from.asObservable(), table: table )
+        from
+            .observeOn( bindScheduler )
+            .subscribe( onNext: { _ in collection.reloadData() } )
+            .disposed( by: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, collection: UICollectionView ) where O.Element == Array<E>
+    {
+        SBDiffCalculator.BindUpdates( from: from, collection: collection, scheduler: bindScheduler, dispBag: dispBag )
     }
     
     func BindRefresh( refresh: UIRefreshControl, scrollView: UIScrollView )
@@ -136,20 +144,14 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
 
 public extension SBMVVMHolderUIBase where Self: UITableViewController
 {
-    
-    func BindReloadTable<T>( from: Observable<T> )
+    func BindReloadTable<O: ObservableType>( from: O )
     {
         BindReload( from: from, table: tableView )
     }
     
-    func BindReloadTable<T>( from: PublishRelay<T> )
+    func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) where O.Element == Array<E>
     {
-        BindReloadTable( from: from.asObservable() )
-    }
-    
-    func BindReloadTable<T>( from: BehaviorRelay<T> )
-    {
-        BindReloadTable( from: from.asObservable() )
+        BindUpdates( from: from, table: tableView, change: change, insert: insert, delete: delete, all: all )
     }
     
     func BindRefreshTable( refresh: UIRefreshControl )

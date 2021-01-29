@@ -46,7 +46,7 @@
 		FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */; };
 		FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */; };
 		FB1ED59C246B901800A9B39E /* SBDiffCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1ED59B246B901800A9B39E /* SBDiffCalculator.swift */; };
-		FB1ED59E246BA16500A9B39E /* SBDiffCalculator+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UITableView.swift */; };
+		FB1ED59E246BA16500A9B39E /* SBDiffCalculator+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UIView.swift */; };
 		FB1ED5A0246BA5D400A9B39E /* SBDiffCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1ED59F246BA5D400A9B39E /* SBDiffCalculatorTests.swift */; };
 		FB2098F923CF33C000006EF5 /* SBApiClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098F823CF33C000006EF5 /* SBApiClientProtocol.swift */; };
 		FB2098FB23CF372C00006EF5 /* SBAlamofireApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */; };
@@ -137,7 +137,7 @@
 		FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtTests.swift; sourceTree = "<group>"; };
 		FB1ED59B246B901800A9B39E /* SBDiffCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDiffCalculator.swift; sourceTree = "<group>"; };
-		FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBDiffCalculator+UITableView.swift"; sourceTree = "<group>"; };
+		FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBDiffCalculator+UIView.swift"; sourceTree = "<group>"; };
 		FB1ED59F246BA5D400A9B39E /* SBDiffCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDiffCalculatorTests.swift; sourceTree = "<group>"; };
 		FB2098F823CF33C000006EF5 /* SBApiClientProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBApiClientProtocol.swift; sourceTree = "<group>"; };
 		FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBAlamofireApiClient.swift; sourceTree = "<group>"; };
@@ -320,7 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				FB1ED59B246B901800A9B39E /* SBDiffCalculator.swift */,
-				FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UITableView.swift */,
+				FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UIView.swift */,
 				FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */,
 			);
 			path = Diff;
@@ -626,7 +626,7 @@
 				FB061B26230D519800202907 /* UIViewController+Ext.swift in Sources */,
 				FB061B20230D4CCE00202907 /* SBServiceViewModel.swift in Sources */,
 				FB061B30230D55C700202907 /* SBDowloadServiceProtocol.swift in Sources */,
-				FB1ED59E246BA16500A9B39E /* SBDiffCalculator+UITableView.swift in Sources */,
+				FB1ED59E246BA16500A9B39E /* SBDiffCalculator+UIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
