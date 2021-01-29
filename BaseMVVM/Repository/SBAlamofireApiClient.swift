@@ -77,16 +77,12 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 if let provider = self_.userInfoProvider
                 {
                     rFullHeaders[self_.tokenHeader] = provider.token
-                    print( "X-Access-Token: \(provider.token)" )
                 }
 
                 if let provider = self_.deviceInfoProvider
                 {
                     rFullHeaders[self_.deviceHeader] = provider.deviceId
-                    print( "X-Device-ID: \(provider.deviceId)" )
-                    
                     rFullHeaders[self_.deviceHeader] = provider.interfaceLanguage
-                    print( "X-User-Language: \(provider.interfaceLanguage)" )
                 }
                 
                 if let headers = headers
