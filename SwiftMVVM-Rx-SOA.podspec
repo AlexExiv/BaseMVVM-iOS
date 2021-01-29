@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 #
 
 s.name         = "SwiftMVVM-Rx-SOA"
-s.version      = "0.3.0a29"
+s.version      = "0.3.1"
 s.summary      = "Swift MVVM based on RxSwift with SOA support"
 
 # This description is used to generate tags and improve search results.
@@ -79,7 +79,7 @@ s.swift_version = "5.0"
 #  Supports git, hg, bzr, svn and HTTP.
 #
 
-s.source       = { :git => "https://github.com/AlexExiv/SwiftMVVM-Rx-SOA.git", :tag => "0.3.0a29" }
+s.source       = { :git => "https://github.com/AlexExiv/SwiftMVVM-Rx-SOA.git", :tag => "0.3.1" }
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -132,9 +132,9 @@ s.source_files  = 'BaseMVVM', 'BaseMVVM/**/*.{h,m,swift}'
 s.requires_arc = true
 
 # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-s.dependency "RxSwift", "~> 5.0"
-s.dependency "RxCocoa", "~> 5.0"
-s.dependency "RxRelay", "~> 5.0"
+s.dependency "RxSwift", "~> 5.1"
+s.dependency "RxCocoa", "~> 5.1"
+s.dependency "RxRelay", "~> 5.1"
 s.dependency "Alamofire", "~> 4.7"
 
 end
