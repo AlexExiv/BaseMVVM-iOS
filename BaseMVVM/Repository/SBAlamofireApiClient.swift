@@ -96,12 +96,14 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 
                 let sURL = "\(self_.baseURL)/\(path)";
                 #if DEBUG
-                print( "REQUEST URL - \(sURL)" );
-                print( "METHOD - \(method.rawValue)" );
+                var _debugMess = "\n\nBEGIN REQUEST \nMETHOD: \(method.rawValue) \nURL: \(sURL)"
+                //print( "REQUEST URL - \(sURL) \nMETHOD - \(method.rawValue)" );
                 if let params = params
                 {
-                    print( "PARAMETERS - \(params)" );
+                    _debugMess += "\nPARAMETERS - \(params)\n\n"
+                    //print( "PARAMETERS - \(params)" );
                 }
+                print( _debugMess )
                 #endif
                 let encoding = (method == .get || method == .delete) ? URLEncoding.default : self_.defaultEncoding
                 let rReq = Alamofire.request( sURL, method: _method, parameters: params, encoding: encoding, headers: rFullHeaders )
@@ -109,8 +111,14 @@ class SBAlamofireApiClient: SBApiClientProtocol
                         {
                             (response) in
                             #if DEBUG
-                            print( "RESPONSE - \(response.result.value)" );
-                            print( "RESPONSE CODE - \(response.response?.statusCode)" );
+                            var _debugMess = "\n\nEND REQUEST \nMETHOD: \(method.rawValue) \nURL: \(sURL) \nRESPONSE CODE: \(response.response?.statusCode ?? 0) \n\n"
+                            if let r = response.result.value
+                            {
+                                _debugMess += "RESPONSE: \(r)\n\n"
+                            }
+                            print( _debugMess )
+                            //print( "RESPONSE - \(response.result.value)" );
+                            //print( "RESPONSE CODE - \(response.response?.statusCode)" );
                             #endif
                             if 200..<400 ~= (response.response?.statusCode ?? 0) && response.result.isSuccess
                             {
