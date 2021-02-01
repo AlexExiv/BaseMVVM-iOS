@@ -34,7 +34,7 @@ public extension SBDiffCalculator
 
 public extension Single where Element == SBDiffCalculator
 {
-    public func bind( to: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) -> Disposable
+    func bind( to: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) -> Disposable
     {
         return asObservable().bind( to: to, change: change, insert: insert, delete: delete, all: all )
     }
@@ -47,7 +47,7 @@ public extension Single where Element == SBDiffCalculator
 
 public extension ObservableType where Element == SBDiffCalculator
 {
-    public func bind( to: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) -> Disposable
+    func bind( to: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) -> Disposable
     {
         return subscribe( onNext: { $0.Dispatch( to: to, change: change, insert: insert, delete: delete, all: all ) } )
     }
@@ -64,14 +64,14 @@ public extension SBDiffCalculator
     {
         from
             .take( 1 )
-            .observeOn( scheduler )
+            .observeOn( MainScheduler.instance )
             .subscribe( onNext: { _ in table.reloadData() } )
             .disposed( by: dispBag )
         
         Observable
             .zip( from, from.skip( 1 ) )
-            .flatMapLatest { SBDiffCalculator.RxCalc( oldItems: $0.0, newItems: $0.1 ) }
-            .observeOn( scheduler )
+            .concatMap { SBDiffCalculator.RxCalc( oldItems: $0.0, newItems: $0.1 ) }
+            .observeOn( MainScheduler.instance )
             .bind( to: table, change: change, insert: insert, delete: delete, all: all )
             .disposed( by: dispBag )
     }
@@ -80,14 +80,14 @@ public extension SBDiffCalculator
     {
         from
             .take( 1 )
-            .observeOn( scheduler )
+            .observeOn( MainScheduler.instance )
             .subscribe( onNext: { _ in collection.reloadData() } )
             .disposed( by: dispBag )
         
         Observable
             .zip( from, from.skip( 1 ) )
-            .flatMapLatest { SBDiffCalculator.RxCalc( oldItems: $0.0, newItems: $0.1 ) }
-            .observeOn( scheduler )
+            .concatMap { SBDiffCalculator.RxCalc( oldItems: $0.0, newItems: $0.1 ) }
+            .observeOn( MainScheduler.instance )
             .bind( to: collection )
             .disposed( by: dispBag )
     }
