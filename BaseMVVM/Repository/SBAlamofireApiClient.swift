@@ -114,7 +114,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                             var _debugMess = "\n\nEND REQUEST \nMETHOD: \(method.rawValue) \nURL: \(sURL) \nRESPONSE CODE: \(response.response?.statusCode ?? 0)"
                             if let r = response.result.value
                             {
-                                _debugMess += "RESPONSE BODY: \(r)"
+                                _debugMess += "\nRESPONSE BODY: \(r)"
                             }
                             _debugMess += "\n\n"
                             print( _debugMess )
