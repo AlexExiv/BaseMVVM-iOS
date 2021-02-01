@@ -11,7 +11,7 @@ import RxSwift
 
 public extension SBDiffCalculator
 {
-    static public func RxCalc( oldItems: SBDiffEntitySection, newItems: SBDiffEntitySection ) -> Single<SBDiffCalculator>
+    static func RxCalc( oldItems: SBDiffEntitySection, newItems: SBDiffEntitySection ) -> Single<SBDiffCalculator>
     {
         return Single.create {
             sub in
@@ -21,12 +21,12 @@ public extension SBDiffCalculator
         }
     }
     
-    static public func RxCalc( oldItems: [[SBDiffEntity]], newItems: [[SBDiffEntity]] ) -> Single<SBDiffCalculator>
+    static func RxCalc( oldItems: [[SBDiffEntity]], newItems: [[SBDiffEntity]] ) -> Single<SBDiffCalculator>
     {
         return RxCalc( oldItems: SBDefaultSection( items: oldItems ), newItems: SBDefaultSection( items: newItems ) )
     }
     
-    static public func RxCalc( oldItems: [SBDiffEntity], newItems: [SBDiffEntity] ) -> Single<SBDiffCalculator>
+    static func RxCalc( oldItems: [SBDiffEntity], newItems: [SBDiffEntity] ) -> Single<SBDiffCalculator>
     {
         return RxCalc( oldItems: [oldItems], newItems: [newItems] )
     }
@@ -39,7 +39,7 @@ public extension Single where Element == SBDiffCalculator
         return asObservable().bind( to: to, change: change, insert: insert, delete: delete, all: all )
     }
     
-    public func bind( to: UICollectionView ) -> Disposable
+    func bind( to: UICollectionView ) -> Disposable
     {
         return asObservable().bind( to: to )
     }
@@ -52,7 +52,7 @@ public extension ObservableType where Element == SBDiffCalculator
         return subscribe( onNext: { $0.Dispatch( to: to, change: change, insert: insert, delete: delete, all: all ) } )
     }
     
-    public func bind( to: UICollectionView ) -> Disposable
+    func bind( to: UICollectionView ) -> Disposable
     {
         return subscribe( onNext: { $0.Dispatch( to: to ) } )
     }
@@ -60,7 +60,7 @@ public extension ObservableType where Element == SBDiffCalculator
 
 public extension SBDiffCalculator
 {
-    static public func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, table: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil, scheduler: SchedulerType, dispBag: DisposeBag ) where O.Element == Array<E>
+    static func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, table: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil, scheduler: SchedulerType, dispBag: DisposeBag ) where O.Element == Array<E>
     {
         from
             .take( 1 )
@@ -76,7 +76,7 @@ public extension SBDiffCalculator
             .disposed( by: dispBag )
     }
     
-    static public func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, collection: UICollectionView, scheduler: SchedulerType, dispBag: DisposeBag ) where O.Element == Array<E>
+    static func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, collection: UICollectionView, scheduler: SchedulerType, dispBag: DisposeBag ) where O.Element == Array<E>
     {
         from
             .take( 1 )

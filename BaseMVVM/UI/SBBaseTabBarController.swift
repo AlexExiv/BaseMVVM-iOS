@@ -15,7 +15,7 @@ open class SBBaseTabBarController<VM: SBViewModel & SBTabViewModel>: UITabBarCon
     public var screenPreloaderCntrl: SBPreloaderControllerProtocol!
     
     public let dispBag = DisposeBag()
-    open let bindScheduler: SchedulerType = MainScheduler.asyncInstance
+    open var bindScheduler: SchedulerType = MainScheduler.asyncInstance
     
     private(set) public var viewModel: VM! = nil
     private(set) public var isInitRx = false
