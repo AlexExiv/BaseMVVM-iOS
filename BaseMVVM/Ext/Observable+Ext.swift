@@ -10,9 +10,9 @@ import Foundation
 import RxSwift
 import RxRelay
 
-extension ObservableType
+public extension ObservableType
 {
-    public func bindDistinct( to relay: BehaviorRelay<Element>, compare: @escaping (Element, Element) -> Bool ) -> Disposable
+    func bindDistinct( to relay: BehaviorRelay<Element>, compare: @escaping (Element, Element) -> Bool ) -> Disposable
     {
         subscribe( onNext:
             {
@@ -22,28 +22,47 @@ extension ObservableType
                 }
             } )
     }
+    
+    func bind( loader: BehaviorRelay<String>, message: String ) -> Observable<Element>
+    {
+        return `do`( onSubscribe: { loader.accept( message ) }, onDispose: { loader.accept( "" ) } )
+    }
 }
 
-extension ObservableType where Element: Equatable
+public extension ObservableType where Element: Equatable
 {
-    public func bindDistinct( to relay: BehaviorRelay<Element> ) -> Disposable
+    func bindDistinct( to relay: BehaviorRelay<Element> ) -> Disposable
     {
         bindDistinct( to: relay, compare: { $0 == $1 } )
     }
 }
 
-extension ObservableType where Element == Float
+public extension ObservableType where Element == Float
 {
-    public func bindDistinct( to relay: BehaviorRelay<Element>, eps: Float = 0.001 ) -> Disposable
+    func bindDistinct( to relay: BehaviorRelay<Element>, eps: Float = 0.001 ) -> Disposable
     {
         bindDistinct( to: relay, compare: { abs( $0 - $1 ) < eps } )
     }
 }
 
-extension ObservableType where Element == Double
+public extension ObservableType where Element == Double
 {
-    public func bindDistinct( to relay: BehaviorRelay<Element>, eps: Double = 0.001 ) -> Disposable
+    func bindDistinct( to relay: BehaviorRelay<Element>, eps: Double = 0.001 ) -> Disposable
     {
         bindDistinct( to: relay, compare: { abs( $0 - $1 ) < eps } )
     }
 }
+
+public extension PrimitiveSequenceType where Self.Trait == RxSwift.SingleTrait
+{
+    func bind( loader: BehaviorRelay<String>, message: String ) -> Single<Element>
+    {
+        return `do`( onSubscribe: { loader.accept( message ) }, onDispose: { loader.accept( "" ) } )
+    }
+    
+    func bind( loader: BehaviorRelay<Bool> ) -> Single<Element>
+    {
+        return `do`( onSubscribe: { loader.accept( true ) }, onDispose: { loader.accept( false ) } )
+    }
+}
+
