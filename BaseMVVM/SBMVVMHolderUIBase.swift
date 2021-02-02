@@ -17,6 +17,8 @@ public protocol SBMVVMHolderUIBase: SBMVVMHolderBase, SBBindUIProtocol
     
     func CreatePreloaderView()
     func CreateScreenPreloaderCntrl()
+    
+    func RouteTo( tag: Int, sender: Any? )
 }
 
 public extension SBMVVMHolderUIBase where Self: UIViewController
@@ -62,9 +64,17 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
             let alert = UIAlertController.DialogText( title: title, message: message )
             alert.Show( cntrl: self )
             
+        case .Show( let tag, let sender ):
+            RouteTo( tag: tag, sender: sender )
+            
         default:
             break
         }
+    }
+    
+    func RouteTo( tag: Int, sender: Any? )
+    {
+        
     }
     
     func BindReload<O: ObservableType>( from: O, table: UITableView )

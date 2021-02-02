@@ -84,6 +84,11 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
         _DispatchMessage( message: message )
     }
     
+    open func RouteTo( tag: Int, sender: Any? )
+    {
+        
+    }
+    
     open func CreatePreloaderView()
     {
         preloaderView = SBPreloaderView( withStyle: .gray )

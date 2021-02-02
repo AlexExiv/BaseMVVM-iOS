@@ -54,6 +54,12 @@
 		FB2098FF23CF5F5700006EF5 /* StringExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */; };
 		FB326B39246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */; };
 		FB43BE922538879200492795 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB43BE912538879200492795 /* Observable+Ext.swift */; };
+		FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F009925C9155F00DF06B9 /* MainViewModel.swift */; };
+		FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F009D25C9156B00DF06B9 /* MainController.swift */; };
+		FB4F00A225C915A500DF06B9 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F00A125C915A500DF06B9 /* ViewModel.swift */; };
+		FB4F00A825C9164C00DF06B9 /* SBDefaultDowloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F00A725C9164C00DF06B9 /* SBDefaultDowloadService.swift */; };
+		FB4F00AC25C9169F00DF06B9 /* SBDefaultUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F00AB25C9169F00DF06B9 /* SBDefaultUserService.swift */; };
+		FB4F00B025C9172F00DF06B9 /* SBDefaultServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F00AF25C9172F00DF06B9 /* SBDefaultServiceFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +151,12 @@
 		FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtTests.swift; sourceTree = "<group>"; };
 		FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBDiffCalculator+RxSwift.swift"; sourceTree = "<group>"; };
 		FB43BE912538879200492795 /* Observable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Ext.swift"; sourceTree = "<group>"; };
+		FB4F009925C9155F00DF06B9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		FB4F009D25C9156B00DF06B9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		FB4F00A125C915A500DF06B9 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		FB4F00A725C9164C00DF06B9 /* SBDefaultDowloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDefaultDowloadService.swift; sourceTree = "<group>"; };
+		FB4F00AB25C9169F00DF06B9 /* SBDefaultUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDefaultUserService.swift; sourceTree = "<group>"; };
+		FB4F00AF25C9172F00DF06B9 /* SBDefaultServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDefaultServiceFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +221,9 @@
 				FB012356246BBF750020C7A9 /* Assets.xcassets */,
 				FB012358246BBF750020C7A9 /* LaunchScreen.storyboard */,
 				FB01235B246BBF750020C7A9 /* Info.plist */,
+				FB4F00A125C915A500DF06B9 /* ViewModel.swift */,
+				FB4F009925C9155F00DF06B9 /* MainViewModel.swift */,
+				FB4F009D25C9156B00DF06B9 /* MainController.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -297,8 +312,11 @@
 			isa = PBXGroup;
 			children = (
 				FB061B1D230D46E200202907 /* SBServiceFactoryProtocol.swift */,
+				FB4F00AF25C9172F00DF06B9 /* SBDefaultServiceFactory.swift */,
 				FB061B21230D4E1600202907 /* SBAuthUserServiceProtocol.swift */,
+				FB4F00AB25C9169F00DF06B9 /* SBDefaultUserService.swift */,
 				FB061B2F230D55C700202907 /* SBDowloadServiceProtocol.swift */,
+				FB4F00A725C9164C00DF06B9 /* SBDefaultDowloadService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -591,8 +609,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB4F00A225C915A500DF06B9 /* ViewModel.swift in Sources */,
+				FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */,
 				FB012352246BBF740020C7A9 /* DiffController.swift in Sources */,
 				FB01234E246BBF740020C7A9 /* AppDelegate.swift in Sources */,
+				FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,10 +634,13 @@
 				FB061B1C230D460F00202907 /* UIAlertController+Ext.swift in Sources */,
 				FB061B0F230D452400202907 /* SBBaseVM.swift in Sources */,
 				FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */,
+				FB4F00B025C9172F00DF06B9 /* SBDefaultServiceFactory.swift in Sources */,
 				FB061B15230D452400202907 /* SBBindProtocol.swift in Sources */,
 				FB061B13230D452400202907 /* SBNavigationController.swift in Sources */,
 				FB2098FB23CF372C00006EF5 /* SBAlamofireApiClient.swift in Sources */,
 				FB061B12230D452400202907 /* SBPreloaderController.swift in Sources */,
+				FB4F00A825C9164C00DF06B9 /* SBDefaultDowloadService.swift in Sources */,
+				FB4F00AC25C9169F00DF06B9 /* SBDefaultUserService.swift in Sources */,
 				FB326B39246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift in Sources */,
 				FB061B0D230D452400202907 /* SBBaseController.swift in Sources */,
 				FB061B10230D452400202907 /* SBViewModel.swift in Sources */,

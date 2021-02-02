@@ -56,6 +56,11 @@ open class SBBaseController<VM: SBViewModel>: UIViewController, SBMVVMHolderProt
         _DispatchMessage( message: message )
     }
     
+    open func RouteTo( tag: Int, sender: Any? )
+    {
+        
+    }
+    
     open func CreatePreloaderView()
     {
         preloaderView = SBPreloaderView( withStyle: .gray )

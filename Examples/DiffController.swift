@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 import BaseMVVM
 
 struct Item: SBDiffEntity
@@ -67,11 +69,14 @@ class DiffController: UITableViewController
     var curInd = 0
     var curItems: [Item]! = nil
     var maxGenValue = 100
+    var rxP = PublishRelay<[Item]>()
+    let dispBag = DisposeBag()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         Reset( nil )
+        SBDiffCalculator.BindUpdates( from: rxP, table: tableView, scheduler: MainScheduler.asyncInstance, dispBag: dispBag )
     }
 
     @IBAction func Reset(_ sender: Any?)
