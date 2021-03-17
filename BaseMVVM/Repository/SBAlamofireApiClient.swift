@@ -82,7 +82,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 if let provider = self_.deviceInfoProvider
                 {
                     rFullHeaders[self_.deviceHeader] = provider.deviceId
-                    rFullHeaders[self_.deviceHeader] = provider.interfaceLanguage
+                    rFullHeaders[self_.languageHeader] = provider.interfaceLanguage
                 }
                 
                 if let headers = headers
