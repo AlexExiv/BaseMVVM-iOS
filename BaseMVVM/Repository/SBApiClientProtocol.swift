@@ -68,9 +68,9 @@ public protocol SBApiClientProtocol
     func RxDownload( path: String, store: String?, params: [String: Any]? ) -> Single<URL?>
     func RxDownload( path: String, store: String?, params: [String: Any]?, headers: [String: String]? ) -> Single<URL?>
     
-    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String ) -> Single<JsonWrapper>
-    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String, params: [String : Any]? ) -> Single<JsonWrapper>
-    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String, params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
+    func RxUpload( path: String, method: HTTPMethod, datas: [Data], names: [String], fileNames: [String], mimeTypes: [String] ) -> Single<JsonWrapper>
+    func RxUpload( path: String, method: HTTPMethod, datas: [Data], names: [String], fileNames: [String], mimeTypes: [String], params: [String : Any]? ) -> Single<JsonWrapper>
+    func RxUpload( path: String, method: HTTPMethod, datas: [Data], names: [String], fileNames: [String], mimeTypes: [String], params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
 }
 
 public struct SBApiClientFactory

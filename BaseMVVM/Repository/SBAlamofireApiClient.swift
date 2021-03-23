@@ -246,17 +246,17 @@ class SBAlamofireApiClient: SBApiClientProtocol
     }
     
     //MARK: - UPLOAD REQUESTS
-    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String ) -> Single<JsonWrapper>
+    func RxUpload( path: String, method: HTTPMethod, datas: [Data], names: [String], fileNames: [String], mimeTypes: [String] ) -> Single<JsonWrapper>
     {
-        return RxUpload( path: path, method: method, data: data, name: name, fileName: fileName, mimeType: mimeType, params: nil, headers: nil )
+        return RxUpload( path: path, method: method, datas: datas, names: names, fileNames: fileNames, mimeTypes: mimeTypes, params: nil, headers: nil )
     }
     
-    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String, params: [String : Any]? ) -> Single<JsonWrapper>
+    func RxUpload( path: String, method: HTTPMethod, datas: [Data], names: [String], fileNames: [String], mimeTypes: [String], params: [String : Any]? ) -> Single<JsonWrapper>
     {
-        return RxUpload( path: path, method: method, data: data, name: name, fileName: fileName, mimeType: mimeType, params: params, headers: nil )
+        return RxUpload( path: path, method: method, datas: datas, names: names, fileNames: fileNames, mimeTypes: mimeTypes, params: params, headers: nil )
     }
     
-    func RxUpload( path: String, method: HTTPMethod, data: Data, name: String, fileName: String, mimeType: String, params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
+    func RxUpload( path: String, method: HTTPMethod, datas: [Data], names: [String], fileNames: [String], mimeTypes: [String], params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
     {
         let _method = Alamofire.HTTPMethod( rawValue: method.rawValue )!
         return Single.create( subscribe:
@@ -312,7 +312,10 @@ class SBAlamofireApiClient: SBApiClientProtocol
                         }
                     }
                     
-                    mfd.append( data, withName: name, fileName: fileName, mimeType: mimeType )
+                    for i in 0..<datas.count
+                    {
+                        mfd.append( datas[i], withName: names[i], fileName: fileNames[i], mimeType: mimeTypes[i] )
+                    }
                 }
                 
                 let urlReq = try! URLRequest( url: sURL, method: _method, headers: rFullHeaders )
