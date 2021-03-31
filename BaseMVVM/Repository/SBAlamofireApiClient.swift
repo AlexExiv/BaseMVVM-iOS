@@ -130,7 +130,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                                     self_.userInfoProvider?.ResetLogin()
                                 }
                                 
-                                subs( .error( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
+                                subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
                             }
                     });
                 
@@ -195,7 +195,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     if let error = response.error
                     {
                         delFile = true;
-                        subs( .error( error as NSError ) );
+                        subs( .failure( error as NSError ) );
                     }
                     else if 200..<400 ~= response.response!.statusCode
                     {
@@ -207,7 +207,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                         do
                         {
                             let rJSON = try JSONSerialization.jsonObject( with: response.result.value!, options: JSONSerialization.ReadingOptions( rawValue: 0 ) );
-                            subs( .error( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: rJSON ) ) )
+                            subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: rJSON ) ) )
                         }
                         catch
                         {
@@ -238,7 +238,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
             }
             else
             {
-                subs( .error( NSError( domain: "", code: 0, userInfo: nil ) ) );
+                subs( .failure( NSError( domain: "", code: 0, userInfo: nil ) ) );
             }
             
             return Disposables.create();
@@ -343,7 +343,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                                     self_.userInfoProvider?.ResetLogin()
                                 }
                                 
-                                subs( .error( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
+                                subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
                             }
                         }
                     case .failure( let error ):
