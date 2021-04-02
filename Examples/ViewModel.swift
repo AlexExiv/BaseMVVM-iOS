@@ -9,10 +9,10 @@
 import Foundation
 import BaseMVVM
 
-class ViewModel: SBServiceViewModel<SBDefaultServiceFactory>
+class ViewModel: SBIViewModel
 {
-    override init( serviceFactory: SBDefaultServiceFactory, parent: SBViewModel? = nil )
-    {
-        super.init( serviceFactory: serviceFactory, parent: parent )
-    }
+    @Inject
+    private(set) var userService: UserServiceProtocol
+    
+    override var authUserService: SBAuthUserServiceProtocol! { userService }
 }

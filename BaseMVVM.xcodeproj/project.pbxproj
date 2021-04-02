@@ -52,6 +52,8 @@
 		FB2098FB23CF372C00006EF5 /* SBAlamofireApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */; };
 		FB2098FD23CF525200006EF5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FC23CF525200006EF5 /* String+Ext.swift */; };
 		FB2098FF23CF5F5700006EF5 /* StringExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */; };
+		FB2780E9261734CA007AD08A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2780E8261734CA007AD08A /* UserService.swift */; };
+		FB2780ED26173C20007AD08A /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2780EC26173C20007AD08A /* Animal.swift */; };
 		FB326B39246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */; };
 		FB43BE922538879200492795 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB43BE912538879200492795 /* Observable+Ext.swift */; };
 		FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F009925C9155F00DF06B9 /* MainViewModel.swift */; };
@@ -60,6 +62,12 @@
 		FB4F00A825C9164C00DF06B9 /* SBDefaultDowloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F00A725C9164C00DF06B9 /* SBDefaultDowloadService.swift */; };
 		FB4F00AC25C9169F00DF06B9 /* SBDefaultUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F00AB25C9169F00DF06B9 /* SBDefaultUserService.swift */; };
 		FB4F00B025C9172F00DF06B9 /* SBDefaultServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F00AF25C9172F00DF06B9 /* SBDefaultServiceFactory.swift */; };
+		FB692F09261730A600397E55 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F08261730A600397E55 /* Inject.swift */; };
+		FB692F0D261730B300397E55 /* ComponentsResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F0C261730B300397E55 /* ComponentsResolver.swift */; };
+		FB692F11261730EE00397E55 /* SBIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F10261730EE00397E55 /* SBIViewModel.swift */; };
+		FB692F172617325700397E55 /* SBIBaseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F162617325700397E55 /* SBIBaseVM.swift */; };
+		FB692F1D2617341200397E55 /* CommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F1C2617341200397E55 /* CommonComponents.swift */; };
+		FB692F232617344B00397E55 /* UserServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F222617344B00397E55 /* UserServiceProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +157,8 @@
 		FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBAlamofireApiClient.swift; sourceTree = "<group>"; };
 		FB2098FC23CF525200006EF5 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		FB2098FE23CF5F5700006EF5 /* StringExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtTests.swift; sourceTree = "<group>"; };
+		FB2780E8261734CA007AD08A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		FB2780EC26173C20007AD08A /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBDiffCalculator+RxSwift.swift"; sourceTree = "<group>"; };
 		FB43BE912538879200492795 /* Observable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Ext.swift"; sourceTree = "<group>"; };
 		FB4F009925C9155F00DF06B9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -157,6 +167,12 @@
 		FB4F00A725C9164C00DF06B9 /* SBDefaultDowloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDefaultDowloadService.swift; sourceTree = "<group>"; };
 		FB4F00AB25C9169F00DF06B9 /* SBDefaultUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDefaultUserService.swift; sourceTree = "<group>"; };
 		FB4F00AF25C9172F00DF06B9 /* SBDefaultServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDefaultServiceFactory.swift; sourceTree = "<group>"; };
+		FB692F08261730A600397E55 /* Inject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inject.swift; sourceTree = "<group>"; };
+		FB692F0C261730B300397E55 /* ComponentsResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsResolver.swift; sourceTree = "<group>"; };
+		FB692F10261730EE00397E55 /* SBIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBIViewModel.swift; sourceTree = "<group>"; };
+		FB692F162617325700397E55 /* SBIBaseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBIBaseVM.swift; sourceTree = "<group>"; };
+		FB692F1C2617341200397E55 /* CommonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonComponents.swift; sourceTree = "<group>"; };
+		FB692F222617344B00397E55 /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +231,9 @@
 		FB01234C246BBF740020C7A9 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				FB692F262617344F00397E55 /* Services */,
+				FB2780EC26173C20007AD08A /* Animal.swift */,
+				FB692F1C2617341200397E55 /* CommonComponents.swift */,
 				FB01234D246BBF740020C7A9 /* AppDelegate.swift */,
 				FB012351246BBF740020C7A9 /* DiffController.swift */,
 				FB012353246BBF740020C7A9 /* Main.storyboard */,
@@ -255,6 +274,7 @@
 			children = (
 				FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */,
 				FB061B17230D45B300202907 /* Podfile */,
+				FB692F072617309400397E55 /* DI */,
 				FB1ED59A246B8F5D00A9B39E /* Diff */,
 				FB061B01230D3DEE00202907 /* Ext */,
 				FB2098F723CF339B00006EF5 /* Repository */,
@@ -265,8 +285,10 @@
 				FB061B07230D452400202907 /* SBBindUIProtocol.swift */,
 				FB061B06230D452400202907 /* SBViewModel.swift */,
 				FB061B1F230D4CCE00202907 /* SBServiceViewModel.swift */,
+				FB692F10261730EE00397E55 /* SBIViewModel.swift */,
 				FB061B05230D452400202907 /* SBBaseVM.swift */,
 				FB061B31230D57F800202907 /* SBServiceBaseVM.swift */,
+				FB692F162617325700397E55 /* SBIBaseVM.swift */,
 				FB061B04230D452400202907 /* SBMVVMHolderProtocol.swift */,
 				FB061B0C230D452400202907 /* SBMVVMHolderUIBase.swift */,
 				FB061AE9230D39B300202907 /* BaseMVVM.h */,
@@ -351,6 +373,24 @@
 				FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		FB692F072617309400397E55 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				FB692F08261730A600397E55 /* Inject.swift */,
+				FB692F0C261730B300397E55 /* ComponentsResolver.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		FB692F262617344F00397E55 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FB692F222617344B00397E55 /* UserServiceProtocol.swift */,
+				FB2780E8261734CA007AD08A /* UserService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -609,11 +649,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB692F232617344B00397E55 /* UserServiceProtocol.swift in Sources */,
 				FB4F00A225C915A500DF06B9 /* ViewModel.swift in Sources */,
 				FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */,
+				FB692F1D2617341200397E55 /* CommonComponents.swift in Sources */,
+				FB2780E9261734CA007AD08A /* UserService.swift in Sources */,
 				FB012352246BBF740020C7A9 /* DiffController.swift in Sources */,
 				FB01234E246BBF740020C7A9 /* AppDelegate.swift in Sources */,
 				FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */,
+				FB2780ED26173C20007AD08A /* Animal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,17 +665,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB692F11261730EE00397E55 /* SBIViewModel.swift in Sources */,
 				FB061B14230D452400202907 /* SBBaseTableController.swift in Sources */,
 				FB061B1E230D46E200202907 /* SBServiceFactoryProtocol.swift in Sources */,
 				FB1ED59C246B901800A9B39E /* SBDiffCalculator.swift in Sources */,
 				FB02A00E237EF7940042AE84 /* SBBaseTabBarController.swift in Sources */,
 				FB061B32230D57F800202907 /* SBServiceBaseVM.swift in Sources */,
+				FB692F172617325700397E55 /* SBIBaseVM.swift in Sources */,
 				FB061B11230D452400202907 /* SBBindUIProtocol.swift in Sources */,
 				FB2098F923CF33C000006EF5 /* SBApiClientProtocol.swift in Sources */,
 				FB2098FD23CF525200006EF5 /* String+Ext.swift in Sources */,
 				FB061B0E230D452400202907 /* SBMVVMHolderProtocol.swift in Sources */,
 				FB061B1A230D460600202907 /* SBPreloaderView.swift in Sources */,
 				FB061B1C230D460F00202907 /* UIAlertController+Ext.swift in Sources */,
+				FB692F0D261730B300397E55 /* ComponentsResolver.swift in Sources */,
 				FB061B0F230D452400202907 /* SBBaseVM.swift in Sources */,
 				FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */,
 				FB4F00B025C9172F00DF06B9 /* SBDefaultServiceFactory.swift in Sources */,
@@ -642,6 +689,7 @@
 				FB4F00A825C9164C00DF06B9 /* SBDefaultDowloadService.swift in Sources */,
 				FB4F00AC25C9169F00DF06B9 /* SBDefaultUserService.swift in Sources */,
 				FB326B39246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift in Sources */,
+				FB692F09261730A600397E55 /* Inject.swift in Sources */,
 				FB061B0D230D452400202907 /* SBBaseController.swift in Sources */,
 				FB061B10230D452400202907 /* SBViewModel.swift in Sources */,
 				FB061B22230D4E1600202907 /* SBAuthUserServiceProtocol.swift in Sources */,

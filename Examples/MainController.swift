@@ -12,12 +12,14 @@ import BaseMVVM
 class MainController: SBBaseTableController<MainViewModel>
 {
     @IBOutlet weak var dialogCell: UITableViewCell!
+    @IBOutlet weak var loginCell: UITableViewCell!
     
     override func InitRx()
     {
         super.InitRx()
         
         Bind( detail: viewModel.rxDialogResult, to: dialogCell )
+        Bind( detail: viewModel.rxUserLogin, to: loginCell )
     }
     
     override func RouteTo( tag: Int, sender: Any? )
@@ -42,6 +44,9 @@ class MainController: SBBaseTableController<MainViewModel>
         {
         case 0:
             viewModel.ShowDialog()
+            
+        case 2:
+            viewModel.ToggleLogin()
             
         default:
             break

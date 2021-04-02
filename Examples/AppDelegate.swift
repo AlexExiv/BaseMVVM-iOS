@@ -13,12 +13,12 @@ import BaseMVVM
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
     var window: UIWindow?
-    var serviceFactory = SBDefaultServiceFactory()
+    var commonComps = CommonComponents( initial: true )
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
         let cntrl = UIStoryboard( name: "Main", bundle: nil ).instantiateInitialViewController() as! SBNavigationController
-        cntrl.BindVM( vm: MainViewModel( serviceFactory: serviceFactory ) )
+        cntrl.BindVM( vm: MainViewModel() )
         
         window = UIWindow()
         window?.rootViewController = cntrl

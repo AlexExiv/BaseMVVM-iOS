@@ -14,10 +14,27 @@ class MainViewModel: ViewModel
 {
     static let MESSAGE_SHOW_DIALOG = 1000
     
+    @Inject( singleton: false, lazy: true )
+    var animal: Animal
+    
     let rxDialogResult = BehaviorRelay<String>( value: "None" )
+    let rxUserLogin = BehaviorRelay<String>( value: "" )
+    
+    override init()
+    {
+        super.init()
+        
+        BindT( from: rxIsLogin, to: rxUserLogin, map: { $0 ? "YES" : "NO" } )
+    }
     
     func ShowDialog()
     {
         RouteTo( tag: MainViewModel.MESSAGE_SHOW_DIALOG )
+    }
+    
+    func ToggleLogin()
+    {
+        print( "ANIMAL NAME - \(animal.name)" )
+        userService.rxIsLogin.accept( !userService.rxIsLogin.value )
     }
 }
