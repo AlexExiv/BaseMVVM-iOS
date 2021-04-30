@@ -16,7 +16,9 @@ public extension SBDiffCalculator
         return Single.create {
             sub in
             let calc = SBDiffCalculator( oldItems: oldItems, newItems: newItems )
-            calc.AsyncCalc { sub( .success( $0 ) ) }
+            //calc.AsyncCalc { sub( .success( $0 ) ) }
+            calc.Calc()
+            sub( .success( calc ) )
             return Disposables.create()
         }
     }
@@ -70,8 +72,8 @@ public extension SBDiffCalculator
         
         Observable
             .zip( from, from.skip( 1 ) )
-            .concatMap { SBDiffCalculator.RxCalc( oldItems: $0.0, newItems: $0.1 ) }
             .observeOn( MainScheduler.instance )
+            .concatMap { SBDiffCalculator.RxCalc( oldItems: $0.0, newItems: $0.1 ) }
             .bind( to: table, change: change, insert: insert, delete: delete, all: all )
             .disposed( by: dispBag )
     }
