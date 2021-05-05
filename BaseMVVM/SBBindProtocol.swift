@@ -19,10 +19,24 @@ public protocol SBBindProtocol
 public extension SBBindProtocol
 {
     //MARK: - Bind
+    func BindT<O: ObservableType, OR: ObserverType> ( from: O, to: OR, map: @escaping (O.Element) -> OR.Element, dispBag: DisposeBag? = nil )
+    {
+        from
+            .observe( on: bindScheduler )
+            .map { map( $0 ) }
+            .bind( to: to )
+            .disposed( by: dispBag ?? self.dispBag )
+    }
+    
+    func Bind<O: ObservableType, OR: ObserverType> ( from: O, to: OR, dispBag: DisposeBag? = nil ) where O.Element == OR.Element
+    {
+        BindT( from: from, to: to, map: { $0 }, dispBag: dispBag )
+    }
+    
     func BindT<O: ObservableType, T> ( from: O, to: BehaviorRelay<T>, map: @escaping (O.Element) -> T, dispBag: DisposeBag? = nil )
     {
         from
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .map { map( $0 ) }
             .bind( to: to )
             .disposed( by: dispBag ?? self.dispBag )
@@ -31,7 +45,7 @@ public extension SBBindProtocol
     func BindT<O: ObservableType, T> ( from: O, to: PublishRelay<T>, map: @escaping (O.Element) -> T, dispBag: DisposeBag? = nil )
     {
         from
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .map { map( $0 ) }
             .bind( to: to )
             .disposed( by: dispBag ?? self.dispBag )
@@ -50,7 +64,7 @@ public extension SBBindProtocol
     func BindEquatableT<O: ObservableType, T: Equatable> ( from: O, to: BehaviorRelay<T>, map: @escaping (O.Element) -> T, dispBag: DisposeBag? = nil )
     {
         from
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .map { map( $0 ) }
             .distinctUntilChanged()
             .bindDistinct( to: to )
@@ -60,7 +74,7 @@ public extension SBBindProtocol
     func BindEquatableT<O: ObservableType, T: Equatable> ( from: O, to: PublishRelay<T>, map: @escaping (O.Element) -> T, dispBag: DisposeBag? = nil )
     {
         from
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .map { map( $0 ) }
             .distinctUntilChanged()
             .bind( to: to )
@@ -82,7 +96,7 @@ public extension SBBindProtocol
     {
         from
             .asObservable()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .distinctUntilChanged()
             .map { mapFrom( $0 ) }
             .bindDistinct( to: to )
@@ -91,7 +105,7 @@ public extension SBBindProtocol
         to
             .asObservable()
             .debounce( .milliseconds( 100 ), scheduler: MainScheduler.asyncInstance )
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             //.distinctUntilChanged()
             .skip( 1 )
             .map { mapTo( $0 ) }
@@ -109,7 +123,7 @@ public extension SBBindProtocol
     func BindAction<O: ObservableType> ( from: O, action: @escaping (O.Element) -> Void, dispBag: DisposeBag? = nil )
     {
         from
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .subscribe( onNext: { action( $0 ) } )
             .disposed( by: dispBag ?? self.dispBag )
     }
