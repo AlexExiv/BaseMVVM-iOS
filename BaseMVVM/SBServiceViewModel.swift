@@ -39,8 +39,8 @@ open class SBServiceViewModel<SF: SBServiceFactoryProtocol>: SBViewModel
         {
             return downloadService
                 .RxDownload( url: url )
-                .catchErrorJustReturn( "" )
-                .observeOn( bindScheduler )
+                .catchAndReturn( "" )
+                .observe( on: bindSyncScheduler )
         }
         
         return Single.just( "" )
@@ -52,8 +52,8 @@ open class SBServiceViewModel<SF: SBServiceFactoryProtocol>: SBViewModel
         {
             return downloadService
                 .RxDownloadImage( url: url, width: width, height: height )
-                .catchErrorJustReturn( "" )
-                .observeOn( bindScheduler )
+                .catchAndReturn( "" )
+                .observe( on: bindSyncScheduler )
         }
         
         return Single.just( "" )
