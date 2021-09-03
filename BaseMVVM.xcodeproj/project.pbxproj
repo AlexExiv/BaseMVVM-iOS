@@ -62,6 +62,12 @@
 		FB3BFF4B26E15EE700575911 /* PagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4A26E15EE700575911 /* PagesController.swift */; };
 		FB3BFF4D26E15F4C00575911 /* PageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4C26E15F4C00575911 /* PageViewModel.swift */; };
 		FB3BFF4F26E15F5C00575911 /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4E26E15F5C00575911 /* PageController.swift */; };
+		FB3BFF5826E20BD600575911 /* StepPagesMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF5226E20BD600575911 /* StepPagesMainController.swift */; };
+		FB3BFF5926E20BD600575911 /* StepPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF5326E20BD600575911 /* StepPagesController.swift */; };
+		FB3BFF5A26E20BD600575911 /* StepPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF5426E20BD600575911 /* StepPageController.swift */; };
+		FB3BFF5B26E20BD600575911 /* StepPagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF5526E20BD600575911 /* StepPagesViewModel.swift */; };
+		FB3BFF5C26E20BD600575911 /* StepPagesMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF5626E20BD600575911 /* StepPagesMainViewModel.swift */; };
+		FB3BFF5D26E20BD600575911 /* StepPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF5726E20BD600575911 /* StepPageViewModel.swift */; };
 		FB43BE922538879200492795 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB43BE912538879200492795 /* Observable+Ext.swift */; };
 		FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F009925C9155F00DF06B9 /* MainViewModel.swift */; };
 		FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F009D25C9156B00DF06B9 /* MainController.swift */; };
@@ -174,6 +180,12 @@
 		FB3BFF4A26E15EE700575911 /* PagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesController.swift; sourceTree = "<group>"; };
 		FB3BFF4C26E15F4C00575911 /* PageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewModel.swift; sourceTree = "<group>"; };
 		FB3BFF4E26E15F5C00575911 /* PageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
+		FB3BFF5226E20BD600575911 /* StepPagesMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepPagesMainController.swift; sourceTree = "<group>"; };
+		FB3BFF5326E20BD600575911 /* StepPagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepPagesController.swift; sourceTree = "<group>"; };
+		FB3BFF5426E20BD600575911 /* StepPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepPageController.swift; sourceTree = "<group>"; };
+		FB3BFF5526E20BD600575911 /* StepPagesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepPagesViewModel.swift; sourceTree = "<group>"; };
+		FB3BFF5626E20BD600575911 /* StepPagesMainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepPagesMainViewModel.swift; sourceTree = "<group>"; };
+		FB3BFF5726E20BD600575911 /* StepPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepPageViewModel.swift; sourceTree = "<group>"; };
 		FB43BE912538879200492795 /* Observable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Ext.swift"; sourceTree = "<group>"; };
 		FB4F009925C9155F00DF06B9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		FB4F009D25C9156B00DF06B9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
@@ -245,6 +257,7 @@
 		FB01234C246BBF740020C7A9 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				FB3BFF5126E20B8C00575911 /* StepPage */,
 				FB3BFF4326E15E2900575911 /* Page */,
 				FB692F262617344F00397E55 /* Services */,
 				FB2780EC26173C20007AD08A /* Animal.swift */,
@@ -402,6 +415,19 @@
 				FB3BFF4E26E15F5C00575911 /* PageController.swift */,
 			);
 			path = Page;
+			sourceTree = "<group>";
+		};
+		FB3BFF5126E20B8C00575911 /* StepPage */ = {
+			isa = PBXGroup;
+			children = (
+				FB3BFF5626E20BD600575911 /* StepPagesMainViewModel.swift */,
+				FB3BFF5226E20BD600575911 /* StepPagesMainController.swift */,
+				FB3BFF5526E20BD600575911 /* StepPagesViewModel.swift */,
+				FB3BFF5326E20BD600575911 /* StepPagesController.swift */,
+				FB3BFF5726E20BD600575911 /* StepPageViewModel.swift */,
+				FB3BFF5426E20BD600575911 /* StepPageController.swift */,
+			);
+			path = StepPage;
 			sourceTree = "<group>";
 		};
 		FB692F072617309400397E55 /* DI */ = {
@@ -680,17 +706,23 @@
 			files = (
 				FB692F232617344B00397E55 /* UserServiceProtocol.swift in Sources */,
 				FB4F00A225C915A500DF06B9 /* ViewModel.swift in Sources */,
+				FB3BFF5A26E20BD600575911 /* StepPageController.swift in Sources */,
 				FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */,
 				FB3BFF4D26E15F4C00575911 /* PageViewModel.swift in Sources */,
 				FB3BFF4926E15ED800575911 /* PagesViewModel.swift in Sources */,
 				FB3BFF4726E15E5A00575911 /* PagesMainController.swift in Sources */,
 				FB692F1D2617341200397E55 /* CommonComponents.swift in Sources */,
 				FB2780E9261734CA007AD08A /* UserService.swift in Sources */,
+				FB3BFF5D26E20BD600575911 /* StepPageViewModel.swift in Sources */,
+				FB3BFF5B26E20BD600575911 /* StepPagesViewModel.swift in Sources */,
 				FB3BFF4B26E15EE700575911 /* PagesController.swift in Sources */,
 				FB012352246BBF740020C7A9 /* DiffController.swift in Sources */,
+				FB3BFF5C26E20BD600575911 /* StepPagesMainViewModel.swift in Sources */,
 				FB01234E246BBF740020C7A9 /* AppDelegate.swift in Sources */,
 				FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */,
 				FB3BFF4526E15E4D00575911 /* PagesMainViewModel.swift in Sources */,
+				FB3BFF5926E20BD600575911 /* StepPagesController.swift in Sources */,
+				FB3BFF5826E20BD600575911 /* StepPagesMainController.swift in Sources */,
 				FB2780ED26173C20007AD08A /* Animal.swift in Sources */,
 				FB3BFF4F26E15F5C00575911 /* PageController.swift in Sources */,
 			);

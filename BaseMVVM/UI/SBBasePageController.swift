@@ -1,5 +1,5 @@
 //
-//  SBBasePageController.swift
+//  SBBasePagesController.swift
 //  BaseMVVM
 //
 //  Created by ALEXEY ABDULIN on 02.09.2021.
@@ -8,8 +8,9 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
-open class SBBasePageController<VM: SBViewModel & SBPagesViewModel>: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, SBMVVMHolderProtocol, SBMVVMHolderUIBase
+open class SBBasePagesController<VM: SBViewModel & SBPagesViewModel>: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, SBMVVMHolderProtocol, SBMVVMHolderUIBase
 {
     public var preloaderView: SBPreloaderView!
     public var screenPreloaderCntrl: SBPreloaderControllerProtocol!
@@ -48,6 +49,8 @@ open class SBBasePageController<VM: SBViewModel & SBPagesViewModel>: UIPageViewC
     }
     
     public var controllers: [UIViewController] = []
+    public var moveDirection: NavigationDirection? = nil
+    private let rxPageIndex = BehaviorRelay( value: (0, false) )
     
     override open func viewDidLoad()
     {
@@ -58,9 +61,19 @@ open class SBBasePageController<VM: SBViewModel & SBPagesViewModel>: UIPageViewC
         
         isInitRx = isInitRx || InvokeInitRx( b: viewModel != nil )
         
-        InitViewControllers()
-        BindPagesVMs( vms: viewModel.pageViewModelsArray )
-        setViewControllers( [controllers[0]], direction: .forward, animated: false, completion: nil )
+        InitPageControllers()
+        if !controllers.isEmpty
+        {
+            BindPagesVMs( vms: viewModel.pageViewModelsArray )
+            setViewControllers( [controllers[0]], direction: .forward, animated: false, completion: nil )
+        }
+        else
+        {
+            if let c = GetController( i: viewModel.rxPageIndex.value )
+            {
+                setViewControllers( [c], direction: .forward, animated: false, completion: nil )
+            }
+        }
     }
     
     override open func viewWillAppear( _ animated: Bool )
@@ -86,7 +99,11 @@ open class SBBasePageController<VM: SBViewModel & SBPagesViewModel>: UIPageViewC
             .observe( on: bindScheduler )
             .subscribe( onNext: { [weak self] in
                 guard let self = self else { return }
-                if let cntrl = self.viewControllers?.first, let index = self.controllers.firstIndex( of: cntrl ), index != $0.1
+                if self.controllers.isEmpty, self.viewControllers?.first?.view.tag != $0.1, let cntrl = self.GetController( i: $0.1 )
+                {
+                    self.setViewControllers( [cntrl], direction: $0.0 > $0.1 ? .reverse : .forward, animated: true, completion: nil )
+                }
+                else if let cntrl = self.viewControllers?.first, let index = self.controllers.firstIndex( of: cntrl ), index != $0.1
                 {
                     self.setViewControllers( [self.controllers[$0.1]], direction: $0.0 > $0.1 ? .reverse : .forward, animated: true, completion: nil )
                 }
@@ -94,9 +111,22 @@ open class SBBasePageController<VM: SBViewModel & SBPagesViewModel>: UIPageViewC
             .disposed( by: dispBag )
     }
     
-    open func InitViewControllers()
+    open func InitPageControllers()
     {
         
+    }
+    
+    open func CreatePageController( i: Int ) -> UIViewController?
+    {
+        nil
+    }
+    
+    func GetController( i: Int ) -> UIViewController?
+    {
+        let cntrl = CreatePageController( i: i )
+        cntrl?.view.tag = i
+        (cntrl as? SBMVVMHolderProtocol)?.BindVM( vm: viewModel.GetPageVM( i: i ) )
+        return cntrl
     }
     
     public func BindVM( vm: SBViewModel )
@@ -134,32 +164,34 @@ open class SBBasePageController<VM: SBViewModel & SBPagesViewModel>: UIPageViewC
     //MARK: - UIPageViewControllerDelegate
     open func pageViewController( _ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController ) -> UIViewController?
     {
-        guard let index = controllers.firstIndex( of: viewController ) else { return nil }
-        if (index - 1) < 0
+        let index = viewModel.rxPageIndex.value - 1
+        if index < 0 && !controllers.isEmpty
         {
             return nil
         }
         
-        return controllers[index - 1]
+        return controllers.isEmpty ? GetController( i: index ) : controllers[index]
     }
     
     open func pageViewController( _ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController ) -> UIViewController?
     {
-        guard let index = controllers.firstIndex( of: viewController ) else { return nil }
-        
-        let i = index + 1
-        if i >= controllers.count
+        let index = viewModel.rxPageIndex.value + 1
+        if index >= controllers.count && !controllers.isEmpty
         {
             return nil
         }
-
-        return controllers[i]
+        
+        return controllers.isEmpty ? GetController( i: index ) : controllers[index]
     }
 
     open func pageViewController( _ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool )
     {
         print( "End animation" )
-        if let cntrl = viewControllers?.first, let index = controllers.firstIndex( of: cntrl )
+        if controllers.isEmpty, let index = viewControllers?.first?.view.tag
+        {
+            viewModel.rxPageIndex.accept( index )
+        }
+        else if let cntrl = viewControllers?.first, let index = controllers.firstIndex( of: cntrl )
         {
             viewModel.rxPageIndex.accept( index )
         }

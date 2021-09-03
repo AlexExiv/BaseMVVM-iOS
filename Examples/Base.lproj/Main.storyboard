@@ -105,6 +105,26 @@
                                             <segue destination="9SM-KK-0a8" kind="show" identifier="PagesMainController" id="xL5-mX-Q2y"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="eL4-Lf-3VB" style="IBUITableViewCellStyleDefault" id="48b-9q-Dgi">
+                                        <rect key="frame" x="0.0" y="198.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="48b-9q-Dgi" id="GFV-LS-RkK">
+                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Show step pages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eL4-Lf-3VB">
+                                                    <rect key="frame" x="20" y="0.0" width="356.5" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="JPA-D2-XCR" kind="show" identifier="StepPagesMainController" id="GMt-xU-QK3"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -280,6 +300,91 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oJM-SX-QQQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2832" y="58"/>
+        </scene>
+        <!--Page-->
+        <scene sceneID="jrq-oB-UyT">
+            <objects>
+                <viewController storyboardIdentifier="StepPagesMainController" id="JPA-D2-XCR" customClass="StepPagesMainController" customModule="Examples" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bao-Cx-hOc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LR4-Eq-QmT">
+                                <rect key="frame" x="0.0" y="88" width="414" height="700"/>
+                                <connections>
+                                    <segue destination="fWv-d0-N2z" kind="embed" identifier="StepPagesController" id="Bbx-mF-1Qg"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="96o-JJ-3Re">
+                                <rect key="frame" x="16" y="804" width="382" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="6IQ-Qx-KKI"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="Reset:" destination="JPA-D2-XCR" eventType="touchUpInside" id="mid-lu-Nub"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="a3C-ae-ouk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="a3C-ae-ouk" firstAttribute="bottom" secondItem="96o-JJ-3Re" secondAttribute="bottom" constant="16" id="4zS-xF-5Vp"/>
+                            <constraint firstItem="96o-JJ-3Re" firstAttribute="top" secondItem="LR4-Eq-QmT" secondAttribute="bottom" constant="16" id="WkR-IX-p4A"/>
+                            <constraint firstItem="a3C-ae-ouk" firstAttribute="trailing" secondItem="LR4-Eq-QmT" secondAttribute="trailing" id="fgr-Vz-UXz"/>
+                            <constraint firstItem="LR4-Eq-QmT" firstAttribute="leading" secondItem="a3C-ae-ouk" secondAttribute="leading" id="ibp-Lv-EW1"/>
+                            <constraint firstItem="LR4-Eq-QmT" firstAttribute="top" secondItem="a3C-ae-ouk" secondAttribute="top" id="lBK-L9-Yiw"/>
+                            <constraint firstItem="a3C-ae-ouk" firstAttribute="trailing" secondItem="96o-JJ-3Re" secondAttribute="trailing" constant="16" id="lxY-pR-vCF"/>
+                            <constraint firstItem="96o-JJ-3Re" firstAttribute="leading" secondItem="a3C-ae-ouk" secondAttribute="leading" constant="16" id="pFo-MJ-0kB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Page" id="djB-x9-xfO"/>
+                    <connections>
+                        <outlet property="resetBtn" destination="96o-JJ-3Re" id="l5v-Om-KAe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FFQ-qo-30u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-907" y="1487"/>
+        </scene>
+        <!--Step Pages Controller-->
+        <scene sceneID="UZY-hc-dnr">
+            <objects>
+                <pageViewController storyboardIdentifier="StepPagesController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" doubleSided="YES" id="fWv-d0-N2z" customClass="StepPagesController" customModule="Examples" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AXG-ix-zip" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-68" y="1487"/>
+        </scene>
+        <!--Step Page Controller-->
+        <scene sceneID="ZFt-Go-7A3">
+            <objects>
+                <viewController storyboardIdentifier="StepPageController" id="dhF-de-BNh" customClass="StepPageController" customModule="Examples" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="55h-8y-Tzj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylU-wV-UZk">
+                                <rect key="frame" x="16" y="436.5" width="382" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aym-tj-jGM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aym-tj-jGM" firstAttribute="trailing" secondItem="ylU-wV-UZk" secondAttribute="trailing" constant="16" id="GV3-4Q-xlb"/>
+                            <constraint firstItem="ylU-wV-UZk" firstAttribute="centerY" secondItem="55h-8y-Tzj" secondAttribute="centerY" id="ZkV-uS-Iwd"/>
+                            <constraint firstItem="ylU-wV-UZk" firstAttribute="leading" secondItem="aym-tj-jGM" secondAttribute="leading" constant="16" id="emR-AR-yIS"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="titleLab" destination="ylU-wV-UZk" id="tyF-GV-EwM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ies-4O-TsW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="683" y="1487"/>
         </scene>
     </scenes>
     <resources>

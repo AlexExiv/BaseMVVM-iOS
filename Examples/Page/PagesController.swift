@@ -9,7 +9,7 @@
 import UIKit
 import BaseMVVM
 
-class PagesController: SBBasePageController<PagesViewModel>
+class PagesController: SBBasePagesController<PagesViewModel>
 {
     override func viewDidLoad()
     {
@@ -21,7 +21,7 @@ class PagesController: SBBasePageController<PagesViewModel>
         super.setViewControllers(viewControllers, direction: direction, animated: animated, completion: completion)
     }
     
-    override func InitViewControllers()
+    override func InitPageControllers()
     {
         for _ in viewModel.pageViewModelsArray.indices
         {

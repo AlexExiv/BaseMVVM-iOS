@@ -111,4 +111,13 @@ public protocol SBPagesViewModel
 {
     var pageViewModelsArray: [SBViewModel] { get }
     var rxPageIndex: BehaviorRelay<Int> { get }
+    func GetPageVM( i: Int ) -> SBViewModel
+}
+
+public extension SBPagesViewModel
+{
+    func GetPageVM( i: Int ) -> SBViewModel
+    {
+        preconditionFailure( "GetPageVM was not implemented" )
+    }
 }

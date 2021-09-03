@@ -33,6 +33,8 @@ class MainViewModel: ViewModel
         {
         case "PagesMainController":
             return PagesMainViewModel()
+        case "StepPagesMainController":
+            return StepPagesMainViewModel()
         default:
             return super.GetChildVM( id: id )
         }
