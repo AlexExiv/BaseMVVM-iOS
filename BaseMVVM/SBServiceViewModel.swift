@@ -59,3 +59,10 @@ open class SBServiceViewModel<SF: SBServiceFactoryProtocol>: SBViewModel
         return Single.just( "" )
     }
 }
+
+open class SBServicePageViewModel<SF: SBServiceFactoryProtocol>: SBServiceViewModel<SF>, SBPagesViewModel
+{
+    open var pageViewModelsArray: [SBViewModel] { preconditionFailure( "You hate implement the pageViewModelsArray property" ) }
+    
+    public let rxPageIndex = BehaviorRelay<Int>( value: 0 )
+}

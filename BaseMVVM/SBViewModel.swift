@@ -106,3 +106,9 @@ public extension SBTabViewModel
     var tabViewModelsMap: [Int: SBViewModel]? { nil }
     var tabViewModelsArray: [SBViewModel]? { nil }
 }
+
+public protocol SBPagesViewModel
+{
+    var pageViewModelsArray: [SBViewModel] { get }
+    var rxPageIndex: BehaviorRelay<Int> { get }
+}

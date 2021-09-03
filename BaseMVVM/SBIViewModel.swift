@@ -56,3 +56,10 @@ open class SBIViewModel: SBViewModel
         return Single.just( "" )
     }
 }
+
+open class SBIPageViewModel: SBIViewModel, SBPagesViewModel
+{
+    open var pageViewModelsArray: [SBViewModel] { preconditionFailure( "You hate implement the pageViewModelsArray property" ) }
+    
+    public let rxPageIndex = BehaviorRelay<Int>( value: 0 )
+}

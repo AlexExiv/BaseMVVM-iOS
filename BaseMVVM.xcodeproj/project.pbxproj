@@ -55,6 +55,13 @@
 		FB2780E9261734CA007AD08A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2780E8261734CA007AD08A /* UserService.swift */; };
 		FB2780ED26173C20007AD08A /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2780EC26173C20007AD08A /* Animal.swift */; };
 		FB326B39246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */; };
+		FB3BFF4226E14D0600575911 /* SBBasePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4126E14D0600575911 /* SBBasePageController.swift */; };
+		FB3BFF4526E15E4D00575911 /* PagesMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4426E15E4D00575911 /* PagesMainViewModel.swift */; };
+		FB3BFF4726E15E5A00575911 /* PagesMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4626E15E5A00575911 /* PagesMainController.swift */; };
+		FB3BFF4926E15ED800575911 /* PagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4826E15ED800575911 /* PagesViewModel.swift */; };
+		FB3BFF4B26E15EE700575911 /* PagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4A26E15EE700575911 /* PagesController.swift */; };
+		FB3BFF4D26E15F4C00575911 /* PageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4C26E15F4C00575911 /* PageViewModel.swift */; };
+		FB3BFF4F26E15F5C00575911 /* PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BFF4E26E15F5C00575911 /* PageController.swift */; };
 		FB43BE922538879200492795 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB43BE912538879200492795 /* Observable+Ext.swift */; };
 		FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F009925C9155F00DF06B9 /* MainViewModel.swift */; };
 		FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4F009D25C9156B00DF06B9 /* MainController.swift */; };
@@ -160,6 +167,13 @@
 		FB2780E8261734CA007AD08A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FB2780EC26173C20007AD08A /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		FB326B38246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBDiffCalculator+RxSwift.swift"; sourceTree = "<group>"; };
+		FB3BFF4126E14D0600575911 /* SBBasePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBBasePageController.swift; sourceTree = "<group>"; };
+		FB3BFF4426E15E4D00575911 /* PagesMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesMainViewModel.swift; sourceTree = "<group>"; };
+		FB3BFF4626E15E5A00575911 /* PagesMainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesMainController.swift; sourceTree = "<group>"; };
+		FB3BFF4826E15ED800575911 /* PagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesViewModel.swift; sourceTree = "<group>"; };
+		FB3BFF4A26E15EE700575911 /* PagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesController.swift; sourceTree = "<group>"; };
+		FB3BFF4C26E15F4C00575911 /* PageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewModel.swift; sourceTree = "<group>"; };
+		FB3BFF4E26E15F5C00575911 /* PageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageController.swift; sourceTree = "<group>"; };
 		FB43BE912538879200492795 /* Observable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Ext.swift"; sourceTree = "<group>"; };
 		FB4F009925C9155F00DF06B9 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		FB4F009D25C9156B00DF06B9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
@@ -231,6 +245,7 @@
 		FB01234C246BBF740020C7A9 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				FB3BFF4326E15E2900575911 /* Page */,
 				FB692F262617344F00397E55 /* Services */,
 				FB2780EC26173C20007AD08A /* Animal.swift */,
 				FB692F1C2617341200397E55 /* CommonComponents.swift */,
@@ -351,6 +366,7 @@
 				FB061B03230D452300202907 /* SBBaseController.swift */,
 				FB061B0A230D452400202907 /* SBBaseTableController.swift */,
 				FB02A00D237EF7940042AE84 /* SBBaseTabBarController.swift */,
+				FB3BFF4126E14D0600575911 /* SBBasePageController.swift */,
 				FB061B08230D452400202907 /* SBPreloaderController.swift */,
 			);
 			path = UI;
@@ -373,6 +389,19 @@
 				FB2098FA23CF372C00006EF5 /* SBAlamofireApiClient.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		FB3BFF4326E15E2900575911 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				FB3BFF4426E15E4D00575911 /* PagesMainViewModel.swift */,
+				FB3BFF4626E15E5A00575911 /* PagesMainController.swift */,
+				FB3BFF4826E15ED800575911 /* PagesViewModel.swift */,
+				FB3BFF4A26E15EE700575911 /* PagesController.swift */,
+				FB3BFF4C26E15F4C00575911 /* PageViewModel.swift */,
+				FB3BFF4E26E15F5C00575911 /* PageController.swift */,
+			);
+			path = Page;
 			sourceTree = "<group>";
 		};
 		FB692F072617309400397E55 /* DI */ = {
@@ -652,12 +681,18 @@
 				FB692F232617344B00397E55 /* UserServiceProtocol.swift in Sources */,
 				FB4F00A225C915A500DF06B9 /* ViewModel.swift in Sources */,
 				FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */,
+				FB3BFF4D26E15F4C00575911 /* PageViewModel.swift in Sources */,
+				FB3BFF4926E15ED800575911 /* PagesViewModel.swift in Sources */,
+				FB3BFF4726E15E5A00575911 /* PagesMainController.swift in Sources */,
 				FB692F1D2617341200397E55 /* CommonComponents.swift in Sources */,
 				FB2780E9261734CA007AD08A /* UserService.swift in Sources */,
+				FB3BFF4B26E15EE700575911 /* PagesController.swift in Sources */,
 				FB012352246BBF740020C7A9 /* DiffController.swift in Sources */,
 				FB01234E246BBF740020C7A9 /* AppDelegate.swift in Sources */,
 				FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */,
+				FB3BFF4526E15E4D00575911 /* PagesMainViewModel.swift in Sources */,
 				FB2780ED26173C20007AD08A /* Animal.swift in Sources */,
+				FB3BFF4F26E15F5C00575911 /* PageController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +721,7 @@
 				FB061B13230D452400202907 /* SBNavigationController.swift in Sources */,
 				FB2098FB23CF372C00006EF5 /* SBAlamofireApiClient.swift in Sources */,
 				FB061B12230D452400202907 /* SBPreloaderController.swift in Sources */,
+				FB3BFF4226E14D0600575911 /* SBBasePageController.swift in Sources */,
 				FB4F00A825C9164C00DF06B9 /* SBDefaultDowloadService.swift in Sources */,
 				FB4F00AC25C9169F00DF06B9 /* SBDefaultUserService.swift in Sources */,
 				FB326B39246C0C7100A821C4 /* SBDiffCalculator+RxSwift.swift in Sources */,

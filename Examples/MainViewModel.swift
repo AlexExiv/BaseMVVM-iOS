@@ -27,6 +27,17 @@ class MainViewModel: ViewModel
         BindT( from: rxIsLogin, to: rxUserLogin, map: { $0 ? "YES" : "NO" } )
     }
     
+    override func GetChildVM( id: String, sender: Any? = nil ) -> SBViewModel
+    {
+        switch id
+        {
+        case "PagesMainController":
+            return PagesMainViewModel()
+        default:
+            return super.GetChildVM( id: id )
+        }
+    }
+    
     func ShowDialog()
     {
         RouteTo( tag: MainViewModel.MESSAGE_SHOW_DIALOG )
