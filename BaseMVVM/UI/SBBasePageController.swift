@@ -124,8 +124,8 @@ open class SBBasePagesController<VM: SBViewModel & SBPagesViewModel>: UIPageView
     func GetController( i: Int ) -> UIViewController?
     {
         let cntrl = CreatePageController( i: i )
-        cntrl?.view.tag = i
         (cntrl as? SBMVVMHolderProtocol)?.BindVM( vm: viewModel.GetPageVM( i: i ) )
+        cntrl?.view.tag = i
         return cntrl
     }
     
