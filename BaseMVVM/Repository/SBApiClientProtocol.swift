@@ -39,6 +39,7 @@ public protocol SBApiDeviceInfoProvider
 }
 
 public typealias ErrorDispatcher = (Int, JsonWrapper) -> String
+public typealias ErrorExtraDispatcher = (Int, JsonWrapper) -> [String: Any]
 
 public enum HTTPMethod: String
 {
@@ -53,6 +54,7 @@ public protocol SBApiClientProtocol
     var deviceHeader: String { get set }
     var languageHeader: String { get set }
     var errorDispatcher: ErrorDispatcher? { get set }
+    var errorExtraDispatcher: ErrorExtraDispatcher? { get set }
     
     func RegisterProvider( user: SBApiUserInfoProvider )
     func RegisterProvider( device: SBApiDeviceInfoProvider )

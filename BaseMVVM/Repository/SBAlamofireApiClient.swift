@@ -25,6 +25,8 @@ class SBAlamofireApiClient: SBApiClientProtocol
     var languageHeader: String = "X-User-Language"
     
     var errorDispatcher: ErrorDispatcher? = nil
+    var errorExtraDispatcher: ErrorExtraDispatcher? = nil
+    
     var userInfoProvider: SBApiUserInfoProvider? = nil
     var deviceInfoProvider: SBApiDeviceInfoProvider? = nil
     
@@ -363,6 +365,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
     {
         var message = "";
         var errStatus = 0;
+        var userInfo = [String: Any]()
         
         if let error = error
         {
@@ -390,12 +393,19 @@ class SBAlamofireApiClient: SBApiClientProtocol
             {
                 message = "Неизвестная ошибка";
             }
+            
+            userInfo[ERROR_MESSAGE_KEY] = message
+            
+            if let dispatcher = errorExtraDispatcher, let json = json
+            {
+                userInfo.Merge( src: dispatcher( status, JsonWrapper( result: json ) ) )
+            }
         }
         else
         {
             message = "Неизвестная ошибка";
         }
         
-        return NSError( domain: message, code: errStatus, userInfo: [ERROR_MESSAGE_KEY : message] );
+        return NSError( domain: message, code: errStatus, userInfo: userInfo );
     }
 }
