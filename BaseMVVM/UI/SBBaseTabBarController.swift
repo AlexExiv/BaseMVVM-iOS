@@ -49,6 +49,7 @@ open class SBBaseTabBarController<VM: SBViewModel & SBTabViewModel>: UITabBarCon
     //MARK: - MVVM
     open func InitRx()
     {
+        InvokeInitPermanentMessages().disposed( by: dispBag )
         BindScreenLoading()
     }
     

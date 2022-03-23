@@ -91,6 +91,7 @@ open class SBBasePagesController<VM: SBViewModel & SBPagesViewModel>: UIPageView
     //MARK: - MVVM
     open func InitRx()
     {
+        InvokeInitPermanentMessages().disposed( by: dispBag )
         BindScreenLoading()
         
         Observable

@@ -63,6 +63,7 @@ open class SBBaseTableController<VM: SBViewModel>: UITableViewController, SBMVVM
     //MARK: - MVVM
     open func InitRx()
     {
+        InvokeInitPermanentMessages().disposed( by: dispBag )
         BindLoading( table: tableView )
         BindScreenLoading()
     }

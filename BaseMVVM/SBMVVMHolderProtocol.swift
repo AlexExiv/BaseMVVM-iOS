@@ -43,7 +43,16 @@ extension SBMVVMHolderBase where Self: AnyObject
         return viewModel
             .rxMessages
             .asObservable()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
+            .subscribe( onNext: { [weak self] in self?.DispatchMessage( message: $0 ) } )
+    }
+    
+    func InvokeInitPermanentMessages() -> Disposable
+    {
+        return viewModel
+            .rxPermanentMessages
+            .asObservable()
+            .observe( on: bindScheduler )
             .subscribe( onNext: { [weak self] in self?.DispatchMessage( message: $0 ) } )
     }
     

@@ -42,6 +42,7 @@ open class SBBaseController<VM: SBViewModel>: UIViewController, SBMVVMHolderProt
     //MARK: - MVVM
     open func InitRx()
     {
+        InvokeInitPermanentMessages().disposed( by: dispBag )
         BindScreenLoading()
     }
     

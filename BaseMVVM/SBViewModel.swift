@@ -20,6 +20,7 @@ open class SBViewModel: SBBindProtocol
     private(set) weak var parent: SBViewModel?
     
     public let rxMessages = PublishRelay<Message>()
+    public let rxPermanentMessages = PublishRelay<Message>()
     
     public let rxIsLogin = BehaviorRelay( value: false )
     public let rxLoading = BehaviorRelay( value: false )
@@ -48,19 +49,19 @@ open class SBViewModel: SBBindProtocol
     open func SendClose()
     {
         rxScreenLoading.accept( "" )
-        rxMessages.accept( .Close )
+        rxPermanentMessages.accept( .Close )
     }
     
     open func SendCloseScenario()
     {
         rxScreenLoading.accept( "" )
-        rxMessages.accept( .CloseScenario )
+        rxPermanentMessages.accept( .CloseScenario )
     }
     
     open func SendClose2Top()
     {
         rxScreenLoading.accept( "" )
-        rxMessages.accept( .Close2Top )
+        rxPermanentMessages.accept( .Close2Top )
     }
     
     open func SendMessage( title: String = "", message: String = "" )
