@@ -42,7 +42,12 @@ class MainViewModel: ViewModel
     
     func ShowDialog()
     {
-        RouteTo( tag: MainViewModel.MESSAGE_SHOW_DIALOG )
+        ShowAlertText(title: "Title", message: "Message", positive: "Set", negative: "Cancel", placeholder: "Placeholder", text: "" ) { [weak self] in self?.rxDialogResult.accept( $0.btn == .positive ? $0.text : "Canceled" ) }
+    }
+    
+    func ShowTestAlert()
+    {
+        ShowAlert( title: "Test", message: "Message", positive: "Yes", negative: "No" ) { [weak self] in self?.rxDialogResult.accept( $0 == .positive ? "Positive" : "Negative" ) }
     }
     
     func ToggleLogin()

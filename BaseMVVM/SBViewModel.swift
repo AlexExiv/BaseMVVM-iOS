@@ -14,7 +14,12 @@ open class SBViewModel: SBBindProtocol
 {
     public enum Message
     {
-        case Close, CloseScenario, Close2Top, Message( title: String, message: String ), Error( error: String ), Custom( tag: Int, userInfo: Any? ), Show( tag: Int, sender: Any? = nil )
+        case Close, CloseScenario, Close2Top, Message( title: String, message: String ), Error( error: String ), Custom( tag: Int, userInfo: Any? ), Show( tag: Int, sender: Any? = nil ), Alert( title: String? = nil, message: String, buttons: [String], placeholder: String? = nil, text: String? = nil, result: ((btn: Int, text: String)) -> Void )
+    }
+    
+    public enum AlertButton: Int
+    {
+        case positive = 0, negative, neutral
     }
     
     private(set) weak var parent: SBViewModel?
@@ -94,6 +99,30 @@ open class SBViewModel: SBBindProtocol
     {
         rxMessages.accept( .Custom( tag: tag, userInfo: userInfo ) )
     }
+    
+    open func ShowAlert( title: String? = nil, message: String, positive: String, negative: String? = nil, neutral: String? = nil, result: ((SBViewModel.AlertButton) -> Void)? = nil )
+    {
+        var buttons = [positive]
+        if let n = negative
+        {
+            buttons.append( n )
+        }
+        if let n = neutral
+        {
+            buttons.append( n )
+        }
+        
+        rxMessages.accept( .Alert( title: title, message: message, buttons: buttons, result: { result?( SBViewModel.AlertButton( rawValue: $0.btn )! ) } ) )
+    }
+    
+    open func ShowAlertText( title: String? = nil, message: String, positive: String, negative: String, placeholder: String? = nil, text: String? = nil, result: (((btn: SBViewModel.AlertButton, text: String)) -> Void)? = nil )
+    {
+        let buttons = [positive, negative]
+
+        rxMessages.accept( .Alert( title: title, message: message, buttons: buttons, placeholder: placeholder ?? "", text: text ?? "", result: { result?( (SBViewModel.AlertButton( rawValue: $0.btn )!, $0.text) ) } ) )
+    }
+    
+    
 }
 
 public protocol SBTabViewModel

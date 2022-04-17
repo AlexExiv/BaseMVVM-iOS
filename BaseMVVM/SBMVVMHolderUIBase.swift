@@ -67,6 +67,20 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
         case .Show( let tag, let sender ):
             RouteTo( tag: tag, sender: sender )
             
+        case .Alert( let title, let message, let buttons, let placeholder, let text, let result ):
+            let alert = UIAlertController( title: title, message: message, preferredStyle: .alert )
+            if let text = text
+            {
+                alert.addTextField
+                {
+                    $0.text = text
+                    $0.placeholder = placeholder
+                }
+            }
+            
+            buttons.enumerated().forEach { b in alert.addAction( UIAlertAction( title: b.element, style: .default, handler: { _ in result( (b.offset, alert.textFields?.first?.text ?? "") ) } ) ) }
+            alert.Show( cntrl: self )
+            
         default:
             break
         }
