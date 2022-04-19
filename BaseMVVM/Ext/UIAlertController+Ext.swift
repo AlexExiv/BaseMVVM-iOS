@@ -83,13 +83,13 @@ public extension UIAlertController
     
     func Prepare( item: UIBarButtonItem? = nil, sourceView: UIView? = nil, sourceRect: CGRect = CGRect() ) -> UIAlertController
     {
-        if let sourceView = sourceView, UI_USER_INTERFACE_IDIOM() == .pad, let popover = popoverPresentationController
+        if let sourceView = sourceView, UIDevice.current.userInterfaceIdiom == .pad, let popover = popoverPresentationController
         {
             popover.sourceView = sourceView;
             popover.sourceRect = sourceRect;
         }
         
-        if let item = item, UI_USER_INTERFACE_IDIOM() == .pad, let popover = popoverPresentationController
+        if let item = item, UIDevice.current.userInterfaceIdiom == .pad, let popover = popoverPresentationController
         {
             popover.barButtonItem = item;
         }
