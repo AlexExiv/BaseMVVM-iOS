@@ -66,72 +66,128 @@ class DiffController: UITableViewController
                     Item( id: 6, value: "Test 6" ),
                     Item( id: 9, value: "Test 7" )]]
 
+    let allItems1 = [[Item( id: 10, value: "Test 10" ),
+                    Item( id: 20, value: "Test 20" ),
+                    Item( id: 30, value: "Test 30" ),
+                    Item( id: 40, value: "Test 40" )],
+                    
+                    [Item( id: 30, value: "Test 30" ),
+                     Item( id: 10, value: "Test 10" ),
+                     Item( id: 40, value: "Test 40" ),
+                     Item( id: 20, value: "Test 20" )],
+    
+                    [Item( id: 10, value: "Test new01" ),
+                    Item( id: 20, value: "Test 20" ),
+                    Item( id: 40, value: "Test new40" ),
+                    Item( id: 50, value: "Test 50" )],
+                    
+                    
+                    [Item( id: 10, value: "Test new10" ),
+                    Item( id: 20, value: "Test 20" ),
+                    Item( id: 30, value: "Test new30" ),
+                    Item( id: 50, value: "Test 50" )],
+                    
+                    [Item( id: 10, value: "Test new10" ),
+                    Item( id: 20, value: "Test 20" ),
+                    Item( id: 40, value: "Test new40" ),
+                    Item( id: 50, value: "Test 50" ),
+                    Item( id: 60, value: "Test 60" ),
+                    Item( id: 70, value: "Test 70" )],
+    
+                    [Item( id: 30, value: "Test new10" ),
+                    Item( id: 10, value: "Test 20" ),
+                    Item( id: 40, value: "Test new40" ),
+                    Item( id: 20, value: "Test 50" ),
+                    Item( id: 60, value: "Test 60" ),
+                    Item( id: 90, value: "Test 70" )]]
+
     var curInd = 0
     var curItems: [Item]! = nil
     var maxGenValue = 100
-    var rxP = PublishRelay<[Item]>()
+    var rxP = BehaviorRelay<[[Item]]>( value: [] )
     let dispBag = DisposeBag()
+    let dataProvider = SBArrayDataProvider<Item>( logging: true )
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         Reset( nil )
-        SBDiffCalculator.BindUpdates( from: rxP, table: tableView, scheduler: MainScheduler.asyncInstance, dispBag: dispBag )
+        //SBDiffCalculator.BindUpdates( from: rxP, table: tableView, scheduler: MainScheduler.asyncInstance, dispBag: dispBag )
+        
+        rxP
+            .bind( to: dataProvider, tableView: tableView )
+            .disposed( by: dispBag )
     }
 
     @IBAction func Reset(_ sender: Any?)
     {
         curInd = 0
-        curItems = allItems[0]
-        tableView.reloadData()
+        rxP.accept( [allItems[0], allItems1[0]] )
+        //curItems = allItems[0]
+        //tableView.reloadData()
     }
     
     @IBAction func Left(_ sender: Any)
     {
         curInd = (allItems.count + curInd - 1)%allItems.count
-        SetData( items: allItems[curInd] )
+        SetData( items: [allItems[curInd], allItems1[curInd]] )
     }
     
     @IBAction func Right(_ sender: Any)
     {
         curInd = (allItems.count + curInd + 1)%allItems.count
-        SetData( items: allItems[curInd] )
+        SetData( items: [allItems[curInd], allItems1[curInd]] )
     }
     
-    func SetData( items: [Item] )
+    func SetData( items: [[Item]] )
     {
-        let calc = SBDiffCalculator( oldItems: curItems, newItems: items )
+        rxP.accept( items )
+        /*let calc = SBDiffCalculator( oldItems: curItems, newItems: items )
         curItems = items
         calc.Calc()
-        calc.Dispatch( to: tableView )
+        calc.Dispatch( to: tableView )*/
     }
     
     func AddData( items: [Item] )
     {
+        var values = rxP.value[1]
+        values.append( contentsOf: items )
+        rxP.accept( [rxP.value[0], values] )
+        /*
         let old = curItems ?? []
         curItems.append( contentsOf: items )
         let calc = SBDiffCalculator( oldItems: old, newItems: curItems )
         //curItems = items
         calc.Calc()
-        calc.Dispatch( to: tableView )
+        calc.Dispatch( to: tableView )*/
     }
     
     //MARK: -
+    override func numberOfSections( in tableView: UITableView ) -> Int
+    {
+        dataProvider.count
+    }
+    
     override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int
     {
-        return curItems?.count ?? 0
+        dataProvider[section].count
+    }
+    
+    override func tableView( _ tableView: UITableView, titleForHeaderInSection section: Int ) -> String?
+    {
+        "Section \(section)"
     }
     
     override func tableView( _ tableView: UITableView, cellForRowAt indexPath: IndexPath ) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell( withIdentifier: "Cell", for: indexPath )
-        cell.textLabel?.text = curItems[indexPath.row].value
+        cell.textLabel?.text = dataProvider[indexPath.section][indexPath.row].value
         return cell
     }
     
     override func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath )
     {
-        if indexPath.row == curItems.count - 1
+        if indexPath.row == dataProvider[dataProvider.count - 1].count - 1
         {
             DispatchQueue.main.async {
                 let items = Array( self.maxGenValue..<(self.maxGenValue + 100) ).map { Item( id: $0, value: "Generate \($0)" ) }

@@ -91,6 +91,7 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
         
     }
     
+    //MARK: - UPDATES TABLES
     func BindReload<O: ObservableType>( from: O, table: UITableView )
     {
         BindAction( from: from, action: { _ in table.reloadData() } )
@@ -101,10 +102,39 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
         SBDiffCalculator.BindUpdates( from: from, table: table, change: change, insert: insert, delete: delete, all: all, scheduler: bindScheduler, dispBag: dispBag )
     }
     
+    func BindUpdates<O: ObservableType, VM: SBDiffEntity>( from: O, to: SBArrayDataProvider<VM>, tableView: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) where O.Element == Array<VM>
+    {
+        from
+            .bind( to: to, tableView: tableView, change: change, insert: insert, delete: delete, all: all )
+            .disposed( by: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, VM: SBDiffEntity>( from: O, to: SBArrayDataProvider<VM>, tableView: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) where O.Element == Array<[VM]>
+    {
+        from
+            .bind( to: to, tableView: tableView, change: change, insert: insert, delete: delete, all: all )
+            .disposed( by: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, K: Hashable, VM: SBDiffEntity>( from: O, to: SBDictionaryDataProvider<K, VM>, tableView: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil, sort: @escaping (Dictionary<K, [VM]>.Keys) -> [K] ) where O.Element == Dictionary<K, [VM]>
+    {
+        from
+            .bind( to: to, tableView: tableView, change: change, insert: insert, delete: delete, all: all, sort: sort )
+            .disposed( by: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, HVM, VM: SBDiffEntity>( from: O, to: SBPairDataProvider<HVM, VM>, tableView: UITableView, change: UITableView.RowAnimation = .fade, insert: UITableView.RowAnimation = .left, delete: UITableView.RowAnimation = .right, all: UITableView.RowAnimation? = nil ) where O.Element == Array<(HVM, [VM])>
+    {
+        from
+            .bind( to: to, tableView: tableView, change: change, insert: insert, delete: delete, all: all )
+            .disposed( by: dispBag )
+    }
+    
+    //MARK: - UPDATE COLLECTIONS
     func BindReload<O: ObservableType>( from: O, collection: UICollectionView )
     {
         from
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .subscribe( onNext: { _ in collection.reloadData() } )
             .disposed( by: dispBag )
     }
@@ -112,6 +142,34 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
     func BindUpdates<O: ObservableType, E: SBDiffEntity>( from: O, collection: UICollectionView ) where O.Element == Array<E>
     {
         SBDiffCalculator.BindUpdates( from: from, collection: collection, scheduler: bindScheduler, dispBag: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, VM: SBDiffEntity>( from: O, to: SBArrayDataProvider<VM>, collectionView: UICollectionView ) where O.Element == Array<VM>
+    {
+        from
+            .bind( to: to, collectionView: collectionView )
+            .disposed( by: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, VM: SBDiffEntity>( from: O, to: SBArrayDataProvider<VM>, collectionView: UICollectionView ) where O.Element == Array<[VM]>
+    {
+        from
+            .bind( to: to, collectionView: collectionView )
+            .disposed( by: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, K: Hashable, VM: SBDiffEntity>( from: O, to: SBDictionaryDataProvider<K, VM>, collectionView: UICollectionView, sort: @escaping (Dictionary<K, [VM]>.Keys) -> [K] ) where O.Element == Dictionary<K, [VM]>
+    {
+        from
+            .bind( to: to, collectionView: collectionView, sort: sort )
+            .disposed( by: dispBag )
+    }
+    
+    func BindUpdates<O: ObservableType, HVM, VM: SBDiffEntity>( from: O, to: SBPairDataProvider<HVM, VM>, collectionView: UICollectionView ) where O.Element == Array<(HVM, [VM])>
+    {
+        from
+            .bind( to: to, collectionView: collectionView )
+            .disposed( by: dispBag )
     }
     
     func BindRefresh( refresh: UIRefreshControl, scrollView: UIScrollView )

@@ -58,8 +58,8 @@ struct SBDefaultSection: SBDiffEntitySection
 
 public class SBDiffCalculator
 {
-    let oldItems: SBDiffEntitySection
-    let newItems: SBDiffEntitySection
+    private(set) var oldItems: SBDiffEntitySection
+    private(set) var newItems: SBDiffEntitySection
     
     private(set) var changedItems: [SBDiffItem] = []
     private(set) var insertedItems: [SBDiffItem] = []

@@ -44,7 +44,8 @@ class MainController: SBBaseTableController<MainViewModel>
         {
         case 0:
             viewModel.ShowDialog()
-            
+        case 1:
+            performSegue( withIdentifier: "DiffController", sender: nil )
         case 2:
             viewModel.ToggleLogin()
             
