@@ -83,6 +83,8 @@
 		FB692F172617325700397E55 /* SBIBaseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F162617325700397E55 /* SBIBaseVM.swift */; };
 		FB692F1D2617341200397E55 /* CommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F1C2617341200397E55 /* CommonComponents.swift */; };
 		FB692F232617344B00397E55 /* UserServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F222617344B00397E55 /* UserServiceProtocol.swift */; };
+		FBDA8EEB287A02B2002A15EF /* CloseTop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBDA8EEA287A02B2002A15EF /* CloseTop.storyboard */; };
+		FBDA8EEE287A0380002A15EF /* CloseTopController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDA8EED287A0380002A15EF /* CloseTopController.swift */; };
 		FBE2155F2812C47A002E29FC /* SBCollectionDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE2155E2812C47A002E29FC /* SBCollectionDataProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -204,6 +206,8 @@
 		FB692F162617325700397E55 /* SBIBaseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBIBaseVM.swift; sourceTree = "<group>"; };
 		FB692F1C2617341200397E55 /* CommonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonComponents.swift; sourceTree = "<group>"; };
 		FB692F222617344B00397E55 /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
+		FBDA8EEA287A02B2002A15EF /* CloseTop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CloseTop.storyboard; sourceTree = "<group>"; };
+		FBDA8EED287A0380002A15EF /* CloseTopController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseTopController.swift; sourceTree = "<group>"; };
 		FBE2155E2812C47A002E29FC /* SBCollectionDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBCollectionDataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -263,6 +267,7 @@
 		FB01234C246BBF740020C7A9 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				FBDA8EEC287A036D002A15EF /* CloseTop */,
 				FB3BFF5126E20B8C00575911 /* StepPage */,
 				FB3BFF4326E15E2900575911 /* Page */,
 				FB692F262617344F00397E55 /* Services */,
@@ -457,6 +462,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		FBDA8EEC287A036D002A15EF /* CloseTop */ = {
+			isa = PBXGroup;
+			children = (
+				FBDA8EEA287A02B2002A15EF /* CloseTop.storyboard */,
+				FBDA8EED287A0380002A15EF /* CloseTopController.swift */,
+			);
+			path = CloseTop;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -582,6 +596,7 @@
 				FB01235A246BBF750020C7A9 /* LaunchScreen.storyboard in Resources */,
 				FB012357246BBF750020C7A9 /* Assets.xcassets in Resources */,
 				FB012355246BBF740020C7A9 /* Main.storyboard in Resources */,
+				FBDA8EEB287A02B2002A15EF /* CloseTop.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +743,7 @@
 				FB012352246BBF740020C7A9 /* DiffController.swift in Sources */,
 				FB3BFF5C26E20BD600575911 /* StepPagesMainViewModel.swift in Sources */,
 				FB01234E246BBF740020C7A9 /* AppDelegate.swift in Sources */,
+				FBDA8EEE287A0380002A15EF /* CloseTopController.swift in Sources */,
 				FB4F009A25C9155F00DF06B9 /* MainViewModel.swift in Sources */,
 				FB3BFF4526E15E4D00575911 /* PagesMainViewModel.swift in Sources */,
 				FB3BFF5926E20BD600575911 /* StepPagesController.swift in Sources */,

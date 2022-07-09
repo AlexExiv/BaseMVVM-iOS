@@ -17,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
-        let cntrl = UIStoryboard( name: "Main", bundle: nil ).instantiateInitialViewController() as! SBNavigationController
-        cntrl.BindVM( vm: MainViewModel() )
+        //let cntrl = UIStoryboard( name: "Main", bundle: nil ).instantiateInitialViewController() as! SBNavigationController
+        //cntrl.BindVM( vm: MainViewModel() )
         
         window = UIWindow()
-        window?.rootViewController = cntrl
+        window?.rootViewController = UIStoryboard( name: "CloseTop", bundle: nil ).instantiateInitialViewController()
         window?.makeKeyAndVisible()
         
         return true

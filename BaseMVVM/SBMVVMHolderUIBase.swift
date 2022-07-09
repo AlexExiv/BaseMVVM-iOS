@@ -54,7 +54,15 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
             
         case .Close2Top:
             UIApplication.shared.keyWindow?.rootViewController?.dismiss( animated: true, completion: nil )
-            (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.popToRootViewController( animated: false )
+            if let tabCntrl = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController
+            {
+                tabCntrl.selectedIndex = 0
+                tabCntrl.viewControllers?.forEach { ($0 as? UINavigationController)?.popViewController( animated: false ) }
+            }
+            else if let navCntrl = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+            {
+                navCntrl.popViewController( animated: false )
+            }
             
         case .Error( let error ):
             let alert = UIAlertController.DialogText( title: NSLocalizedString( "Ошибка", comment: "" ), message: error )
