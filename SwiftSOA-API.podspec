@@ -90,7 +90,7 @@ s.source       = { :git => "https://github.com/AlexExiv/SwiftMVVM-Rx-SOA.git", :
 #  Not including the public_header_files will make all headers public.
 #
 
-s.source_files  = 'BaseMVVM/Repository/**/*.{h,m,swift}'
+s.source_files  = 'BaseMVVM/Ext/**/*.{h,m,swift}', 'BaseMVVM/Repository/**/*.{h,m,swift}'
 # s.exclude_files = "Classes/Exclude"
 
 # s.public_header_files = "Classes/**/*.h"

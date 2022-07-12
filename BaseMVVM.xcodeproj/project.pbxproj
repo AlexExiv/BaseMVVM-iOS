@@ -209,7 +209,7 @@
 		FB692F222617344B00397E55 /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
 		FBDA8EEA287A02B2002A15EF /* CloseTop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CloseTop.storyboard; sourceTree = "<group>"; };
 		FBDA8EED287A0380002A15EF /* CloseTopController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseTopController.swift; sourceTree = "<group>"; };
-		FBDA8F05287D905F002A15EF /* SwiftSOA-API.podspec */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SwiftSOA-API.podspec"; sourceTree = SOURCE_ROOT; };
+		FBDA8F05287D905F002A15EF /* SwiftSOA-API.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SwiftSOA-API.podspec"; sourceTree = SOURCE_ROOT; };
 		FBE2155E2812C47A002E29FC /* SBCollectionDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBCollectionDataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -319,6 +319,7 @@
 				FB692F072617309400397E55 /* DI */,
 				FB1ED59A246B8F5D00A9B39E /* Diff */,
 				FB061B01230D3DEE00202907 /* Ext */,
+				FBDA8F07287D9622002A15EF /* UIExt */,
 				FB2098F723CF339B00006EF5 /* Repository */,
 				FB061B33230D58EC00202907 /* Service */,
 				FB061B02230D3DF700202907 /* Components */,
@@ -357,8 +358,6 @@
 			children = (
 				FB2098FC23CF525200006EF5 /* String+Ext.swift */,
 				FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */,
-				FB061B1B230D460F00202907 /* UIAlertController+Ext.swift */,
-				FB061B25230D519800202907 /* UIViewController+Ext.swift */,
 				FB43BE912538879200492795 /* Observable+Ext.swift */,
 			);
 			path = Ext;
@@ -472,6 +471,15 @@
 				FBDA8EED287A0380002A15EF /* CloseTopController.swift */,
 			);
 			path = CloseTop;
+			sourceTree = "<group>";
+		};
+		FBDA8F07287D9622002A15EF /* UIExt */ = {
+			isa = PBXGroup;
+			children = (
+				FB061B1B230D460F00202907 /* UIAlertController+Ext.swift */,
+				FB061B25230D519800202907 /* UIViewController+Ext.swift */,
+			);
+			path = UIExt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
