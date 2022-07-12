@@ -85,6 +85,7 @@
 		FB692F232617344B00397E55 /* UserServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB692F222617344B00397E55 /* UserServiceProtocol.swift */; };
 		FBDA8EEB287A02B2002A15EF /* CloseTop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBDA8EEA287A02B2002A15EF /* CloseTop.storyboard */; };
 		FBDA8EEE287A0380002A15EF /* CloseTopController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDA8EED287A0380002A15EF /* CloseTopController.swift */; };
+		FBDA8F06287D905F002A15EF /* SwiftSOA-API.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FBDA8F05287D905F002A15EF /* SwiftSOA-API.podspec */; };
 		FBE2155F2812C47A002E29FC /* SBCollectionDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE2155E2812C47A002E29FC /* SBCollectionDataProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -208,6 +209,7 @@
 		FB692F222617344B00397E55 /* UserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceProtocol.swift; sourceTree = "<group>"; };
 		FBDA8EEA287A02B2002A15EF /* CloseTop.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CloseTop.storyboard; sourceTree = "<group>"; };
 		FBDA8EED287A0380002A15EF /* CloseTopController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseTopController.swift; sourceTree = "<group>"; };
+		FBDA8F05287D905F002A15EF /* SwiftSOA-API.podspec */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SwiftSOA-API.podspec"; sourceTree = SOURCE_ROOT; };
 		FBE2155E2812C47A002E29FC /* SBCollectionDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBCollectionDataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -311,6 +313,7 @@
 		FB061AE8230D39B300202907 /* BaseMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				FBDA8F05287D905F002A15EF /* SwiftSOA-API.podspec */,
 				FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */,
 				FB061B17230D45B300202907 /* Podfile */,
 				FB692F072617309400397E55 /* DI */,
@@ -604,6 +607,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBDA8F06287D905F002A15EF /* SwiftSOA-API.podspec in Resources */,
 				FB061B18230D45B300202907 /* Podfile in Resources */,
 				FB061B29230D53B500202907 /* Localizable.strings in Resources */,
 				FB061B36230D8A9200202907 /* SwiftMVVM-Rx-SOA.podspec in Resources */,

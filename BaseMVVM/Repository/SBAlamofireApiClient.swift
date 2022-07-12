@@ -12,9 +12,9 @@ import RxSwift
 
 public extension SBApiClientFactory
 {
-    static func CreateAlamofire( baseURL: String, defaultEncoding: ParameterEncoding = URLEncoding.default ) -> SBApiClientProtocol
+    static func CreateAlamofire( baseURL: String, defaultEncoding: ParameterEncoding = URLEncoding.default, logging: Bool = true ) -> SBApiClientProtocol
     {
-        return SBAlamofireApiClient( baseURL: baseURL, defaultEncoding: defaultEncoding )
+        return SBAlamofireApiClient( baseURL: baseURL, defaultEncoding: defaultEncoding, logging: logging )
     }
 }
 
@@ -32,11 +32,13 @@ class SBAlamofireApiClient: SBApiClientProtocol
     
     let baseURL: String
     let defaultEncoding: ParameterEncoding
+    let logging: Bool
     
-    init( baseURL: String, defaultEncoding: ParameterEncoding = URLEncoding.default )
+    init( baseURL: String, defaultEncoding: ParameterEncoding = URLEncoding.default, logging: Bool = true )
     {
         self.baseURL = baseURL
         self.defaultEncoding = defaultEncoding
+        self.logging = logging
     }
     
     func RegisterProvider( user: SBApiUserInfoProvider )
@@ -93,7 +95,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 }
                 
                 let sURL = "\(self_.baseURL)/\(path)";
-                #if DEBUG
+
                 var _debugMess = "\n\nBEGIN REQUEST \nMETHOD: \(method.rawValue) \nURL: \(sURL)"
                 if let params = params
                 {
@@ -104,36 +106,35 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     _debugMess += "\nHEADERS: \(rFullHeaders)"
                 }
                 _debugMess += "\n\n"
-                print( _debugMess )
-                #endif
+                self_.PrintLog( _debugMess )
+
                 let encoding = (method == .get || method == .delete) ? URLEncoding.default : self_.defaultEncoding
                 let rReq = Alamofire.request( sURL, method: _method, parameters: params, encoding: encoding, headers: rFullHeaders )
                     .responseJSON( completionHandler:
+                    {
+                        (response) in
+
+                        var _debugMess = "\n\nEND REQUEST \nMETHOD: \(method.rawValue) \nURL: \(sURL) \nRESPONSE CODE: \(response.response?.statusCode ?? 0)"
+                        if let r = response.result.value
                         {
-                            (response) in
+                            _debugMess += "\nRESPONSE BODY: \(r)"
+                        }
+                        _debugMess += "\n\n"
+                        self_.PrintLog( _debugMess )
+
+                        if 200..<400 ~= (response.response?.statusCode ?? 0) && response.result.isSuccess
+                        {
+                            subs( .success( JsonWrapper( result: response.result.value! ) ) );
+                        }
+                        else
+                        {
+                            if let code = response.response?.statusCode, (code == 401 || code == 403)
+                            {
+                                self_.userInfoProvider?.ResetLogin()
+                            }
                             
-                            #if DEBUG
-                            var _debugMess = "\n\nEND REQUEST \nMETHOD: \(method.rawValue) \nURL: \(sURL) \nRESPONSE CODE: \(response.response?.statusCode ?? 0)"
-                            if let r = response.result.value
-                            {
-                                _debugMess += "\nRESPONSE BODY: \(r)"
-                            }
-                            _debugMess += "\n\n"
-                            print( _debugMess )
-                            #endif
-                            if 200..<400 ~= (response.response?.statusCode ?? 0) && response.result.isSuccess
-                            {
-                                subs( .success( JsonWrapper( result: response.result.value! ) ) );
-                            }
-                            else
-                            {
-                                if let code = response.response?.statusCode, (code == 401 || code == 403)
-                                {
-                                    self_.userInfoProvider?.ResetLogin()
-                                }
-                                
-                                subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
-                            }
+                            subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
+                        }
                     });
                 
                 return Disposables.create
@@ -183,7 +184,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
             
             if let self_ = self
             {
-                print( "DOWNLOAD URL - \(path)" );
+                self_.PrintLog( "DOWNLOAD URL - \(path)" );
                 let downloadReq = Alamofire.download( path.starts( with: "http://" ) || path.starts( with: "https://" ) ? path : "\(self_.baseURL)/\(path)", method: .get, parameters: params, headers: headers )
                 {
                     (_, _)  in
@@ -271,16 +272,16 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 if let provider = self_.userInfoProvider
                 {
                     rFullHeaders[self_.tokenHeader] = provider.token
-                    print( "X-Access-Token: \(provider.token)" )
+                    self_.PrintLog( "X-Access-Token: \(provider.token)" )
                 }
 
                 if let provider = self_.deviceInfoProvider
                 {
                     rFullHeaders[self_.deviceHeader] = provider.deviceId
-                    print( "X-Device-ID: \(provider.deviceId)" )
+                    self_.PrintLog( "X-Device-ID: \(provider.deviceId)" )
                     
                     rFullHeaders[self_.deviceHeader] = provider.interfaceLanguage
-                    print( "X-User-Language: \(provider.interfaceLanguage)" )
+                    self_.PrintLog( "X-User-Language: \(provider.interfaceLanguage)" )
                 }
                 
                 if let headers = headers
@@ -289,12 +290,11 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 }
                 
                 let sURL = "\(self_.baseURL)/\(path)";
-                #if DEBUG
-                print( "REQUEST URL - \(sURL)" );
-                print( "METHOD - \(method.rawValue)" );
-                print( "PARAMETERS - \(params)" );
-                #endif
-                
+
+                self_.PrintLog( "REQUEST URL - \(sURL)" );
+                self_.PrintLog( "METHOD - \(method.rawValue)" );
+                self_.PrintLog( "PARAMETERS - \(params)" );
+
                 let multipartFormData: (MultipartFormData) -> Void =
                 {
                     mfd in
@@ -330,9 +330,9 @@ class SBAlamofireApiClient: SBApiClientProtocol
                         upload.responseJSON
                         {
                             (response: DataResponse) in
-                            #if DEBUG
-                            print( "RESPONSE - \(response.result.value)" );
-                            #endif
+                            
+                            self_.PrintLog( "RESPONSE - \(response.result.value)" );
+                            
                             let iCode = response.response?.statusCode ?? 0;
                             if 200..<400 ~= iCode
                             {
@@ -407,5 +407,15 @@ class SBAlamofireApiClient: SBApiClientProtocol
         }
         
         return NSError( domain: message, code: errStatus, userInfo: userInfo );
+    }
+    
+    func PrintLog( _ items: Any..., separator: String = " ", terminator: String = "\n" )
+    {
+#if DEBUG
+        if logging
+        {
+            print( items, separator: separator, terminator: terminator )
+        }
+#endif
     }
 }

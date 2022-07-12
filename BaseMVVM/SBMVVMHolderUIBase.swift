@@ -56,8 +56,8 @@ public extension SBMVVMHolderUIBase where Self: UIViewController
             UIApplication.shared.keyWindow?.rootViewController?.dismiss( animated: true, completion: nil )
             if let tabCntrl = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController
             {
-                tabCntrl.selectedIndex = 0
                 tabCntrl.viewControllers?.forEach { ($0 as? UINavigationController)?.popViewController( animated: false ) }
+                tabCntrl.selectedIndex = 0
             }
             else if let navCntrl = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
             {
