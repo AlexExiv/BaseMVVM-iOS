@@ -23,6 +23,9 @@ extension SBCollectionDataProvider
             
             if logging
             {
+                print( "INSERT SECTIONS: - \(insertedSections)" )
+                print( "DELETE SECTIONS: - \(deleteSections)" )
+                
                 print( "CHANGES: - \(changedItems)" )
                 print( "MOVES: - \(movedItems)" )
                 print( "INSERTS: - \(insertedItems)" )
@@ -53,6 +56,16 @@ extension SBCollectionDataProvider
         let changeIndeces = changedItems.map { $0.newRow }
         let deleteIndeces = deletedItems.map { $0.oldRow }
         let insertIndeces = insertedItems.map { $0.newRow }
+        
+        if !insertedSections.isEmpty
+        {
+            to.insertSections( IndexSet( insertedSections ), with: all ?? insert )
+        }
+        
+        if !deleteSections.isEmpty
+        {
+            to.deleteSections( IndexSet( deleteSections ), with: all ?? delete )
+        }
         
         to.reloadRows( at: changeIndeces, with: all ?? change )
         movedItems.forEach
@@ -90,6 +103,9 @@ extension SBCollectionDataProvider
             
             if logging
             {
+                print( "INSERT SECTIONS: - \(insertedSections)" )
+                print( "DELETE SECTIONS: - \(deleteSections)" )
+                
                 print( "CHANGES: - \(changedItems)" )
                 print( "MOVES: - \(movedItems)" )
                 print( "INSERTS: - \(insertedItems)" )
@@ -111,6 +127,16 @@ extension SBCollectionDataProvider
         let changeIndeces = changedItems.map { $0.newItem }
         let deleteIndeces = deletedItems.map { $0.oldItem }
         let insertIndeces = insertedItems.map { $0.newItem }
+        
+        if !insertedSections.isEmpty
+        {
+            to.insertSections( IndexSet( insertedSections ) )
+        }
+        
+        if !deleteSections.isEmpty
+        {
+            to.deleteSections( IndexSet( deleteSections ) )
+        }
         
         to.reloadItems( at: changeIndeces )
         movedItems.forEach

@@ -89,6 +89,9 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
     private(set) var movedItems: [SBDiffItem] = []
     private(set) var deletedItems: [SBDiffItem] = []
     
+    private(set) var insertedSections: [Int] = []
+    private(set) var deleteSections: [Int] = []
+    
     let logging: Bool
     
     public var indices: [CollectionSection.K]
@@ -123,7 +126,16 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
             Set( items: newItems )
             return
         }
-                
+        
+        if newItems.count > oldItems.count
+        {
+            insertedSections.append( contentsOf: (oldItems.count..<newItems.count) )
+        }
+        else if newItems.count < oldItems.count
+        {
+            deleteSections.append( contentsOf: (newItems.count..<oldItems.count) )
+        }
+     
         var wasItems = [Int: [Int: Bool]]()
         for secOInd in 0..<oldItems.indices.count
         {
@@ -176,6 +188,9 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
         insertedItems.removeAll()
         movedItems.removeAll()
         deletedItems.removeAll()
+        
+        insertedSections.removeAll()
+        deleteSections.removeAll()
     }
 
     private func CheckItems( oldItems: CollectionSection, newItems: CollectionSection, oldSec: Int, oldI: Int ) -> SBDiffItem

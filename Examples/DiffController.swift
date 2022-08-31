@@ -104,14 +104,14 @@ class DiffController: UITableViewController
     var curInd = 0
     var curItems: [Item]! = nil
     var maxGenValue = 100
-    var rxP = BehaviorRelay<[[Item]]>( value: [] )
+    var rxP = BehaviorRelay<[(String, [Item])]>( value: [] )
     let dispBag = DisposeBag()
-    let dataProvider = SBArrayDataProvider<Item>( logging: true )
+    let dataProvider = SBPairDataProvider<String, Item>( logging: true )
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        Reset( nil )
+        //Reset( nil )
         //SBDiffCalculator.BindUpdates( from: rxP, table: tableView, scheduler: MainScheduler.asyncInstance, dispBag: dispBag )
         
         rxP
@@ -122,7 +122,7 @@ class DiffController: UITableViewController
     @IBAction func Reset(_ sender: Any?)
     {
         curInd = 0
-        rxP.accept( [allItems[0], allItems1[0]] )
+        rxP.accept( [("Section 0", allItems[0]), ("Section 1", allItems1[0])] )
         //curItems = allItems[0]
         //tableView.reloadData()
     }
@@ -130,18 +130,32 @@ class DiffController: UITableViewController
     @IBAction func Left(_ sender: Any)
     {
         curInd = (allItems.count + curInd - 1)%allItems.count
-        SetData( items: [allItems[curInd], allItems1[curInd]] )
+        var sections = [[Item]]()
+        sections.append( allItems[curInd] )
+        if curInd % 2 == 0
+        {
+            sections.append( allItems1[curInd] )
+        }
+        
+        SetData( items: sections )
     }
     
     @IBAction func Right(_ sender: Any)
     {
         curInd = (allItems.count + curInd + 1)%allItems.count
-        SetData( items: [allItems[curInd], allItems1[curInd]] )
+        var sections = [[Item]]()
+        sections.append( allItems[curInd] )
+        if curInd % 2 == 0
+        {
+            sections.append( allItems1[curInd] )
+        }
+        
+        SetData( items: sections )
     }
     
     func SetData( items: [[Item]] )
     {
-        rxP.accept( items )
+        rxP.accept( items.enumerated().map { ("Section \($0.offset)", $0.element) } )
         /*let calc = SBDiffCalculator( oldItems: curItems, newItems: items )
         curItems = items
         calc.Calc()
@@ -150,9 +164,11 @@ class DiffController: UITableViewController
     
     func AddData( items: [Item] )
     {
-        var values = rxP.value[1]
-        values.append( contentsOf: items )
-        rxP.accept( [rxP.value[0], values] )
+        var values = rxP.value.last!
+        values.1.append( contentsOf: items )
+        var newItems = rxP.value.count > 1 ? Array( rxP.value[0..<(rxP.value.count - 1)] ) : []
+        newItems.append( values )
+        rxP.accept( newItems )
         /*
         let old = curItems ?? []
         curItems.append( contentsOf: items )
