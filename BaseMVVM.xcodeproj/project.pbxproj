@@ -45,6 +45,7 @@
 		FB061B36230D8A9200202907 /* SwiftMVVM-Rx-SOA.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */; };
 		FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */; };
 		FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */; };
+		FB15276C28C092FF00209083 /* ReverseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB15276B28C092FF00209083 /* ReverseController.swift */; };
 		FB1ED59C246B901800A9B39E /* SBDiffCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1ED59B246B901800A9B39E /* SBDiffCalculator.swift */; };
 		FB1ED59E246BA16500A9B39E /* SBDiffCalculator+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UIView.swift */; };
 		FB1ED5A0246BA5D400A9B39E /* SBDiffCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1ED59F246BA5D400A9B39E /* SBDiffCalculatorTests.swift */; };
@@ -169,6 +170,7 @@
 		FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SwiftMVVM-Rx-SOA.podspec"; sourceTree = SOURCE_ROOT; };
 		FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtTests.swift; sourceTree = "<group>"; };
+		FB15276B28C092FF00209083 /* ReverseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseController.swift; sourceTree = "<group>"; };
 		FB1ED59B246B901800A9B39E /* SBDiffCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDiffCalculator.swift; sourceTree = "<group>"; };
 		FB1ED59D246BA16500A9B39E /* SBDiffCalculator+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBDiffCalculator+UIView.swift"; sourceTree = "<group>"; };
 		FB1ED59F246BA5D400A9B39E /* SBDiffCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDiffCalculatorTests.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				FB4F00A125C915A500DF06B9 /* ViewModel.swift */,
 				FB4F009925C9155F00DF06B9 /* MainViewModel.swift */,
 				FB4F009D25C9156B00DF06B9 /* MainController.swift */,
+				FB15276B28C092FF00209083 /* ReverseController.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				FB692F232617344B00397E55 /* UserServiceProtocol.swift in Sources */,
 				FB4F00A225C915A500DF06B9 /* ViewModel.swift in Sources */,
 				FB3BFF5A26E20BD600575911 /* StepPageController.swift in Sources */,
+				FB15276C28C092FF00209083 /* ReverseController.swift in Sources */,
 				FB4F009E25C9156B00DF06B9 /* MainController.swift in Sources */,
 				FB3BFF4D26E15F4C00575911 /* PageViewModel.swift in Sources */,
 				FB3BFF4926E15ED800575911 /* PagesViewModel.swift in Sources */,

@@ -92,6 +92,7 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
     private(set) var insertedSections: [Int] = []
     private(set) var deleteSections: [Int] = []
     
+    let reverse: Bool
     let logging: Bool
     
     public var indices: [CollectionSection.K]
@@ -104,8 +105,9 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
         items?.count ?? 0
     }
     
-    public init( logging: Bool = false )
+    public init( reverse: Bool = false, logging: Bool = false )
     {
+        self.reverse = reverse
         self.logging = logging
     }
     
@@ -116,20 +118,38 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
     
     public func Set( items: CollectionSection )
     {
+        if items.count == 0
+        {
+            return
+        }
+        
         self.items = items
         startReload = false
     }
     
     public func CalculateChanges( newItems: CollectionSection )
     {
-        guard let oldItems = items else {
+        if newItems.count == 0 && items == nil
+        {
+            return
+        }
+        
+        guard let oldItems = items else
+        {
             Set( items: newItems )
             return
         }
         
         if newItems.count > oldItems.count
         {
-            insertedSections.append( contentsOf: (oldItems.count..<newItems.count) )
+            if reverse
+            {
+                insertedSections.append( contentsOf: (0..<(newItems.count - oldItems.count)) )
+            }
+            else
+            {
+                insertedSections.append( contentsOf: (oldItems.count..<newItems.count) )
+            }
         }
         else if newItems.count < oldItems.count
         {

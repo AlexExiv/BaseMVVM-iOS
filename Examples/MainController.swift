@@ -48,6 +48,8 @@ class MainController: SBBaseTableController<MainViewModel>
             performSegue( withIdentifier: "DiffController", sender: nil )
         case 2:
             viewModel.ToggleLogin()
+        case 5:
+            performSegue( withIdentifier: "ReverseController", sender: nil )
             
         default:
             break

@@ -15,7 +15,16 @@ extension SBCollectionDataProvider
         if startReload
         {
             Set( items: newItems )
-            to.reloadData()
+            if newItems.count > 0
+            {
+                to.reloadData()
+                if reverse
+                {
+                    let numSec = to.numberOfSections
+                    let numRow = to.numberOfRows( inSection: numSec - 1 )
+                    to.scrollToRow( at: IndexPath( row: numRow - 1, section: numSec - 1 ), at: .bottom, animated: false )
+                }
+            }
         }
         else
         {
@@ -32,6 +41,58 @@ extension SBCollectionDataProvider
                 print( "DELETES: - \(deletedItems)" )
             }
             
+            var moveIndex: IndexPath? = nil
+            
+            if reverse, let visibleRows = to.indexPathsForVisibleRows, var cellIndex = visibleRows.last
+            {
+                if let cell = to.cellForRow( at: cellIndex )
+                {
+                    if #available(iOS 11.0, *), logging
+                    {
+                        print( "CELL Y: \(cell.frame.origin.y) ; CONTENT OFFSET: \(to.contentOffset.y) ; CONTENT SIZE: \(to.contentSize.height) ; BOTTOM: \(to.safeAreaInsets.bottom)" )
+                        print( "CELL Y - OFFSET: \(cell.frame.origin.y - to.contentOffset.y); CELL HEIGHT: \(cell.frame.height) ; TABLE HEIGHT: \(to.frame.height)" )
+                    }
+                    else
+                    {
+                        
+                    }
+                    
+                    let y = cell.frame.origin.y - to.contentOffset.y
+                    if ((y + cell.frame.height) > to.frame.height) && (visibleRows.count > 1)
+                    {
+                        cellIndex = visibleRows[visibleRows.count - 2]
+                    }
+                }
+                
+                var section = cellIndex.section, row = cellIndex.row
+                insertedSections.forEach
+                {
+                    if $0 <= cellIndex.section
+                    {
+                        section += 1
+                    }
+                }
+                
+                for i in insertedItems where i.newSec == section
+                {
+                    if i.newI < cellIndex.row
+                    {
+                        row += 1
+                    }
+                }
+                
+                moveIndex = IndexPath( row: row, section: section )
+                if logging
+                {
+                    print( "MOVE FROM: \(cellIndex) TO: \(moveIndex!)" )
+                }
+            }
+            
+            if all == UITableView.RowAnimation.none
+            {
+                UIView.setAnimationsEnabled( false )
+            }
+                
             if #available(iOS 11.0, *)
             {
                 to.performBatchUpdates(
@@ -47,6 +108,23 @@ extension SBCollectionDataProvider
                 _ProcessUpdates( to: to, change: change, insert: insert, delete: delete, all: all )
                 CommitChanges()
                 to.endUpdates()
+            }
+            
+            if all == UITableView.RowAnimation.none
+            {
+                UIView.setAnimationsEnabled( true )
+            }
+            
+            if let moveIndex = moveIndex
+            {
+                let rows = to.numberOfRows( inSection: moveIndex.section )
+                to.scrollToRow( at: IndexPath( item: min( rows - 1, moveIndex.row ), section: moveIndex.section ), at: .none, animated: false )
+                to.panGestureRecognizer.isEnabled = false
+                
+                DispatchQueue.main.asyncAfter( deadline: DispatchTime.now() + 0.05 )
+                {
+                    to.panGestureRecognizer.isEnabled = true
+                }
             }
         }
     }
@@ -95,7 +173,16 @@ extension SBCollectionDataProvider
         if startReload
         {
             Set( items: newItems )
-            to.reloadData()
+            if newItems.count > 0
+            {
+                to.reloadData()
+                if reverse
+                {
+                    let numSec = to.numberOfSections
+                    let numRow = to.numberOfItems( inSection: numSec - 1 )
+                    to.scrollToItem( at: IndexPath( row: numRow - 1, section: numSec - 1 ), at: .bottom, animated: false )
+                }
+            }
         }
         else
         {
