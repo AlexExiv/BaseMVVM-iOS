@@ -117,8 +117,10 @@ extension SBCollectionDataProvider
             
             if let moveIndex = moveIndex
             {
-                let rows = to.numberOfRows( inSection: moveIndex.section )
-                to.scrollToRow( at: IndexPath( item: min( rows - 1, moveIndex.row ), section: moveIndex.section ), at: .none, animated: false )
+                let sections = to.numberOfSections
+                let realSection = min( sections - 1, moveIndex.section )
+                let rows = to.numberOfRows( inSection: realSection )
+                to.scrollToRow( at: IndexPath( item: min( rows - 1, moveIndex.row ), section: realSection ), at: .none, animated: false )
                 to.panGestureRecognizer.isEnabled = false
                 
                 DispatchQueue.main.asyncAfter( deadline: DispatchTime.now() + 0.05 )
