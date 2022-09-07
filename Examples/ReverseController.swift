@@ -84,12 +84,12 @@ class ReverseController: UITableViewController
     
     override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int
     {
-        messageProvider[section].count
+        messageProvider[section].items.count
     }
     
     override func tableView( _ tableView: UITableView, titleForHeaderInSection section: Int ) -> String?
     {
-        "Section \(section)"
+        messageProvider[section].header
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -98,7 +98,7 @@ class ReverseController: UITableViewController
     
     override func tableView( _ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath ) -> CGFloat
     {
-        cellHeights[messageProvider[indexPath.section][indexPath.row].id] ?? UITableView.automaticDimension
+        cellHeights[messageProvider[indexPath.section].items[indexPath.row].id] ?? UITableView.automaticDimension
     }
     
     override func tableView( _ tableView: UITableView, heightForHeaderInSection section: Int ) -> CGFloat
@@ -108,15 +108,15 @@ class ReverseController: UITableViewController
     
     override func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath ) -> CGFloat
     {
-        let h = cellHeights[messageProvider[indexPath.section][indexPath.row].id] ?? CGFloat.random( in: 44.0...135.0 )
-        cellHeights[messageProvider[indexPath.section][indexPath.row].id] = h
+        let h = cellHeights[messageProvider[indexPath.section].items[indexPath.row].id] ?? CGFloat.random( in: 44.0...135.0 )
+        cellHeights[messageProvider[indexPath.section].items[indexPath.row].id] = h
         return h
     }
     
     override func tableView( _ tableView: UITableView, cellForRowAt indexPath: IndexPath ) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell( withIdentifier: "Cell", for: indexPath )
-        cell.textLabel?.text = messageProvider[indexPath.section][indexPath.row].value
+        cell.textLabel?.text = messageProvider[indexPath.section].items[indexPath.row].value
         return cell
     }
     /*

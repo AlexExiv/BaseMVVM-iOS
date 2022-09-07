@@ -11,19 +11,20 @@ import Foundation
 public protocol SBCollectionSectionProtocol
 {
     associatedtype K: Hashable
+    associatedtype H
     associatedtype VM: SBDiffEntity
     
     var count: Int { get }
     var indices: [K] { get }
-    subscript( index: K ) -> [VM] { get }
+    
+    subscript( index: K ) -> (header: H, items: [VM]) { get }
 }
 
 public struct SBArrayCollectionSection<VM: SBDiffEntity>: SBCollectionSectionProtocol
 {
     let items: [[VM]]
-    public let indices: [Int]
-    
     public var count: Int { items.count }
+    public let indices: [Int]
     
     public init( items: [[VM]] )
     {
@@ -31,18 +32,17 @@ public struct SBArrayCollectionSection<VM: SBDiffEntity>: SBCollectionSectionPro
         self.indices = Array( items.indices )
     }
     
-    public subscript( index: Int ) -> [VM]
+    public subscript( index: Int ) -> (header: Int, items: [VM])
     {
-        items[index]
+        (index, items[index])
     }
 }
 
 public struct SBMapCollectionSection<K: Hashable, VM: SBDiffEntity>: SBCollectionSectionProtocol
 {
     let items: [K: [VM]]
-    public let indices: [K]
-    
     public var count: Int { items.count }
+    public let indices: [K]
     
     public init( items: [K: [VM]], indices: [K] )
     {
@@ -50,18 +50,17 @@ public struct SBMapCollectionSection<K: Hashable, VM: SBDiffEntity>: SBCollectio
         self.indices = indices
     }
     
-    public subscript( index: K ) -> [VM]
+    public subscript( index: K ) -> (header: K, items: [VM])
     {
-        items[index]!
+        (index, items[index]!)
     }
 }
 
 public struct SBPairCollectionSection<HVM, VM: SBDiffEntity>: SBCollectionSectionProtocol
 {
     let items: [(HVM, [VM])]
-    public let indices: [Int]
-    
     public var count: Int { items.count }
+    public let indices: [Int]
     
     public init( items: [(HVM, [VM])] )
     {
@@ -69,9 +68,9 @@ public struct SBPairCollectionSection<HVM, VM: SBDiffEntity>: SBCollectionSectio
         self.indices = Array( items.indices )
     }
     
-    public subscript( index: Int ) -> [VM]
+    public subscript( index: Int ) -> (header: HVM, items: [VM])
     {
-        items[index].1
+        items[index]
     }
 }
 
@@ -111,7 +110,7 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
         self.logging = logging
     }
     
-    public subscript( index: CollectionSection.K ) -> [VM]
+    public subscript( index: CollectionSection.K ) -> (header: CollectionSection.H, items: [VM])
     {
         items![index]
     }
@@ -160,7 +159,7 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
         for secOInd in 0..<oldItems.indices.count
         {
             let secO = oldItems.indices[secOInd]
-            for o in 0..<oldItems[secO].count
+            for o in 0..<oldItems[secO].items.count
             {
                 let item = CheckItems( oldItems: oldItems, newItems: newItems, oldSec: secOInd, oldI: o )
                 switch item.state
@@ -187,7 +186,7 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
         for secNInd in 0..<newItems.indices.count
         {
             let secN = newItems.indices[secNInd]
-            for n in 0..<newItems[secN].count
+            for n in 0..<newItems[secN].items.count
             {
                 if wasItems[secNInd]?[n] == nil
                 {
@@ -218,12 +217,12 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
         for secNInd in 0..<newItems.indices.count
         {
             let secN = newItems.indices[secNInd]
-            if newItems[secN].count > oldI, let item = CheckItems( oldItems: oldItems, newItems: newItems, oldSec: oldSec, oldI: oldI, newSec: secNInd, newI: oldI )
+            if newItems[secN].items.count > oldI, let item = CheckItems( oldItems: oldItems, newItems: newItems, oldSec: oldSec, oldI: oldI, newSec: secNInd, newI: oldI )
             {
                 return item
             }
             
-            for n in 0..<newItems[secN].count
+            for n in 0..<newItems[secN].items.count
             {
                 if let item = CheckItems( oldItems: oldItems, newItems: newItems, oldSec: oldSec, oldI: oldI, newSec: secNInd, newI: n )
                 {
@@ -239,8 +238,8 @@ public class SBCollectionDataProvider<CollectionSection: SBCollectionSectionProt
     {
         let olds = oldItems[oldItems.indices[oldSec]]
         let news = newItems[newItems.indices[newSec]]
-        let old = olds[oldI]
-        let new = news[newI]
+        let old = olds.items[oldI]
+        let new = news.items[newI]
 
         if old.IsTheSame( entity: new )
         {

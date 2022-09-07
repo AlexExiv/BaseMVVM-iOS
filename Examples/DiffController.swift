@@ -186,7 +186,7 @@ class DiffController: UITableViewController
     
     override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int
     {
-        dataProvider[section].count
+        dataProvider[section].items.count
     }
     
     override func tableView( _ tableView: UITableView, titleForHeaderInSection section: Int ) -> String?
@@ -197,13 +197,13 @@ class DiffController: UITableViewController
     override func tableView( _ tableView: UITableView, cellForRowAt indexPath: IndexPath ) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell( withIdentifier: "Cell", for: indexPath )
-        cell.textLabel?.text = dataProvider[indexPath.section][indexPath.row].value
+        cell.textLabel?.text = dataProvider[indexPath.section].items[indexPath.row].value
         return cell
     }
     
     override func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath )
     {
-        if indexPath.row == dataProvider[dataProvider.count - 1].count - 1
+        if indexPath.row == dataProvider[dataProvider.count - 1].items.count - 1
         {
             DispatchQueue.main.async {
                 let items = Array( self.maxGenValue..<(self.maxGenValue + 100) ).map { Item( id: $0, value: "Generate \($0)" ) }

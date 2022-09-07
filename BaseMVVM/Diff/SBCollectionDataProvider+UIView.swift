@@ -127,6 +127,12 @@ extension SBCollectionDataProvider
                 {
                     to.panGestureRecognizer.isEnabled = true
                 }
+                /*
+                if to.isDecelerating, let indexes = to.indexPathsForVisibleRows, indexes.count > 2
+                {
+                    let preLastIndex = indexes[indexes.count - 2]
+                    to.scrollToRow( at: preLastIndex, at: .bottom, animated: true )
+                }*/
             }
         }
     }
