@@ -12,9 +12,15 @@ import RxRelay
 class StepPageViewModel: ViewModel
 {
     let rxLabel = BehaviorRelay( value: "" )
+    let rxHideLabel = BehaviorRelay( value: false )
     
     init( l: String )
     {
         rxLabel.accept( l )
+    }
+    
+    func ToggleHide()
+    {
+        rxHideLabel.accept( !rxHideLabel.value )
     }
 }

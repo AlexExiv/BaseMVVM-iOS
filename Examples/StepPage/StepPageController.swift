@@ -17,5 +17,11 @@ class StepPageController: SBBaseController<StepPageViewModel>
     {
         super.InitRx()
         Bind( from: viewModel.rxLabel, to: titleLab )
+        BindHidden( from: viewModel.rxHideLabel, to: titleLab, duration: 0.5 )
+    }
+    
+    @IBAction func HideAction( _ sender: Any )
+    {
+        viewModel.ToggleHide()
     }
 }

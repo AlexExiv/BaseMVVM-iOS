@@ -25,7 +25,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.text )
             .disposed( by: dispBag )
     }
@@ -40,7 +40,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.attributedText )
             .disposed( by: dispBag )
     }
@@ -55,7 +55,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.text )
             .disposed( by: dispBag )
     }
@@ -70,7 +70,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.text )
             .disposed( by: dispBag )
     }
@@ -86,7 +86,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .map { map( $0 ) }
             .distinctUntilChanged()
             .map( { UIImage( named: $0 ) } )
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.image )
             .disposed( by: dispBag )
     }
@@ -102,7 +102,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         {
             text
                 .distinctUntilChanged()
-                .observeOn( bindScheduler )
+                .observe( on: bindScheduler )
                 .bind( to: textLabel.rx.text )
                 .disposed( by: dispBag )
         }
@@ -111,7 +111,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         {
             detail
                 .distinctUntilChanged()
-                .observeOn( bindScheduler )
+                .observe( on: bindScheduler )
                 .bind( to: detailLabel.rx.text )
                 .disposed( by: dispBag )
         }
@@ -123,7 +123,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.title )
             .disposed( by: dispBag )
     }
@@ -139,7 +139,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.title( for: .normal ) )
             .disposed( by: dispBag )
     }
@@ -155,7 +155,7 @@ public extension SBBindUIProtocol where Self: UIViewController
             .map { map( $0 ) }
             .distinctUntilChanged()
             .map { UIImage( named: $0 )?.withRenderingMode( renderingMode ) }
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: toIcon.rx.image( for: .normal ) )
             .disposed( by: dispBag )
     }
@@ -166,7 +166,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( onNext: { toBG.backgroundColor = $0 } )
             .disposed( by: dispBag )
     }
@@ -181,7 +181,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         let driver = from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
         
         var disp: Disposable? = nil
         
@@ -231,16 +231,17 @@ public extension SBBindUIProtocol where Self: UIViewController
             from
                 .map { map( $0 ) }
                 .distinctUntilChanged()
-                .observeOn( bindScheduler )
+                .observe( on: bindScheduler )
                 .bind( onNext:
                 {
                     hidden in
                     
-                    UIView.animate( withDuration: duration, animations: {
-                        to.alpha = hidden ? 0.0 : 1.0
-                    }, completion: { (b) in
-                        to.isHidden = hidden
-                    })
+                    if !hidden
+                    {
+                        to.isHidden = false
+                    }
+                    
+                    UIView.animate( withDuration: duration, animations: { to.alpha = hidden ? 0.0 : 1.0 }, completion: { (b) in to.isHidden = hidden })
                 })
                 .disposed( by: dispBag )
 //        }
@@ -257,7 +258,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.isEnabled )
             .disposed( by: dispBag )
     }
@@ -272,7 +273,7 @@ public extension SBBindUIProtocol where Self: UIViewController
         from
             .map { map( $0 ) }
             .distinctUntilChanged()
-            .observeOn( bindScheduler )
+            .observe( on: bindScheduler )
             .bind( to: to.rx.isOn )
             .disposed( by: dispBag )
     }
