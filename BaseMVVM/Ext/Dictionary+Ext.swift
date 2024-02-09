@@ -147,9 +147,9 @@ extension Dictionary where Key == String
         }
         else if let value = v as? String
         {
-            if let value = Int( value )
+            if let value = Double( value )
             {
-                ret = value
+                ret = Int( value )
             }
         }
         
