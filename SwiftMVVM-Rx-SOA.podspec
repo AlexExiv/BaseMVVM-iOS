@@ -132,9 +132,9 @@ s.source_files  = 'BaseMVVM', 'BaseMVVM/**/*.{h,m,swift}'
 s.requires_arc = true
 
 # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-s.dependency "RxSwift", "~> 6.5.0"
-s.dependency "RxCocoa", "~> 6.5.0"
-s.dependency "RxRelay", "~> 6.5.0"
-s.dependency "Alamofire", "~> 4.7"
+s.dependency "RxSwift", "~> 6.6.0"
+s.dependency "RxCocoa", "~> 6.6.0"
+s.dependency "RxRelay", "~> 6.6.0"
+s.dependency "Alamofire", "~> 5.9.1"
 
 end

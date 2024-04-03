@@ -70,13 +70,13 @@ class SBAlamofireApiClient: SBApiClientProtocol
     
     func RxJSON( path: String, method: HTTPMethod, params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
     {
-        let _method = method == .deleteBody ? .delete : Alamofire.HTTPMethod( rawValue: method.rawValue )!
+        let _method = method == .deleteBody ? .delete : Alamofire.HTTPMethod( rawValue: method.rawValue )
         return Single.create( subscribe:
         {
             [weak self] (subs) -> Disposable in
             if let self_ = self
             {
-                var rFullHeaders = HTTPHeaders();
+                var rFullHeaders = [String: String]()
                 
                 if let provider = self_.userInfoProvider
                 {
@@ -109,32 +109,38 @@ class SBAlamofireApiClient: SBApiClientProtocol
                 self_.PrintLog( _debugMess )
 
                 let encoding = (method == .get || method == .delete) ? URLEncoding.default : self_.defaultEncoding
-                let rReq = Alamofire.request( sURL, method: _method, parameters: params, encoding: encoding, headers: rFullHeaders )
+                let rReq = AF.request( sURL, method: _method, parameters: params, encoding: encoding, headers: rFullHeaders.asHTTPHeaders() )
                     .responseJSON( completionHandler:
                     {
                         (response) in
 
                         var _debugMess = "\n\nEND REQUEST \nMETHOD: \(method.rawValue) \nURL: \(sURL) \nRESPONSE CODE: \(response.response?.statusCode ?? 0)"
-                        if let r = response.result.value
-                        {
-                            _debugMess += "\nRESPONSE BODY: \(r)"
-                        }
-                        _debugMess += "\n\n"
-                        self_.PrintLog( _debugMess )
 
-                        if 200..<400 ~= (response.response?.statusCode ?? 0) && response.result.isSuccess
+                        switch response.result
                         {
-                            subs( .success( JsonWrapper( result: response.result.value! ) ) );
-                        }
-                        else
-                        {
-                            if let code = response.response?.statusCode, (code == 401 || code == 403)
+                        case .success( let result ):
+                            _debugMess += "\nRESPONSE BODY: \(result)"
+                            
+                            if 200..<400 ~= (response.response?.statusCode ?? 0)
                             {
-                                self_.userInfoProvider?.ResetLogin()
+                                subs( .success( JsonWrapper( result: result ) ) );
+                            }
+                            else
+                            {
+                                if let code = response.response?.statusCode, (code == 401 || code == 403)
+                                {
+                                    self_.userInfoProvider?.ResetLogin()
+                                }
+                                
+                                subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: result ) ) );
                             }
                             
-                            subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
+                        case .failure( let error ):
+                            subs( .failure( self_.ParseError( error: error, status: response.response?.statusCode ?? 0, json: nil ) ) )
                         }
+                        
+                        _debugMess += "\n\n"
+                        self_.PrintLog( _debugMess )
                     });
                 
                 return Disposables.create
@@ -185,7 +191,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
             if let self_ = self
             {
                 self_.PrintLog( "DOWNLOAD URL - \(path)" );
-                let downloadReq = Alamofire.download( path.starts( with: "http://" ) || path.starts( with: "https://" ) ? path : "\(self_.baseURL)/\(path)", method: .get, parameters: params, headers: headers )
+                let downloadReq = AF.download( path.starts( with: "http://" ) || path.starts( with: "https://" ) ? path : "\(self_.baseURL)/\(path)", method: .get, parameters: params, headers: headers?.asHTTPHeaders() )
                 {
                     (_, _)  in
                     return ( destinationURL: docPath, options: [.removePreviousFile, .createIntermediateDirectories] )
@@ -209,7 +215,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
                         delFile = true;
                         do
                         {
-                            let rJSON = try JSONSerialization.jsonObject( with: response.result.value!, options: JSONSerialization.ReadingOptions( rawValue: 0 ) );
+                            let rJSON = try JSONSerialization.jsonObject( with: response.value!, options: JSONSerialization.ReadingOptions( rawValue: 0 ) );
                             subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: rJSON ) ) )
                         }
                         catch
@@ -261,13 +267,13 @@ class SBAlamofireApiClient: SBApiClientProtocol
     
     func RxUpload( path: String, method: HTTPMethod, datas: [Data], names: [String], fileNames: [String], mimeTypes: [String], params: [String : Any]?, headers: [String: String]? ) -> Single<JsonWrapper>
     {
-        let _method = Alamofire.HTTPMethod( rawValue: method.rawValue )!
+        let _method = Alamofire.HTTPMethod( rawValue: method.rawValue )
         return Single.create( subscribe:
         {
             [weak self] (subs) -> Disposable in
             if let self_ = self
             {
-                var rFullHeaders = HTTPHeaders();
+                var rFullHeaders = [String: String]();
                 
                 if let provider = self_.userInfoProvider
                 {
@@ -320,38 +326,28 @@ class SBAlamofireApiClient: SBApiClientProtocol
                     }
                 }
                 
-                let urlReq = try! URLRequest( url: sURL, method: _method, headers: rFullHeaders )
-                Alamofire.upload( multipartFormData: multipartFormData, with: urlReq, encodingCompletion:
-                {
-                    result in
-                    switch result
-                    {
-                    case .success( let upload, _, _ ):
-                        upload.responseJSON
+                let urlReq = try! URLRequest( url: sURL, method: _method, headers: rFullHeaders.asHTTPHeaders() )
+                AF.upload( multipartFormData: multipartFormData, with: urlReq )
+                    .responseJSON {
+                        response in
+                        
+                        self_.PrintLog( "RESPONSE - \(response.value)" );
+                        
+                        let iCode = response.response?.statusCode ?? 0;
+                        if 200..<400 ~= iCode
                         {
-                            (response: DataResponse) in
-                            
-                            self_.PrintLog( "RESPONSE - \(response.result.value)" );
-                            
-                            let iCode = response.response?.statusCode ?? 0;
-                            if 200..<400 ~= iCode
-                            {
-                                subs( .success( JsonWrapper( result: response.result.value! )  ) );
-                            }
-                            else
-                            {
-                                if let code = response.response?.statusCode, (code == 401 || code == 403)
-                                {
-                                    self_.userInfoProvider?.ResetLogin()
-                                }
-                                
-                                subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.result.value ) ) );
-                            }
+                            subs( .success( JsonWrapper( result: response.value! )  ) );
                         }
-                    case .failure( let error ):
-                        break
+                        else
+                        {
+                            if let code = response.response?.statusCode, (code == 401 || code == 403)
+                            {
+                                self_.userInfoProvider?.ResetLogin()
+                            }
+                            
+                            subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.value ) ) );
+                        }
                     }
-                })
                
                 return Disposables.create()
             }
@@ -417,5 +413,13 @@ class SBAlamofireApiClient: SBApiClientProtocol
             print( items, separator: separator, terminator: terminator )
         }
 #endif
+    }
+}
+
+extension Dictionary where Key == String, Value == String
+{
+    func asHTTPHeaders() -> HTTPHeaders
+    {
+        HTTPHeaders( self )
     }
 }
