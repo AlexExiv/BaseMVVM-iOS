@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -43,6 +43,7 @@
 		FB061B30230D55C700202907 /* SBDowloadServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB061B2F230D55C700202907 /* SBDowloadServiceProtocol.swift */; };
 		FB061B32230D57F800202907 /* SBServiceBaseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB061B31230D57F800202907 /* SBServiceBaseVM.swift */; };
 		FB061B36230D8A9200202907 /* SwiftMVVM-Rx-SOA.podspec in Resources */ = {isa = PBXBuildFile; fileRef = FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */; };
+		FB0C0FF22BBE8F2A003947C0 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FB0C0FF12BBE8F2A003947C0 /* PrivacyInfo.xcprivacy */; };
 		FB116F2323CDC3D30038B698 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */; };
 		FB116F2523CDCA7B0038B698 /* DictionaryExtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */; };
 		FB15276C28C092FF00209083 /* ReverseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB15276B28C092FF00209083 /* ReverseController.swift */; };
@@ -168,6 +169,7 @@
 		FB061B2F230D55C700202907 /* SBDowloadServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDowloadServiceProtocol.swift; sourceTree = "<group>"; };
 		FB061B31230D57F800202907 /* SBServiceBaseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBServiceBaseVM.swift; sourceTree = "<group>"; };
 		FB061B35230D8A9100202907 /* SwiftMVVM-Rx-SOA.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SwiftMVVM-Rx-SOA.podspec"; sourceTree = SOURCE_ROOT; };
+		FB0C0FF12BBE8F2A003947C0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FB116F2223CDC3D30038B698 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
 		FB116F2423CDCA7B0038B698 /* DictionaryExtTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtTests.swift; sourceTree = "<group>"; };
 		FB15276B28C092FF00209083 /* ReverseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseController.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				FB061AE9230D39B300202907 /* BaseMVVM.h */,
 				FB061AEA230D39B300202907 /* Info.plist */,
 				FB061B2B230D53B500202907 /* Localizable.strings */,
+				FB0C0FF12BBE8F2A003947C0 /* PrivacyInfo.xcprivacy */,
 			);
 			path = BaseMVVM;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB0C0FF22BBE8F2A003947C0 /* PrivacyInfo.xcprivacy in Resources */,
 				FBDA8F06287D905F002A15EF /* SwiftSOA-API.podspec in Resources */,
 				FB061B18230D45B300202907 /* Podfile in Resources */,
 				FB061B29230D53B500202907 /* Localizable.strings in Resources */,
