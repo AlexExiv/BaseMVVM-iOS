@@ -137,4 +137,6 @@ s.dependency "RxCocoa", "~> 6.6.0"
 s.dependency "RxRelay", "~> 6.6.0"
 s.dependency "Alamofire", "~> 5.9.1"
 
+s.resource_bundles = { "SwiftSOA-API" => ["BaseMVVM/PrivacyInfo.xcprivacy"] }
+
 end
