@@ -63,7 +63,7 @@ s.author             = { "ALEXEY ABDULIN" => "alexexiv@gmail.com" }
 #
 
 # s.platform     = :ios
-s.platform     = :ios, "10.0"
+s.platform     = :ios, "12.0"
 s.swift_version = "5.3"
 
 #  When using multiple platforms
