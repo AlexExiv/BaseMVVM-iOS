@@ -26,16 +26,14 @@ public struct JsonWrapper
     }
 }
 
-public protocol SBApiUserInfoProvider
+public protocol SBApiPropertiesProvider
 {
-    var token: String { get }
-    func ResetLogin()
+    func OnProvideProperties() -> [String: String]
 }
 
-public protocol SBApiDeviceInfoProvider
+public protocol SBApiTokenResetListener
 {
-    var deviceId: String { get }
-    var interfaceLanguage: String { get }
+    func OnTokenReset()
 }
 
 public typealias ErrorDispatcher = (Int, JsonWrapper) -> String
@@ -50,14 +48,12 @@ public let ERROR_MESSAGE_KEY = "ERROR_MESSAGE_KEY"
 
 public protocol SBApiClientProtocol
 {
-    var tokenHeader: String { get set }
-    var deviceHeader: String { get set }
-    var languageHeader: String { get set }
+    var resetTokenCodes: [Int] { get set }
     var errorDispatcher: ErrorDispatcher? { get set }
     var errorExtraDispatcher: ErrorExtraDispatcher? { get set }
     
-    func RegisterProvider( user: SBApiUserInfoProvider )
-    func RegisterProvider( device: SBApiDeviceInfoProvider )
+    func Register( provider: SBApiPropertiesProvider )
+    func Register( listener: SBApiTokenResetListener )
     
     func RxJSON( path: String ) -> Single<JsonWrapper>
     func RxJSON( path: String, params: [String: Any]? ) -> Single<JsonWrapper>

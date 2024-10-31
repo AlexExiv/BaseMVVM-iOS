@@ -20,15 +20,12 @@ public extension SBApiClientFactory
 
 class SBAlamofireApiClient: SBApiClientProtocol
 {
-    var tokenHeader: String = "Authorization"
-    var deviceHeader: String = "X-Device-ID"
-    var languageHeader: String = "X-User-Language"
-    
+    var resetTokenCodes: [Int] = [401]
     var errorDispatcher: ErrorDispatcher? = nil
     var errorExtraDispatcher: ErrorExtraDispatcher? = nil
     
-    var userInfoProvider: SBApiUserInfoProvider? = nil
-    var deviceInfoProvider: SBApiDeviceInfoProvider? = nil
+    var propertiesProviders: [SBApiPropertiesProvider] = []
+    var resetListeners: [SBApiTokenResetListener] = []
     
     let baseURL: String
     let defaultEncoding: ParameterEncoding
@@ -40,17 +37,16 @@ class SBAlamofireApiClient: SBApiClientProtocol
         self.defaultEncoding = defaultEncoding
         self.logging = logging
     }
-    
-    func RegisterProvider( user: SBApiUserInfoProvider )
+
+    func Register( provider: SBApiPropertiesProvider )
     {
-        userInfoProvider = user
+        propertiesProviders.append( provider )
     }
     
-    func RegisterProvider( device: SBApiDeviceInfoProvider )
+    func Register( listener: SBApiTokenResetListener )
     {
-        deviceInfoProvider = device
+        resetListeners.append( listener )
     }
-    
     
     //MARK: - JSON REQUESTS
     func RxJSON( path: String ) -> Single<JsonWrapper>
@@ -77,17 +73,7 @@ class SBAlamofireApiClient: SBApiClientProtocol
             if let self_ = self
             {
                 var rFullHeaders = [String: String]()
-                
-                if let provider = self_.userInfoProvider
-                {
-                    rFullHeaders[self_.tokenHeader] = provider.token
-                }
-
-                if let provider = self_.deviceInfoProvider
-                {
-                    rFullHeaders[self_.deviceHeader] = provider.deviceId
-                    rFullHeaders[self_.languageHeader] = provider.interfaceLanguage
-                }
+                self_.propertiesProviders.forEach { rFullHeaders.Merge( src: $0.OnProvideProperties() ) }
                 
                 if let headers = headers
                 {
@@ -127,9 +113,10 @@ class SBAlamofireApiClient: SBApiClientProtocol
                             }
                             else
                             {
-                                if let code = response.response?.statusCode, (code == 401 || code == 403)
+                                if let code = response.response?.statusCode, self_.resetTokenCodes.contains( code )
                                 {
-                                    self_.userInfoProvider?.ResetLogin()
+                                    self_.resetListeners.forEach { $0.OnTokenReset() }
+                                    //self_.userInfoProvider?.ResetLogin()
                                 }
                                 
                                 subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: result ) ) );
@@ -274,22 +261,8 @@ class SBAlamofireApiClient: SBApiClientProtocol
             if let self_ = self
             {
                 var rFullHeaders = [String: String]();
-                
-                if let provider = self_.userInfoProvider
-                {
-                    rFullHeaders[self_.tokenHeader] = provider.token
-                    self_.PrintLog( "X-Access-Token: \(provider.token)" )
-                }
 
-                if let provider = self_.deviceInfoProvider
-                {
-                    rFullHeaders[self_.deviceHeader] = provider.deviceId
-                    self_.PrintLog( "X-Device-ID: \(provider.deviceId)" )
-                    
-                    rFullHeaders[self_.deviceHeader] = provider.interfaceLanguage
-                    self_.PrintLog( "X-User-Language: \(provider.interfaceLanguage)" )
-                }
-                
+                self_.propertiesProviders.forEach { rFullHeaders.Merge( src: $0.OnProvideProperties() ) }
                 if let headers = headers
                 {
                     rFullHeaders.Merge( src: headers );
@@ -340,9 +313,9 @@ class SBAlamofireApiClient: SBApiClientProtocol
                         }
                         else
                         {
-                            if let code = response.response?.statusCode, (code == 401 || code == 403)
+                            if let code = response.response?.statusCode, self_.resetTokenCodes.contains( code )
                             {
-                                self_.userInfoProvider?.ResetLogin()
+                                self_.resetListeners.forEach { $0.OnTokenReset() }
                             }
                             
                             subs( .failure( self_.ParseError( error: response.error, status: response.response?.statusCode ?? 0, json: response.value ) ) );
