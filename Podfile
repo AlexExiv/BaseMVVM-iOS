@@ -3,7 +3,7 @@ platform :ios, '15.6'
 use_frameworks!
 
 def shared_pods
-  pod 'Alamofire', '~> 5.9.1'
+  pod 'Alamofire', '~> 5.10.1'
   pod 'RxSwift',    '~> 6.7.1'
   pod 'RxCocoa',    '~> 6.7.1'
   pod 'RxRelay',    '~> 6.7.1'

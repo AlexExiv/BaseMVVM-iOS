@@ -135,7 +135,7 @@ s.requires_arc = true
 s.dependency "RxSwift", "~> 6.7.1"
 s.dependency "RxCocoa", "~> 6.7.1"
 s.dependency "RxRelay", "~> 6.7.1"
-s.dependency "Alamofire", "~> 5.9.1"
+s.dependency "Alamofire", "~> 5.10.1"
 
 s.resource_bundles = { "SwiftSOA-API" => ["BaseMVVM/PrivacyInfo.xcprivacy"] }
 
